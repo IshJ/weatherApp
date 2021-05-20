@@ -9,6 +9,8 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -61,8 +63,10 @@ public class AddLocationDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_add_location, null);
 
         rootView = view;
+//        Log.d("weather:AddressScan2", "#1#0#1");
 
         builder.setView(view);
+
         builder.setTitle(getActivity().getString(R.string.dialog_add_label));
 
         this.database = PFASQLiteHelper.getInstance(getActivity());
@@ -100,6 +104,7 @@ public class AddLocationDialog extends DialogFragment {
         });
 
         builder.setNegativeButton(getActivity().getString(R.string.dialog_add_close_button), null);
+        Log.d("weather:AddressScan2", "#1#0#0");
 
         return builder.create();
     }

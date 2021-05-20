@@ -4,22 +4,37 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-sdk
+        android:minSdkVersion="28"
+        android:targetSdkVersion="28"
+        />
 
     <application
         android:allowBackup="true"
+        android:fontFamily="sans-serif-light"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:fontFamily = "sans-serif-light"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+>
 
-
-        <activity android:name="org.woheller69.weather.activities.RainViewerActivity"
-            android:label="@string/RainViewer"/>
 
         <activity
+            android:name="org.woheller69.weather.activities.RainViewerActivity"
+            android:exported="true"
+            android:label="@string/RainViewer" />
+
+        <activity
+            android:name="org.woheller69.weather.activities.NavigationActivity"
+            android:exported="true"
+            android:label="@string/navigation_drawer_close" />
+        <activity
             android:name="org.woheller69.weather.activities.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light">
+            <!--            android:theme="@style/SplashTheme"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -27,17 +42,20 @@
         </activity>
         <activity
             android:name="org.woheller69.weather.activities.ManageLocationsActivity"
-            android:launchMode="singleTop"
+            android:exported="true"
             android:label="@string/activity_manage"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName="org.woheller69.weather.activities.ForecastCityActivity" />
+            android:launchMode="singleTop"
+            android:parentActivityName="org.woheller69.weather.activities.ForecastCityActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.woheller69.weather.activities.ForecastCityActivity"
-            android:launchMode="singleTop"
+            android:exported="true"
             android:label="@string/app_name"
+            android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.woheller69.weather.activities.RadiusSearchActivity"
+            android:exported="true"
             android:label="@string/activity_radius_search"
             android:parentActivityName="org.woheller69.weather.activities.ForecastCityActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -47,6 +65,7 @@
         </activity>
         <activity
             android:name="org.woheller69.weather.activities.RadiusSearchResultActivity"
+            android:exported="true"
             android:label="@string/radius_search_result_label"
             android:parentActivityName="org.woheller69.weather.activities.RadiusSearchActivity">
             <meta-data
@@ -55,6 +74,7 @@
         </activity>
         <activity
             android:name="org.woheller69.weather.activities.AboutActivity"
+            android:exported="true"
             android:label="@string/about"
             android:parentActivityName="org.woheller69.weather.activities.ForecastCityActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -65,6 +85,7 @@
 
         <activity
             android:name="org.woheller69.weather.activities.SettingsActivity"
+            android:exported="true"
             android:label="@string/activity_settings_title"
             android:parentActivityName="org.woheller69.weather.activities.ForecastCityActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -75,12 +96,29 @@
         </activity>
         <activity
             android:name="org.woheller69.weather.firststart.TutorialActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="com.example.mynativeapplication.action" />-->
+            <!--                <category android:name="android.intent.category.DEFAULT" />-->
+            <!--            </intent-filter>-->
+        </activity>
 
         <service
             android:name="org.woheller69.weather.services.UpdateDataService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
+            android:name="org.woheller69.weather.SideChannelJob"
+            android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false" />
+            android:process=":externalProcess" />
+<!--            android:process=":externalProcess" />-->
 
         <receiver android:name="org.woheller69.weather.widget.WeatherWidget">
             <intent-filter>
@@ -101,6 +139,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/weather_widget_5day_info" />
         </receiver>
+
 
     </application>
 

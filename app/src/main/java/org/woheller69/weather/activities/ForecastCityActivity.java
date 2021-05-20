@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,7 +62,9 @@ public class ForecastCityActivity extends NavigationActivity implements IUpdatea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Log.d("weather:AddressScan2", "#7#0#1");
         setContentView(R.layout.activity_forecast_city);
+
         overridePendingTransition(0, 0);
 
         initResources();
@@ -96,6 +100,7 @@ public class ForecastCityActivity extends NavigationActivity implements IUpdatea
         tabLayout.setupWithViewPager(viewPager, true);
 
 
+
         PFASQLiteHelper db = PFASQLiteHelper.getInstance(this);
         if (db.getAllCitiesToWatch().isEmpty()) {
             // no cities selected.. don't show the viewPager - rather show a text that tells the user that no city was selected
@@ -107,6 +112,19 @@ public class ForecastCityActivity extends NavigationActivity implements IUpdatea
             viewPager.setVisibility(View.VISIBLE);
             viewPager.setAdapter(pagerAdapter);
         }
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("weather:AddressScan2", "#7#0#0");
+//        int waitVal = 2000;
+//        long startTime = System.currentTimeMillis();
+//        while (System.currentTimeMillis()-startTime<waitVal){}
+        finishAndRemoveTask();
+        overridePendingTransition( 0, 0);
+
     }
 
     @Override

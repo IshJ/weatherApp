@@ -13,6 +13,7 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -91,8 +92,9 @@ public class AddLocationDialogPhotonAPI extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_add_location, null);
 
         rootView = view;
-
+//        Log.d("weather:AddressScan2", "#2#0#1");
         builder.setView(view);
+
         builder.setTitle(getActivity().getString(R.string.dialog_add_label));
 
         this.database = PFASQLiteHelper.getInstance(getActivity());
@@ -170,6 +172,7 @@ public class AddLocationDialogPhotonAPI extends DialogFragment {
         });
 
         builder.setNegativeButton(getActivity().getString(R.string.dialog_add_close_button), null);
+        Log.d("weather:AddressScan2", "#2#0#0");
 
         return builder.create();
 

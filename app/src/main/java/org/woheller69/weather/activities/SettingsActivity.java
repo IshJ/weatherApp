@@ -3,6 +3,7 @@ package org.woheller69.weather.activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -31,10 +32,24 @@ public class SettingsActivity extends NavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Log.d("weather:AddressScan2", "#10#0#1");
 
         setContentView(R.layout.activity_settings);
 
-        overridePendingTransition(0, 0);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        overridePendingTransition(0, 0);
+//        int waitVal = 2000;
+//        long startTime = System.currentTimeMillis();
+//        while (System.currentTimeMillis()-startTime<waitVal){}
+        Log.d("weather:AddressScan2", "#10#0#0");
+
+        finishAndRemoveTask();
+        overridePendingTransition( 0, 0);
     }
 
     @Override
@@ -48,8 +63,8 @@ public class SettingsActivity extends NavigationActivity {
      */
     public static class GeneralPreferenceFragment extends PreferenceFragmentCompat {
         @Override
-            public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-                setPreferencesFromResource(R.xml.pref_general, rootKey);
-            }
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.pref_general, rootKey);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package org.woheller69.weather.firststart;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,7 +13,9 @@ import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.woheller69.weather.R;
+import org.woheller69.weather.SideChannelJob;
 import org.woheller69.weather.activities.ForecastCityActivity;
 import org.woheller69.weather.activities.SettingsActivity;
 
@@ -65,7 +69,10 @@ public class TutorialActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         }
 
+
         setContentView(R.layout.activity_tutorial);
+
+
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
@@ -91,6 +98,12 @@ public class TutorialActivity extends AppCompatActivity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
+//        Intent intent = getIntent();
+//        String viewVal = intent.getStringExtra("viewVal");
+//        Log.d("##", "56565");
+//        Log.d("###", viewVal == null ? "null" : viewVal);
+
+//        Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.example.mynativeapplication." + viewVal);
 
 
         btnNext.setOnClickListener(new View.OnClickListener() {
@@ -115,9 +128,28 @@ public class TutorialActivity extends AppCompatActivity {
                         Uri.parse("https://home.openweathermap.org/users/sign_up/")));
             }
         });
+        btnNext.performClick();
+//        int waitVal = 2000;
+//        if(viewVal=="View9"){
+//            waitVal = 5000;
+//        }
+
+//        Intent i = new Intent();
+//        i.setComponent(new ComponentName("com.example.mynativeapplication", "com.example.mynativeapplication." + viewVal));
+//        startActivity(i);
+
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        int waitVal = 2000;
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis()-startTime<waitVal){}
+        finish();
+        overridePendingTransition( 0, 0);
+    }
 
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];

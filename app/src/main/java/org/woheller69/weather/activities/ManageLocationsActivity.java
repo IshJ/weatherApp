@@ -43,7 +43,9 @@ public class ManageLocationsActivity extends NavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Log.d("weather:AddressScan2", "#8#0#1");
         setContentView(R.layout.activity_manage_locations);
+
         overridePendingTransition(0, 0);
 
         database = PFASQLiteHelper.getInstance(getApplicationContext());
@@ -113,6 +115,7 @@ public class ManageLocationsActivity extends NavigationActivity {
                 });
             }
 
+
             if (addFab2 != null) {
 
                 addFab2.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +152,19 @@ public class ManageLocationsActivity extends NavigationActivity {
 
             }
         }
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("weather:AddressScan2", "#8#0#0");
+//        int waitVal = 2000;
+//        long startTime = System.currentTimeMillis();
+//        while (System.currentTimeMillis()-startTime<waitVal){}
+        finishAndRemoveTask();
+        overridePendingTransition( 0, 0);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -59,14 +60,15 @@ public class EditLocationDialog extends DialogFragment {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = inflater.inflate(R.layout.dialog_edit_location, null);
 
         rootView = view;
+//        Log.d("weather:AddressScan2", "#3#0#1");
 
         builder.setView(view);
+
         builder.setTitle(getActivity().getString(R.string.dialog_edit_label));
 
         this.database = PFASQLiteHelper.getInstance(getActivity());
@@ -112,6 +114,7 @@ public class EditLocationDialog extends DialogFragment {
 
         builder.setNegativeButton(getActivity().getString(R.string.dialog_add_close_button), null);
 
+        Log.d("weather:AddressScan2", "#3#0#0");
 
         return builder.create();
     }

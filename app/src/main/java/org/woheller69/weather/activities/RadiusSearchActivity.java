@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
@@ -81,12 +82,28 @@ public class RadiusSearchActivity extends NavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Log.d("weather:AddressScan2", "#9#0#1");
         setContentView(R.layout.activity_radius_search);
+
         overridePendingTransition(0, 0);
 
 
         dbHelper = PFASQLiteHelper.getInstance(this);
         initialize();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("weather:AddressScan2", "#9#0#0");
+//        finish();
+//        int waitVal = 2000;
+//        long startTime = System.currentTimeMillis();
+//        while (System.currentTimeMillis()-startTime<waitVal){}
+        finishAndRemoveTask();
+        overridePendingTransition( 0, 0);
+
     }
 
     @Override

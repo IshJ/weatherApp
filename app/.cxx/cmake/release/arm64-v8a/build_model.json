@@ -1,0 +1,71 @@
+{
+  "variant": {
+    "module": {
+      "rootBuildGradleFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather",
+      "sdkFolder": "/home/ishadi/Android/Sdk",
+      "isNativeCompilerSettingsCacheEnabled": false,
+      "isBuildOnlyTargetAbiEnabled": true,
+      "splitsAbiFilterSet": [],
+      "intermediatesFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates",
+      "gradleModulePathName": ":app",
+      "moduleRootFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app",
+      "makeFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/CMakeLists.txt",
+      "buildSystem": "CMAKE",
+      "compilerSettingsCacheFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/.cxx",
+      "cxxFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx",
+      "ndkFolder": "/home/ishadi/Android/Sdk/ndk/22.1.7171670",
+      "ndkVersion": "22.1.7171670",
+      "ndkSupportedAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "ndkDefaultAbiList": [
+        "ARMEABI_V7A",
+        "ARM64_V8A",
+        "X86",
+        "X86_64"
+      ],
+      "cmakeToolchainFile": "."
+    },
+    "buildSystemArgumentList": [
+      "-DCMAKE_VERBOSE_MAKEFILE\u003d1"
+    ],
+    "cFlagList": [],
+    "cppFlagsList": [
+      ""
+    ],
+    "variantName": "release",
+    "soFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/lib",
+    "objFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj",
+    "jsonFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release",
+    "gradleBuildOutputFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release",
+    "isDebuggableEnabled": false,
+    "validAbiList": [
+      "ARM64_V8A"
+    ],
+    "buildTargetSet": []
+  },
+  "abi": "ARM64_V8A",
+  "abiPlatformVersion": 28,
+  "cxxBuildFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a",
+  "jsonFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/android_gradle_build.json",
+  "gradleBuildOutputFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release/arm64-v8a",
+  "objFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj/arm64-v8a",
+  "buildCommandFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/build_command.txt",
+  "buildOutputFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/build_output.txt",
+  "modelOutputFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/build_model.json",
+  "cmake": {
+    "cmakeListsWrapperFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release/arm64-v8a/CMakeLists.txt",
+    "toolchainWrapperFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release/arm64-v8a/android_gradle_build.toolchain.cmake",
+    "buildGenerationStateFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release/arm64-v8a/build_generation_state.json",
+    "cacheKeyFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release/arm64-v8a/compiler_cache_key.json",
+    "compilerCacheUseFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release/arm64-v8a/compiler_cache_use.json",
+    "compilerCacheWriteFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release/arm64-v8a/compiler_cache_write.json",
+    "toolchainSettingsFromCacheFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release/arm64-v8a/compiler_settings_cache.cmake",
+    "cmakeWrappingBaseFolder": "."
+  },
+  "jsonGenerationLoggingRecordFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/json_generation_record.json",
+  "compileCommandsJsonFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/compile_commands.json"
+}

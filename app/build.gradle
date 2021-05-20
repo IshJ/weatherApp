@@ -2,25 +2,53 @@ apply plugin: 'com.android.application'
 
 android {
 
-    compileSdkVersion 29
-
+    compileSdkVersion 28
+//    buildToolsVersion '28.0.3'
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         applicationId "org.woheller69.weather"
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion 28
+        targetSdkVersion 28
         versionCode 33
         versionName "3.3"
 
         buildConfigField "String", "DEFAULT_API_KEY", "\"00000000000000000000000000000000\""
         buildConfigField "String", "BASE_URL", "\"https://api.openweathermap.org/data/2.5/\""
+
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                arguments "-DCMAKE_VERBOSE_MAKEFILE=1"
+            }
+        }
+        ndk{
+            //abiFilters "armeabi-v7a"
+            //abiFilters "arm64-v8a","armeabi-v7a"
+            abiFilters "arm64-v8a"
+        }
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            debuggable true
         }
+    }
+    externalNativeBuild {
+
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+            version "3.10.2"
+        }
+    }
+    packagingOptions {
+        // pickFirsts:当出现重复文件，会使用第一个匹配的文件打包进入apk
+        pickFirst 'lib/arm64-v8a/libflush.so'
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

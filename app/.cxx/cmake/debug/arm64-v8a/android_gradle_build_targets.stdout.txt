@@ -1,0 +1,197 @@
+ninja: Entering directory `/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/debug/arm64-v8a'
+[1/3] Building C object libflush/CMakeFiles/flush.dir/libflush/hit.c.o
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:106:60: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                        LOGD("Camera hit %d-%d-%d.", j, i, count);
+                                               ~~          ^~~~~
+                                               %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:128:63: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                        LOGD("Audio hit %d-%d-%d.", j + 1, i, count);
+                                              ~~              ^~~~~
+                                              %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:155:53: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                        LOGD("Cache hit %d-%d.", j, count);
+                                           ~~       ^~~~~
+                                           %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:104:31: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                    if (count <= threshold) {
+                        ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:126:31: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                    if (count <= threshold) {
+                        ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:145:27: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                if (count <= threshold) {
+                    ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:236:48: warning: data argument not used by format string [-Wformat-extra-args]
+                    LOGD("Compiler activated", j, count, addr[j]);
+                         ~~~~~~~~~~~~~~~~~~~~  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:177:85: warning: unused parameter 'camera_audio' [-Wunused-parameter]
+stage1_(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
+                                                                                    ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:249:84: warning: unused parameter 'camera_audio' [-Wunused-parameter]
+stage1(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
+                                                                                   ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:336:81: warning: unused parameter 'camera_audio' [-Wunused-parameter]
+adjust_threshold(int threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
+                                                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:337:23: warning: unused parameter 'finishtrial1' [-Wunused-parameter]
+                 int *finishtrial1) {
+                      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:358:27: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                if (count <= threshold) {
+                    ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:370:27: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                if (count <= threshold) {
+                    ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:394:26: warning: unused parameter 'g_lock' [-Wunused-parameter]
+int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int threshold, int *flags,
+                         ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:394:38: warning: unused parameter 'compiler_position' [-Wunused-parameter]
+int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int threshold, int *flags,
+                                     ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:394:62: warning: unused parameter 'continueRun' [-Wunused-parameter]
+int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int threshold, int *flags,
+                                                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:394:95: warning: unused parameter 'flags' [-Wunused-parameter]
+int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int threshold, int *flags,
+                                                                                              ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:395:15: warning: unused parameter 'times' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+              ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:395:27: warning: unused parameter 'thresholds' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:395:44: warning: unused parameter 'logs' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:395:55: warning: unused parameter 'log_length' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+                                                      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:395:71: warning: unused parameter 'sum_length' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+                                                                      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:396:17: warning: unused parameter 'addr' [-Wunused-parameter]
+        size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio) {
+                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:396:28: warning: unused parameter 'camera_pattern' [-Wunused-parameter]
+        size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio) {
+                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:396:49: warning: unused parameter 'audio_pattern' [-Wunused-parameter]
+        size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio) {
+                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:396:69: warning: unused parameter 'length_of_camera_audio' [-Wunused-parameter]
+        size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio) {
+                                                                    ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:428:11: warning: unused variable 'address' [-Wunused-variable]
+    void *address = &foo;
+          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:418:17: warning: unused parameter 'param' [-Wunused-parameter]
+int hit2(char **param, int length, int threshold) {
+                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:450:27: warning: unused parameter 'length' [-Wunused-parameter]
+int hit5(void *param, int length, int threshold) {
+                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:486:48: warning: format specifies type 'unsigned long' but the argument has type 'void *' [-Wformat]
+    LOGD("OdexScan:: Address:start for : %lu", param);
+                                         ~~~   ^~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:492:47: warning: format specifies type 'unsigned long' but the argument has type 'void *' [-Wformat]
+    LOGD("OdexScan:: Address:finished : %lu", param);
+                                        ~~~   ^~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:472:37: warning: unused parameter 'length' [-Wunused-parameter]
+int scanOdexMemory(void *param, int length, int threshold) {
+                                    ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:472:49: warning: unused parameter 'threshold' [-Wunused-parameter]
+int scanOdexMemory(void *param, int length, int threshold) {
+                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:536:11: warning: unused variable 'address' [-Wunused-variable]
+    void *address = &foo;
+          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:530:36: warning: unused parameter 'libflush_session' [-Wunused-parameter]
+bool scan_cfg1(libflush_session_t *libflush_session, int threshold) {
+                                   ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:530:58: warning: unused parameter 'threshold' [-Wunused-parameter]
+bool scan_cfg1(libflush_session_t *libflush_session, int threshold) {
+                                                         ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:617:31: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                    if (count <= threshold) {
+                        ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:651:23: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+            if (count <= threshold) {
+                ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:695:50: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        libflush_flush(libflush_session, address + i);
+                                         ~~~~~~~ ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:696:78: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        count1 = libflush_reload_address_and_flush(libflush_session, address + i);
+                                                                     ~~~~~~~ ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:697:68: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        count2 = libflush_reload_address(libflush_session, address + i);
+                                                           ~~~~~~~ ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:698:68: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        count2 = libflush_reload_address(libflush_session, address + i);
+                                                           ~~~~~~~ ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:700:60: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+        LOGD("AddressScan: not_in_cache: %d in_cache: %d", count1, count2);
+                                         ~~                ^~~~~~
+                                         %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:700:68: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+        LOGD("AddressScan: not_in_cache: %d in_cache: %d", count1, count2);
+                                                      ~~           ^~~~~~
+                                                      %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:707:16: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+    if (count1 <= threshold) {
+        ~~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:721:63: warning: format specifies type 'unsigned long' but the argument has type 'void *' [-Wformat]
+    LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+                                         ~~~                  ^~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:721:72: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+    LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+                                                         ~~            ^~~~~~
+                                                         %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:716:12: warning: unused variable 'count1' [-Wunused-variable]
+    size_t count1;
+           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:715:9: warning: unused variable 'i' [-Wunused-variable]
+    int i = 0;
+        ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:714:77: warning: unused parameter 'threshold' [-Wunused-parameter]
+is_address_in_use1(libflush_session_t *libflush_session, void *address, int threshold) {
+                                                                            ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:577:1: warning: unused function 'attack_slave' [-Wunused-function]
+attack_slave(libflush_session_t *libflush_session, int sum_length, pthread_mutex_t *g_lock,
+^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:73:1: warning: unused function 'attack_slaveX' [-Wunused-function]
+attack_slaveX(libflush_session_t *libflush_session, int sum_length, pthread_mutex_t *g_lock,
+^
+52 warnings generated.
+[2/3] Linking C shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libs/arm64-v8a/libflush.so
+[3/3] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so
