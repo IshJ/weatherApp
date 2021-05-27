@@ -132,19 +132,24 @@ public class SideChannelJob extends Service {
                         Log.d(TAG, "Odex x starting Address: " + odexMemExBegin.toString(16));
 
                         String[] offsets = getMethodOffsets();
+//don't change
+                        String odexOffsets = "7b1730,7b2830,7b3c90,7b8ed0,7b9220,7bc890,7bd050,7be940,7c1160,7c14c0";
+                        Log.d(TAG, "odex offsets:"+ odexOffsets);
+
+                        Log.d(TAG, "scanned offsets:"+ String.join(",", offsets));
                         long[] intOffsets = new long[offsets.length];
 
                         for (int i = 0; i < offsets.length; i++) {
 //                          (exec memory-exec offset)+code offset
                             offsets[i] = odexMemExBegin.add(new BigInteger(offsets[i], 16)).toString(10);
-                            intOffsets[i] = Long.valueOf(offsets[i]);
+                            intOffsets[i] = Long.parseLong(offsets[i]);
 
                         }
 
                         while (true) {
                             scan4(intOffsets, intOffsets.length);
 //                            scanOdex(intOffsets, intOffsets.length);
-//                            Thread.sleep(50);
+//                            Thread.sleep(100);
                         }
                     }
                 } catch (Exception e) {
@@ -163,9 +168,11 @@ public class SideChannelJob extends Service {
 
         // get Process ID of the running app
         int pid = android.os.Process.myPid();
+
         Log.d(TAG, "%%%% spLASH! getOdexBeginAddress" + pid);
 
         try {
+
             Log.d(TAG, "%%%% spLASH! grep woheller69 /proc/self/maps | grep odex");
             Optional<String> odc = Files.lines(Paths.get("/proc/self/maps")).collect(Collectors.toList())
                     .stream().sequential().filter(s -> s.contains("woheller69") && s.contains("base.odex"))
@@ -181,7 +188,8 @@ public class SideChannelJob extends Service {
         return "77a6425000";
     }
 
-    public String getOdexBeginExAddress() {
+    public String
+    getOdexBeginExAddress() {
 
         // get Process ID of the running app
         int pid = android.os.Process.myPid();
@@ -212,8 +220,9 @@ public class SideChannelJob extends Service {
     }
 
     public String[] getMethodOffsets() {
+
         //SideChannelOffsets
-        return new String[]{"000000","7b8190"};
+        return new String[]{"000000","7b8ed0","7b9220","7bc890","7bd050","7be940","7c1160"};
 //        return new String[]{"000000", "000000"};
     }
 
@@ -256,6 +265,17 @@ public class SideChannelJob extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        try {
+            int pid = android.os.Process.myPid();
+            Log.d(TAG, "%%%% spLASH! " + pid);
+            Runtime.getRuntime().exec("taskset -p f "+pid);
+            String cpuBind = getCommandResult("taskset -p " + pid);
+            Log.d(TAG, "cpu core: " + cpuBind);
+
+        } catch (Exception e) {
+            Log.d(TAG, e.toString());
+        }
+
         Log.d("foreground", "onCreate");
         //如果API在26以上即版本为O则调用startForefround()方法启动服务
         setForegroundService();
@@ -316,6 +336,26 @@ public class SideChannelJob extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    private static String getCommandResult(String command) {
+        StringBuilder log = new StringBuilder();
+
+        try {
+            // Run the command
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+
+            // Grab the results
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                log.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return log.toString();
     }
 }
 

@@ -1,5 +1,7 @@
 package org.woheller69.weather.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -43,8 +45,9 @@ public class ManageLocationsActivity extends NavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Log.d("weather:AddressScan2", "#8#0#1");
+//        Log.d("weather:AddressScan2", "#7#0#1");
         setContentView(R.layout.activity_manage_locations);
+        Log.d("weather:AddressScan2", "#7_0#");
 
         overridePendingTransition(0, 0);
 
@@ -159,11 +162,13 @@ public class ManageLocationsActivity extends NavigationActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("weather:AddressScan2", "#8#0#0");
 //        int waitVal = 2000;
 //        long startTime = System.currentTimeMillis();
 //        while (System.currentTimeMillis()-startTime<waitVal){}
-        finishAndRemoveTask();
+        Intent resultIntent = getIntent();
+//        resultIntent.putExtra(...);  // put data that you want returned to activity A
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
         overridePendingTransition( 0, 0);
     }
 

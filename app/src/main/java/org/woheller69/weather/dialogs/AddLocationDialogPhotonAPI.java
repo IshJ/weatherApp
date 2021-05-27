@@ -80,6 +80,8 @@ public class AddLocationDialogPhotonAPI extends DialogFragment {
 
         Locale locale = ConfigurationCompat.getLocales(Resources.getSystem().getConfiguration()).get(0);
         //supported languages by photon.komoot.io API: default, en, de, fr, it
+        Log.d("weather:AddressScan2", "#1_0#");
+
         if ((locale.getLanguage().equals("de"))||(locale.getLanguage().equals("en"))||(locale.getLanguage().equals("fr"))||(locale.getLanguage().equals("it")))                 {
             lang=locale.getLanguage();
         } else {
@@ -92,7 +94,7 @@ public class AddLocationDialogPhotonAPI extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_add_location, null);
 
         rootView = view;
-//        Log.d("weather:AddressScan2", "#2#0#1");
+//        Log.d("weather:AddressScan2", "#1#0#1");
         builder.setView(view);
 
         builder.setTitle(getActivity().getString(R.string.dialog_add_label));
@@ -172,7 +174,6 @@ public class AddLocationDialogPhotonAPI extends DialogFragment {
         });
 
         builder.setNegativeButton(getActivity().getString(R.string.dialog_add_close_button), null);
-        Log.d("weather:AddressScan2", "#2#0#0");
 
         return builder.create();
 

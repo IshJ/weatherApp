@@ -32,9 +32,10 @@ public class SettingsActivity extends NavigationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Log.d("weather:AddressScan2", "#10#0#1");
+//        Log.d("weather:AddressScan2", "#9#0#1");
 
         setContentView(R.layout.activity_settings);
+        Log.d("weather:AddressScan2", "#9_0#");
 
 
     }
@@ -46,9 +47,8 @@ public class SettingsActivity extends NavigationActivity {
 //        int waitVal = 2000;
 //        long startTime = System.currentTimeMillis();
 //        while (System.currentTimeMillis()-startTime<waitVal){}
-        Log.d("weather:AddressScan2", "#10#0#0");
 
-        finishAndRemoveTask();
+        finish();
         overridePendingTransition( 0, 0);
     }
 

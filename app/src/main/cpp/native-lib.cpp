@@ -284,16 +284,32 @@ Java_org_woheller69_weather_SideChannelJob_scan4(
         return; /* exception occurred */
     }
 
+//    stack variable test
+//    jlong foo = 16;
+//    jlong *address = &foo;
+//    LOGD("scan4 stack start %lu threshold %d", address, threshold);
+//
+//    hit5(address, 0 , 0);
+//
+//    LOGD("scan4 stack finish %lu", address);
+
+//    LOGD("scan4 stack+10 start %lu threshold %d", address, threshold);
+//
+//    hit5(address+10, 0 , 0);
+//
+//    LOGD("scan4 stack+10 finish %lu", address);
+
+
     // do stuff to the array
     for (i=1; i<length; i++) {
-        LOGD("scan4 %lu", c_array[i]);
+//        LOGD("scan4 %lu", c_array[i]);
         hit5(reinterpret_cast<void *>(c_array[i]), 0, 0);
     }
 
     // release the memory so java can have it again
     (env)->ReleaseLongArrayElements(arr, c_array, 0);
 
-    LOGD("Finished scanning %d",running);
+//    LOGD("Finished scanning %d",running);
     return;
 }
 

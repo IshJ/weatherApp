@@ -27,6 +27,7 @@ Keep scanning functions to get the access time to check if there are functions a
 #include <pthread.h>
 #include <jni.h>
 #include "threads.h"
+#include <time.h>
 
 #else
 #ifndef WITH_ANDROID
@@ -448,7 +449,7 @@ int hit2(char **param, int length, int threshold) {
 
 
 int hit5(void *param, int length, int threshold) {
-    LOGD("Start AddressScan hit2.\n");
+//    LOGD("Start AddressScan hit2.\n");
     libflush_session_t *libflush_session;
     libflush_init(&libflush_session, NULL);
     is_address_in_use1(libflush_session, param, threshold);
@@ -459,10 +460,10 @@ int hit5(void *param, int length, int threshold) {
 
 int charToBin(unsigned char letter) {
     int binary[8];
-    for(int n = 0; n < 8; n++)
-        binary[7-n] = (letter >> n) & 1;
+    for (int n = 0; n < 8; n++)
+        binary[7 - n] = (letter >> n) & 1;
     /* print result */
-    for(int n = 0; n < 8; n++)
+    for (int n = 0; n < 8; n++)
         LOGD("%d -> %d", n, binary[n]);
     //LOGD("OdexScan:: Address: binary finished\n");
     return 0;
@@ -480,13 +481,11 @@ int scanOdexMemory(void *param, int length, int threshold) {
 //        LOGD("OdexScan:: Address: %s reading :", c[i]);
 //    }
 
-    unsigned char* c2 = (unsigned char*)param;
-    ;
+    unsigned char *c2 = (unsigned char *) param;;
     unsigned char a[8];
     LOGD("OdexScan:: Address:start for : %lu", param);
-    for(int i = 0; i < 8 ; i++)
-    {
-        a[i] = (unsigned)*(unsigned char*)(c2+i);
+    for (int i = 0; i < 8; i++) {
+        a[i] = (unsigned) *(unsigned char *) (c2 + i);
         charToBin(a[i]);
     }
     LOGD("OdexScan:: Address:finished : %lu", param);
@@ -718,9 +717,16 @@ is_address_in_use1(libflush_session_t *libflush_session, void *address, int thre
 
     count2 = libflush_reload_address_and_flush(libflush_session, address);
 ///    count2 = libflush_probe(libflush_session, address);
-    LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+//    LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+
+
+    if (count2 < 800) {
+        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+    }
 
 }
+
+
 
 
 

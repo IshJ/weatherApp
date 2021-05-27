@@ -60,12 +60,14 @@ public class EditLocationDialog extends DialogFragment {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Log.d("weather:AddressScan2", "#2_0#");
+
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = inflater.inflate(R.layout.dialog_edit_location, null);
 
         rootView = view;
-//        Log.d("weather:AddressScan2", "#3#0#1");
+//        Log.d("weather:AddressScan2", "#2#0#1");
 
         builder.setView(view);
 
@@ -114,7 +116,6 @@ public class EditLocationDialog extends DialogFragment {
 
         builder.setNegativeButton(getActivity().getString(R.string.dialog_add_close_button), null);
 
-        Log.d("weather:AddressScan2", "#3#0#0");
 
         return builder.create();
     }

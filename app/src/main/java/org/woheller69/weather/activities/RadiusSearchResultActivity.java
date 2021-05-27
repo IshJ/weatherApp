@@ -45,9 +45,10 @@ public class RadiusSearchResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Log.d("weather:AddressScan2", "#4#0#1");
+//        Log.d("weather:AddressScan2", "#3_1#");
 
         setContentView(R.layout.activity_radius_search_result);
+        Log.d("weather:AddressScan2", "#3_0#");
 
 
         // Retrieve the data to display
@@ -78,11 +79,10 @@ public class RadiusSearchResultActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("weather:AddressScan2", "#4#0#0");
 //        int waitVal = 2000;
 //        long startTime = System.currentTimeMillis();
 //        while (System.currentTimeMillis()-startTime<waitVal){}
-        finishAndRemoveTask();
+        finish();
         overridePendingTransition( 0, 0);
     }
 

@@ -62,8 +62,9 @@ public class ForecastCityActivity extends NavigationActivity implements IUpdatea
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Log.d("weather:AddressScan2", "#7#0#1");
+//        Log.d("weather:AddressScan2", "#6#0#1");
         setContentView(R.layout.activity_forecast_city);
+        Log.d("weather:AddressScan2", "#6_0#");
 
         overridePendingTransition(0, 0);
 
@@ -118,11 +119,10 @@ public class ForecastCityActivity extends NavigationActivity implements IUpdatea
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("weather:AddressScan2", "#7#0#0");
 //        int waitVal = 2000;
 //        long startTime = System.currentTimeMillis();
 //        while (System.currentTimeMillis()-startTime<waitVal){}
-        finishAndRemoveTask();
+        finish();
         overridePendingTransition( 0, 0);
 
     }

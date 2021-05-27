@@ -15,7 +15,8 @@ public class AboutActivity extends NavigationActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Log.d("weather:AddressScan2", "#6#0#1");
+//        Log.d("weather:AddressScan2", "#5#0#1");
+        Log.d("weather:AddressScan2", "#5_0#");
 
         setContentView(R.layout.activity_about);
 
@@ -33,9 +34,8 @@ public class AboutActivity extends NavigationActivity {
 //        long startTime = System.currentTimeMillis();
 //        while (System.currentTimeMillis() - startTime < waitVal) {
 //        }
-        Log.d("weather:AddressScan2", "#6#0#0");
 
-        finishAndRemoveTask();
+        finish();
         overridePendingTransition(0, 0);
     }
 

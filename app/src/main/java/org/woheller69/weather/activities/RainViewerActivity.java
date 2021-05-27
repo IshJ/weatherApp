@@ -41,7 +41,8 @@ public class RainViewerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-//        Log.d("weather:AddressScan2", "#5#0#1");
+//        Log.d("weather:AddressScan2", "#4#0#1");
+        Log.d("weather:AddressScan2", "#4_0#");
 
         setContentView(R.layout.activity_rain_viewer);
 
@@ -108,11 +109,10 @@ public class RainViewerActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("weather:AddressScan2", "#5#0#0");
 //        int waitVal = 2000;
 //        long startTime = System.currentTimeMillis();
 //        while (System.currentTimeMillis()-startTime<waitVal){}
-        finishAndRemoveTask();
+        finish();
         overridePendingTransition( 0, 0);
     }
 

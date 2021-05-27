@@ -61,9 +61,10 @@ public class AddLocationDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = inflater.inflate(R.layout.dialog_add_location, null);
+        Log.d("weather:AddressScan2", "#0_0#");
 
         rootView = view;
-//        Log.d("weather:AddressScan2", "#1#0#1");
+//        Log.d("weather:AddressScan2", "#0#0#1");
 
         builder.setView(view);
 
@@ -104,7 +105,6 @@ public class AddLocationDialog extends DialogFragment {
         });
 
         builder.setNegativeButton(getActivity().getString(R.string.dialog_add_close_button), null);
-        Log.d("weather:AddressScan2", "#1#0#0");
 
         return builder.create();
     }
