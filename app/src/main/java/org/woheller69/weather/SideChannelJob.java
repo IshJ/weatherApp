@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
 //import static org.woheller69.weather.CacheScan.notification;
 //import static org.woheller69.weather.JobInsertRunnable.insert_locker;
 import static org.woheller69.weather.activities.SplashActivity.cs;
+import static org.woheller69.weather.activities.SplashActivity.reentrantLock;
 
 public class SideChannelJob extends Service {
     public static volatile boolean continueRun;
@@ -103,6 +104,7 @@ public class SideChannelJob extends Service {
     public void doBackgroundWork() {
         Log.d(TAG, "New Thread Created");
 
+
         // Send the job to a different thread
         new Thread(new Runnable() {
             @Override
@@ -115,16 +117,16 @@ public class SideChannelJob extends Service {
                         Log.d(TAG, "Initialize CacheScan");
 
 ////                        exec memory
-                                BigInteger odexMemExBegin = new BigInteger(getOdexBeginExAddress(), 16);
-                                Log.d("OdexScan::", "exec memory: "+ odexMemExBegin.toString(16) );
+                        BigInteger odexMemExBegin = new BigInteger(getOdexBeginExAddress(), 16);
+                        Log.d("OdexScan::", "exec memory: " + odexMemExBegin.toString(16));
 ////                        exec offset
-                                BigInteger execOffset = new BigInteger("11a000", 16);
-                                Log.d("OdexScan::", "exec offset: "+ execOffset.toString(16) );
+                        BigInteger execOffset = new BigInteger("11a000", 16);
+                        Log.d("OdexScan::", "exec offset: " + execOffset.toString(16));
 
 //####
 //######
-                            // exec memory-exec offset+4
-                                    odexMemExBegin = odexMemExBegin.subtract(execOffset).add(new BigInteger("4", 10));
+                        // exec memory-exec offset+4
+                        odexMemExBegin = odexMemExBegin.subtract(execOffset).add(new BigInteger("4", 10));
 
                         odexMemMapBegin = new BigInteger(getOdexBeginAddress(), 16);
 
@@ -133,21 +135,22 @@ public class SideChannelJob extends Service {
 
                         String[] offsets = getMethodOffsets();
 //don't change
-                        String odexOffsets = "7b1730,7b2830,7b3c90,7b8ed0,7b9220,7bc890,7bd050,7be940,7c1160,7c14c0";
-                        Log.d(TAG, "odex offsets:"+ odexOffsets);
+                        String odexOffsets = "7b8f50,7b9060";
+                        Log.d(TAG, "odex offsets:" + odexOffsets);
 
-                        Log.d(TAG, "scanned offsets:"+ String.join(",", offsets));
-                        long[] intOffsets = new long[offsets.length];
+                        Log.d(TAG, "scanned offsets:" + String.join(",", offsets));
+                        long[] longOffsets = new long[offsets.length];
+//                        int[] intOffsets = new int[offsets.length];
 
                         for (int i = 0; i < offsets.length; i++) {
 //                          (exec memory-exec offset)+code offset
                             offsets[i] = odexMemExBegin.add(new BigInteger(offsets[i], 16)).toString(10);
-                            intOffsets[i] = Long.parseLong(offsets[i]);
-
+                            longOffsets[i] = Long.parseLong(offsets[i]);
+//                            intOffsets[i] = Integer.valueOf(offsets[i]);
                         }
 
                         while (true) {
-                            scan4(intOffsets, intOffsets.length);
+                            scan4(longOffsets, longOffsets.length);
 //                            scanOdex(intOffsets, intOffsets.length);
 //                            Thread.sleep(100);
                         }
@@ -222,7 +225,7 @@ public class SideChannelJob extends Service {
     public String[] getMethodOffsets() {
 
         //SideChannelOffsets
-        return new String[]{"000000","7b8ed0","7b9220","7bc890","7bd050","7be940","7c1160"};
+        return new String[]{"000000","7b8f50","7b9060"};
 //        return new String[]{"000000", "000000"};
     }
 
@@ -239,6 +242,10 @@ public class SideChannelJob extends Service {
     public native void scan3(String[] stringArray, int length);
 
     public native void scan4(long[] arr, int length);
+
+//    public native void scan5(int[] arr, int length);
+
+
 
     public native void scanOdex(long[] arr, int length);
 
@@ -265,16 +272,16 @@ public class SideChannelJob extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        try {
-            int pid = android.os.Process.myPid();
-            Log.d(TAG, "%%%% spLASH! " + pid);
-            Runtime.getRuntime().exec("taskset -p f "+pid);
-            String cpuBind = getCommandResult("taskset -p " + pid);
-            Log.d(TAG, "cpu core: " + cpuBind);
-
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
-        }
+//        try {
+//            int pid = android.os.Process.myPid();
+//            Log.d(TAG, "%%%% spLASH! " + pid);
+//            Runtime.getRuntime().exec("taskset -p f " + pid);
+//            String cpuBind = getCommandResult("taskset -p " + pid);
+//            Log.d(TAG, "cpu core: " + cpuBind);
+//
+//        } catch (Exception e) {
+//            Log.d(TAG, e.toString());
+//        }
 
         Log.d("foreground", "onCreate");
         //如果API在26以上即版本为O则调用startForefround()方法启动服务

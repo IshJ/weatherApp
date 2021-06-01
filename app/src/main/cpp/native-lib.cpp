@@ -74,84 +74,84 @@ int address_check(std::string function){
 /**
  * Function to initialize the setting
  */
-extern "C" JNIEXPORT jstring JNICALL
-Java_org_woheller69_weather__init(
-        JNIEnv *env,
-        jobject thiz,
-        jobjectArray dexlist, jobjectArray filenames, jobjectArray func_lists) {
-    pthread_mutex_init(&g_lock, NULL);//create a locker
-    jsize size = env->GetArrayLength(dexlist);//get number of dex files
-    char** func_list; //functions' offsets of every library;
-    //get address list
-    mfiles = static_cast<size_t *>(malloc(sizeof(size_t *) * size));
-    for(int i=0;i<size;i++)
-    {
-        jstring obj = (jstring)env->GetObjectArrayElement(dexlist,i);
-        std::string dex = env->GetStringUTFChars(obj,NULL);
-        obj = (jstring)env->GetObjectArrayElement(filenames,i);
-        std::string filename = env->GetStringUTFChars(obj,NULL);
-        obj = (jstring)env->GetObjectArrayElement(func_lists,i);
-        int length=0;
-        func_list  = split(',',(char*)env->GetStringUTFChars(obj,NULL), &length);//split a string into function list
-        LOGD("Filename %s, Length %d.", filename.c_str(), length);
-        //expand addr[];
-        sum_length = sum_length + length;
-        addr = static_cast<size_t *>(realloc(addr,sum_length*sizeof(size_t)));
-        mfiles[i] = ReadOffset(env, dex, addr, func_list, length, filename, camera_list, audio_list);//read the offsets of functions. In ReadOffset.h
-    }
-    LOGD("Functions Length %d",sum_length);
-    LOGD("Camera List: %d, Audio List: %d",length_of_camera_audio[0],length_of_camera_audio[1]);
-//    Should be enabled
-    threshold = 100;
-    threshold = get_threshold();
-//    threshold = adjust_threshold(threshold, length_of_camera_audio, addr, camera_audio, &finishtrial1);//adjust threshold
-    camera_pattern = (int*)malloc(sizeof(int)*length_of_camera_audio[0]);
-    memset(camera_pattern,0,sizeof(int)*length_of_camera_audio[0]);
-    audio_pattern = (int*)malloc(sizeof(int)*length_of_camera_audio[1]);
-    memset(audio_pattern,0,sizeof(int)*length_of_camera_audio[1]);
-    filter = (int*)malloc(sizeof(int)*(length_of_camera_audio[0]+length_of_camera_audio[1]));
-    memset(filter,0,(length_of_camera_audio[0]+length_of_camera_audio[1])*sizeof(int));
-
-    std::string temp;
-    int found = 0;
-    for(int i=0;i<length_of_camera_audio[0];i++) {
-        if (temp == camera_list[i] && found == 1) {//only retain one function with the same name
-            *((size_t *) addr[1] + i) = 0;
-            filter[i] = 1;
-            continue;
-        }
-        if (!address_check(camera_list[i])) {
-            *((size_t *) addr[1] + i) = 0;
-            filter[i] = 1;
-        } else if (*((size_t *) addr[1] + i) != 0) {
-            LOGD("Keep %s", camera_list[i].c_str());
-            temp = camera_list[i];
-            found = 1;
-        } else
-            found = 0;
-    }
-    found = 0;
-    for(int i=0;i<length_of_camera_audio[1];i++){
-        if(temp==audio_list[i]&&found==1) {
-            *((size_t*)addr[2]+i) = 0;
-            filter[i] = 1;
-            continue;
-        }
-        if(!address_check(audio_list[i])){
-            *((size_t*)addr[2]+i) = 0;
-            filter[i+length_of_camera_audio[0]] = 1;
-        } else if(*((size_t*)addr[2]+i)!=0){
-            LOGD("Keep %s", audio_list[i].c_str());
-            temp = audio_list[i];
-            found = 1;
-        } else
-            found = 0;
-    }
-    flags = (int*)malloc(sum_length*sizeof(int));
-    memset(flags,0,sum_length*sizeof(int));
-    LOGD("Finish Initializtion");
-    return env->NewStringUTF("");
-}
+//extern "C" JNIEXPORT jstring JNICALL
+//Java_org_woheller69_weather__init(
+//        JNIEnv *env,
+//        jobject thiz,
+//        jobjectArray dexlist, jobjectArray filenames, jobjectArray func_lists) {
+//    pthread_mutex_init(&g_lock, NULL);//create a locker
+//    jsize size = env->GetArrayLength(dexlist);//get number of dex files
+//    char** func_list; //functions' offsets of every library;
+//    //get address list
+//    mfiles = static_cast<size_t *>(malloc(sizeof(size_t *) * size));
+//    for(int i=0;i<size;i++)
+//    {
+//        jstring obj = (jstring)env->GetObjectArrayElement(dexlist,i);
+//        std::string dex = env->GetStringUTFChars(obj,NULL);
+//        obj = (jstring)env->GetObjectArrayElement(filenames,i);
+//        std::string filename = env->GetStringUTFChars(obj,NULL);
+//        obj = (jstring)env->GetObjectArrayElement(func_lists,i);
+//        int length=0;
+//        func_list  = split(',',(char*)env->GetStringUTFChars(obj,NULL), &length);//split a string into function list
+//        LOGD("Filename %s, Length %d.", filename.c_str(), length);
+//        //expand addr[];
+//        sum_length = sum_length + length;
+//        addr = static_cast<size_t *>(realloc(addr,sum_length*sizeof(size_t)));
+//        mfiles[i] = ReadOffset(env, dex, addr, func_list, length, filename, camera_list, audio_list);//read the offsets of functions. In ReadOffset.h
+//    }
+//    LOGD("Functions Length %d",sum_length);
+//    LOGD("Camera List: %d, Audio List: %d",length_of_camera_audio[0],length_of_camera_audio[1]);
+////    Should be enabled
+//    threshold = 100;
+//    threshold = get_threshold();
+////    threshold = adjust_threshold(threshold, length_of_camera_audio, addr, camera_audio, &finishtrial1);//adjust threshold
+//    camera_pattern = (int*)malloc(sizeof(int)*length_of_camera_audio[0]);
+//    memset(camera_pattern,0,sizeof(int)*length_of_camera_audio[0]);
+//    audio_pattern = (int*)malloc(sizeof(int)*length_of_camera_audio[1]);
+//    memset(audio_pattern,0,sizeof(int)*length_of_camera_audio[1]);
+//    filter = (int*)malloc(sizeof(int)*(length_of_camera_audio[0]+length_of_camera_audio[1]));
+//    memset(filter,0,(length_of_camera_audio[0]+length_of_camera_audio[1])*sizeof(int));
+//
+//    std::string temp;
+//    int found = 0;
+//    for(int i=0;i<length_of_camera_audio[0];i++) {
+//        if (temp == camera_list[i] && found == 1) {//only retain one function with the same name
+//            *((size_t *) addr[1] + i) = 0;
+//            filter[i] = 1;
+//            continue;
+//        }
+//        if (!address_check(camera_list[i])) {
+//            *((size_t *) addr[1] + i) = 0;
+//            filter[i] = 1;
+//        } else if (*((size_t *) addr[1] + i) != 0) {
+//            LOGD("Keep %s", camera_list[i].c_str());
+//            temp = camera_list[i];
+//            found = 1;
+//        } else
+//            found = 0;
+//    }
+//    found = 0;
+//    for(int i=0;i<length_of_camera_audio[1];i++){
+//        if(temp==audio_list[i]&&found==1) {
+//            *((size_t*)addr[2]+i) = 0;
+//            filter[i] = 1;
+//            continue;
+//        }
+//        if(!address_check(audio_list[i])){
+//            *((size_t*)addr[2]+i) = 0;
+//            filter[i+length_of_camera_audio[0]] = 1;
+//        } else if(*((size_t*)addr[2]+i)!=0){
+//            LOGD("Keep %s", audio_list[i].c_str());
+//            temp = audio_list[i];
+//            found = 1;
+//        } else
+//            found = 0;
+//    }
+//    flags = (int*)malloc(sum_length*sizeof(int));
+//    memset(flags,0,sum_length*sizeof(int));
+//    LOGD("Finish Initializtion");
+//    return env->NewStringUTF("");
+//}
 
 extern "C" JNIEXPORT void JNICALL
 Java_org_woheller69_weather_SideChannelJob_scan(
@@ -283,23 +283,6 @@ Java_org_woheller69_weather_SideChannelJob_scan4(
     if (c_array == NULL) {
         return; /* exception occurred */
     }
-
-//    stack variable test
-//    jlong foo = 16;
-//    jlong *address = &foo;
-//    LOGD("scan4 stack start %lu threshold %d", address, threshold);
-//
-//    hit5(address, 0 , 0);
-//
-//    LOGD("scan4 stack finish %lu", address);
-
-//    LOGD("scan4 stack+10 start %lu threshold %d", address, threshold);
-//
-//    hit5(address+10, 0 , 0);
-//
-//    LOGD("scan4 stack+10 finish %lu", address);
-
-
     // do stuff to the array
     for (i=1; i<length; i++) {
 //        LOGD("scan4 %lu", c_array[i]);
@@ -311,6 +294,49 @@ Java_org_woheller69_weather_SideChannelJob_scan4(
 
 //    LOGD("Finished scanning %d",running);
     return;
+}
+
+
+extern "C" JNIEXPORT void JNICALL
+Java_org_woheller69_weather_SideChannelJob_scan5(
+        JNIEnv *env,
+        jobject thiz,jintArray arr, jint length) {
+
+//    int* arrp = env->GetIntArrayElements(arr,0);
+//    size_t *addr = nullptr;
+//    jint i = 0;
+//    for (i=0; i<length; i++) {
+//        *((size_t *) addr+ i) = arrp+i;
+//        size_t target = *((size_t *) addr[i]);
+////        LOGD("scan4 %lu", c_array[i]);
+//        hit6(arrp, length, 0);
+//        hit5(reinterpret_cast<void *>(c_array[i]), length, 0);
+//    }
+
+
+
+//    jlong *c_array;
+//    jint i = 0;
+//
+//    // get a pointer to the array
+//    c_array = (env)->GetLongArrayElements(arr, 0);
+//
+//    // do some exception checking
+//    if (c_array == NULL) {
+//        return; /* exception occurred */
+//    }
+//    // do stuff to the array
+//    for (i=1; i<length; i++) {
+////        LOGD("scan4 %lu", c_array[i]);
+//        hit6(arrp, length, 0);
+//        hit5(reinterpret_cast<void *>(c_array[i]), length, 0);
+//    }
+//
+//    // release the memory so java can have it again
+//    (env)->ReleaseLongArrayElements(arr, c_array, 0);
+//
+////    LOGD("Finished scanning %d",running);
+//    return;
 }
 
 extern "C" JNIEXPORT void JNICALL
@@ -386,23 +412,23 @@ Java_org_woheller69_weather_CacheScan_init(
     jsize size = env->GetArrayLength(dexlist);//get number of dex files
     char** func_list; //functions' offsets of every library;
     //get address list
-    mfiles = static_cast<size_t *>(malloc(sizeof(size_t *) * size));
-    for(int i=0;i<size;i++)
-    {
-        jstring obj = (jstring)env->GetObjectArrayElement(dexlist,i);
-        std::string dex = env->GetStringUTFChars(obj,NULL);
-        obj = (jstring)env->GetObjectArrayElement(filenames,i);
-        std::string filename = env->GetStringUTFChars(obj,NULL);
-        obj = (jstring)env->GetObjectArrayElement(func_lists,i);
-        int length=0;      func_list  = split(',',(char*)env->GetStringUTFChars(obj,NULL), &length);//split a string into function list
-        LOGD("Filename %s, Length %d.", filename.c_str(), length);
-        //expand addr[];
-        sum_length = sum_length + length;
-        addr = static_cast<size_t *>(realloc(addr,sum_length*sizeof(size_t)));
-        mfiles[i] = ReadOffset(env, dex, addr, func_list, length, filename, camera_list, audio_list);//read the offsets of functions. In ReadOffset.h
-    }
-    LOGD("Functions Length %d",sum_length);
-    LOGD("Camera List: %d, Audio List: %d",length_of_camera_audio[0],length_of_camera_audio[1]);
+//    mfiles = static_cast<size_t *>(malloc(sizeof(size_t *) * size));
+//    for(int i=0;i<size;i++)
+//    {
+//        jstring obj = (jstring)env->GetObjectArrayElement(dexlist,i);
+//        std::string dex = env->GetStringUTFChars(obj,NULL);
+//        obj = (jstring)env->GetObjectArrayElement(filenames,i);
+//        std::string filename = env->GetStringUTFChars(obj,NULL);
+//        obj = (jstring)env->GetObjectArrayElement(func_lists,i);
+//        int length=0;      func_list  = split(',',(char*)env->GetStringUTFChars(obj,NULL), &length);//split a string into function list
+//        LOGD("Filename %s, Length %d.", filename.c_str(), length);
+//        //expand addr[];
+//        sum_length = sum_length + length;
+//        addr = static_cast<size_t *>(realloc(addr,sum_length*sizeof(size_t)));
+//        mfiles[i] = ReadOffset(env, dex, addr, func_list, length, filename, camera_list, audio_list);//read the offsets of functions. In ReadOffset.h
+//    }
+//    LOGD("Functions Length %d",sum_length);
+//    LOGD("Camera List: %d, Audio List: %d",length_of_camera_audio[0],length_of_camera_audio[1]);
 //    Should be enabled
     threshold = 100;
     threshold = get_threshold();

@@ -86,7 +86,7 @@ public class RadiusSearchActivity extends NavigationActivity {
         super.onCreate(savedInstanceState);
 //        Log.d("weather:AddressScan2", "#8#0#1");
         setContentView(R.layout.activity_radius_search);
-        Log.d("weather:AddressScan2", "#8_0#");
+        Log.d("weather:AddressScan2", "#0_0#");
 
         overridePendingTransition(0, 0);
 

@@ -10,8 +10,8 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 INCLUDE(config.cmake)
 
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/libflush/libs/${CMAKE_ANDROID_ARCH_ABI}/)
-include_directories(libflush
-        libflush/eviction)
+include_directories(libflush/
+        libflush/eviction/)
 include_directories(.)
 
 file(GLOB LOCAL_SRC_FILES libflush/*.c)

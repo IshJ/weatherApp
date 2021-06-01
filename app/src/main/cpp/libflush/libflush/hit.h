@@ -14,6 +14,7 @@ int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int th
         size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio);
 int hit2(char **param, int length, int threshold);
 int hit5(void *param, int length, int threshold);
+//int hit6(size_t *param, int length, int threshold);
 int scanOdexMemory(void *param, int length, int threshold);
 void stage1(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, int *pInt,
             int *pInt1);

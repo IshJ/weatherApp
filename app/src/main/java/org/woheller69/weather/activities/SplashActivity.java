@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,9 @@ import java.util.Optional;
 import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Created by yonjuni on 24.10.16.
@@ -49,8 +52,10 @@ public class SplashActivity extends AppCompatActivity {
     static int loopCount = 5;
     static SortedSet<Integer> keys;
     static List<String> views;
+    static List<ReentrantLock> viewLocks = Collections.synchronizedList(new ArrayList<>());
+    public static ReentrantLock reentrantLock = new ReentrantLock();
     static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-
+    static private Integer obj = 0;
 
 
 //        List<ActivityRunner> runners = new ArrayList<>();
@@ -64,22 +69,23 @@ public class SplashActivity extends AppCompatActivity {
 
         viewMap = new HashMap<>();
 
-        viewMap.put(8, ".activities.RadiusSearchActivity"
-        );
-        viewMap.put(7, ".activities.ManageLocationsActivity"
-        );
+//        viewMap.put(0, ".activities.RadiusSearchActivity"
+//        );
+//        viewMap.put(7, ".activities.ManageLocationsActivity"
+//        );
         viewMap.put(4, ".activities.RainViewerActivity"
         );
-        viewMap.put(3, ".activities.RadiusSearchResultActivity"
-        );
-        viewMap.put(5, ".activities.AboutActivity"
-        );
-        viewMap.put(6, ".activities.ForecastCityActivity"
-        );
+//        viewMap.put(3, ".activities.RadiusSearchResultActivity"
+//        );
+//        viewMap.put(5, ".activities.AboutActivity"
+//        );
+//        viewMap.put(6, ".activities.ForecastCityActivity"
+//        );
 
-        viewMap.keySet().forEach(k-> inverseViewMap.put(viewMap.get(k), k));
+        viewMap.keySet().forEach(k -> inverseViewMap.put(viewMap.get(k), k));
         keys = new TreeSet<>(viewMap.keySet());
         views = keys.stream().map(viewMap::get).collect(Collectors.toList());
+        views.stream().forEach(i -> viewLocks.add(new ReentrantLock()));
     }
 
     private AppPreferencesManager prefManager;
@@ -87,15 +93,15 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        try {
-            int pid = android.os.Process.myPid();
-            Log.d(TAG, "%%%% spLASH! " + pid);
-            Runtime.getRuntime().exec("taskset -p 30 " + pid);
-            String cpuBind = getCommandResult("taskset -p " + pid);
-            Log.d(TAG, "cpu core: " + cpuBind);
-        } catch (Exception e) {
-            Log.d(TAG, e.toString());
-        }
+//        try {
+//            int pid = android.os.Process.myPid();
+//            Log.d(TAG, "%%%% spLASH! " + pid);
+//            Runtime.getRuntime().exec("taskset -p 30 " + pid);
+//            String cpuBind = getCommandResult("taskset -p " + pid);
+//            Log.d(TAG, "cpu core: " + cpuBind);
+//        } catch (Exception e) {
+//            Log.d(TAG, e.toString());
+//        }
 
 //        Intent intent = getIntent();
 //        String viewVal = intent.getStringExtra("viewVal");
@@ -103,25 +109,26 @@ public class SplashActivity extends AppCompatActivity {
         prefManager = new AppPreferencesManager(PreferenceManager.getDefaultSharedPreferences(this));
 
 //        getOdexBeginAddress();
-        views.stream().forEach(view -> sequentialRunners.add(new SequentialActivityRunner(view, pkgName,sequentialRunners.size())));
+        IntStream.range(0, views.size())
+                .forEach(i -> sequentialRunners.add(new SequentialActivityRunner(views.get(i), pkgName, i)));
+//        views.stream().forEach(view -> sequentialRunners.add(new SequentialActivityRunner(view, pkgName,sequentialRunners.size())));
 
 
         Intent begin = new Intent(this, SideChannelJob.class);
         startForegroundService(begin);
 
 
-
-        if (true) {  //First time got to TutorialActivity
-            Intent mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("viewVal" , viewVal==null?"View4":viewVal);
-//            mainIntent.putExtras(bundle);
-            SplashActivity.this.startActivity(mainIntent);
-        } else { //otherwise directly start ForecastCityActivity
-
-            Intent mainIntent = new Intent(SplashActivity.this, ForecastCityActivity.class);
-            SplashActivity.this.startActivity(mainIntent);
-        }
+//        if (true) {  //First time got to TutorialActivity
+//            Intent mainIntent = new Intent(SplashActivity.this, TutorialActivity.class);
+////            Bundle bundle = new Bundle();
+////            bundle.putString("viewVal" , viewVal==null?"View4":viewVal);
+////            mainIntent.putExtras(bundle);
+//            SplashActivity.this.startActivity(mainIntent);
+//        } else { //otherwise directly start ForecastCityActivity
+//
+//            Intent mainIntent = new Intent(SplashActivity.this, ForecastCityActivity.class);
+//            SplashActivity.this.startActivity(mainIntent);
+//        }
 
 //        SplashActivity.this.finish();
 //        int waitVal = 5000;
@@ -136,15 +143,27 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-//        runView();
+//        brings 210
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        runView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-//        long startTime = System.currentTimeMillis();
-//        while (System.currentTimeMillis()-startTime<2000
-//        ){}
+        long startTime = System.currentTimeMillis();
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        uncommenting below will cause wrong timings
 //        runView();
     }
 
@@ -153,24 +172,90 @@ public class SplashActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() - startTime < 500
-        ) {
-        }
-//        runView();
+//        while (System.currentTimeMillis() - startTime < 500
+//        ) {
+//        }
+        runView();
     }
 
-//    private void runView() {
-//        currentViewId++;
-//        if(currentViewId==sequentialRunners.size()){
-//            if(currentLoopId == loopCount){
-//                Log.d("weather:AddressScan2",  "Automation completed!");
-//                finish();
-//            }
-//            currentLoopId++;
-//            currentViewId=0;
+    private void runView() {
+//        long startTime = System.currentTimeMillis();
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
 //        }
-//        sequentialRunners.get(currentViewId).run();
-//    }
+////            while (System.currentTimeMillis() - startTime < 2000
+////            ) {
+////            }
+//        reentrantLock.lock();
+        currentViewId++;
+        if (currentViewId == sequentialRunners.size()) {
+            if (currentLoopId >= loopCount) {
+                Log.d("weather:AddressScan2", "Automation_completed!");
+                finish();
+            }
+            currentLoopId++;
+            currentViewId = 0;
+        }
+        sequentialRunners.get(currentViewId).run();
+
+    }
+
+    class SequentialActivityRunner {
+        private final String view;
+        private final String pkgName;
+        private final int id;
+
+        public SequentialActivityRunner(String view, String pkgName, int id) {
+            this.view = view;
+            this.pkgName = pkgName;
+            this.id = id;
+        }
+
+        public void run() {
+
+            Log.d("weather:AddressScan2", "#" + inverseViewMap.get(view) + "_1#");
+//            long startTime = System.currentTimeMillis();
+//            while (System.currentTimeMillis()-startTime<1000
+//            ){}
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(pkgName,
+                    pkgName + view));
+
+
+
+//            startActivity(intent);
+            startActivityForResult(intent, id);
+
+//            CountDownTimer mcd = new CountDownTimer(1000, 1000) {
+//                public void onTick(long millisUntilFinished) {}
+//                public void onFinish() {
+//                    try
+//                    {
+//                        finishActivity(id);
+//                        Log.d(TAG, "inside mcd");
+//                    }
+//                    catch (Exception ex)
+//                    {}
+//                }
+//            }.start();
+
+
+//
+//
+////            finish();
+////            Log.d("###", view);
+//            Log.d("weather:AddressScan2",  "#"+inverseViewMap.get(view)+"#0#1");
+//            overridePendingTransition(0, 0);
+//            Intent intent = new Intent();
+//            intent.setComponent(new ComponentName(pkgName,
+//                    pkgName + view));
+//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//            startActivity(intent);
+        }
+    }
 
     public String getOdexBeginAddress() {
 
@@ -225,11 +310,11 @@ public class SplashActivity extends AppCompatActivity {
         for (int j = 0; j < runners.size(); j++) {
             runners.get(j).run();
             long startTime = System.currentTimeMillis();
-            while (System.currentTimeMillis()-startTime<1000
-            ){}
+            while (System.currentTimeMillis() - startTime < 1000
+            ) {
+            }
         }
     }
-
 
 
 //    class ActivityRunner implements Runnable {
@@ -253,57 +338,6 @@ public class SplashActivity extends AppCompatActivity {
 //        }
 //    }
 
-
-    class SequentialActivityRunner {
-        private final String view;
-        private final String pkgName;
-        private final int id;
-
-        public SequentialActivityRunner(String view, String pkgName, int id) {
-            this.view = view;
-            this.pkgName = pkgName;
-            this.id = id;
-        }
-
-        public void run() {
-            Log.d("weather:AddressScan2",  "#"+inverseViewMap.get(view)+"_1#");
-//            long startTime = System.currentTimeMillis();
-//            while (System.currentTimeMillis()-startTime<1000
-//            ){}
-            Intent intent = new Intent();
-            intent.setComponent(new ComponentName(pkgName,
-                    pkgName + view));
-
-//            startActivity(intent);
-            startActivityForResult(intent, id);
-//            CountDownTimer mcd = new CountDownTimer(1000, 1000) {
-//                public void onTick(long millisUntilFinished) {}
-//                public void onFinish() {
-//                    try
-//                    {
-//                        finishActivity(id);
-//                        Log.d(TAG, "inside mcd");
-//                    }
-//                    catch (Exception ex)
-//                    {}
-//                }
-//            }.start();
-
-
-//
-//
-////            finish();
-////            Log.d("###", view);
-//            Log.d("weather:AddressScan2",  "#"+inverseViewMap.get(view)+"#0#1");
-//            overridePendingTransition(0, 0);
-//            Intent intent = new Intent();
-//            intent.setComponent(new ComponentName(pkgName,
-//                    pkgName + view));
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//            startActivity(intent);
-        }
-    }
 
     protected void automate() {
 

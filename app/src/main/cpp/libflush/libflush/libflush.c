@@ -106,7 +106,7 @@ libflush_terminate(libflush_session_t* session)
 #endif
 
     /* Terminate eviction */
-    libflush_eviction_terminate(session);
+//    libflush_eviction_terminate(session);
 
     /* Terminate architecture */
 #if defined(__ARM_ARCH_7A__)
@@ -129,7 +129,6 @@ libflush_flush(libflush_session_t* session, void* address)
 #if USE_EVICTION == 1
     libflush_eviction_evict(session, address);
 #elif defined(__ARM_ARCH_8A__)
-
     arm_v8_flush(address);
 #elif defined(__i386__) || defined(__x86_64__)
     x86_flush(address);

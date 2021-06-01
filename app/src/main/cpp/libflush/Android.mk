@@ -12,7 +12,7 @@ LOCAL_CFLAGS += ${CFLAGS}
 LOCAL_SRC_FILES := $(wildcard libflush/*.c)
 LOCAL_SRC_FILES += $(wildcard libflush/eviction/*.c)
 
-COMPILER_FILTER := speed
+#COMPILER_FILTER := speed
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
 LOCAL_SRC_FILES += $(wildcard libflush/armv7/*.c)
@@ -58,11 +58,11 @@ endif
 LOCAL_CFLAGS += -DWITH_THREADS=1
 
 #compiler
-PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER=${COMPILER_FILTER}
+#PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER=${COMPILER_FILTER}
 
 LOCAL_LDLIBS :=-llog
 LOCAL_XOM := false
 
 include $(BUILD_SHARED_LIBRARY)
-include $(BUILD_PREBUILT)
+#include $(BUILD_PREBUILT)
 #include $(BUILD_STATIC_LIBRARY)

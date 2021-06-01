@@ -21,6 +21,7 @@ import org.woheller69.weather.preferences.AppPreferencesManager;
 import org.woheller69.weather.R;
 
 import static java.lang.Boolean.TRUE;
+import static java.lang.Math.log;
 
 
 public class RainViewerActivity extends AppCompatActivity {
@@ -41,9 +42,8 @@ public class RainViewerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-//        Log.d("weather:AddressScan2", "#4#0#1");
-        Log.d("weather:AddressScan2", "#4_0#");
-
+//        Log.d("weather:AddressScan2", "#4_0#");
+        int a = method0(3);
         setContentView(R.layout.activity_rain_viewer);
 
         AppPreferencesManager prefManager =
@@ -103,7 +103,6 @@ public class RainViewerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
-
     }
 
     @Override
@@ -112,13 +111,59 @@ public class RainViewerActivity extends AppCompatActivity {
 //        int waitVal = 2000;
 //        long startTime = System.currentTimeMillis();
 //        while (System.currentTimeMillis()-startTime<waitVal){}
+
+
         finish();
-        overridePendingTransition( 0, 0);
+        overridePendingTransition(0, 0);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    protected int method0(int number) {
+        Log.d("weather:AddressScan2", "#4_0_0#");
+
+        int log = 0;
+        int bits = number;
+//        if ((bits & 0xffff0000) != 0) {
+//            bits >>>= 16;
+//            log = 16;
+//        }
+//        if (bits >= 256) {
+//            bits >>>= 8;
+//            log += 8;
+//        }
+//        if (bits >= 16) {
+//            bits >>>= 4;
+//            log += 4;
+//        }
+//        if (bits >= 4) {
+//            bits >>>= 2;
+//            log += 2;
+//        }
+//        if (1 << log < number)
+//            log++;
+//        int a = log + (bits >>> 1);
+        int waitVal = 500;
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() - startTime < waitVal) {
+        }
+        method1();
+        return number;
+    }
+
+    static int pow(int base, int power) {
+        int result = 1;
+        for (int i = 0; i < power; i++)
+            result *= base;
+        return result;
+    }
+
+    protected void method1() {
+        Log.d("weather:AddressScan2", "#4_1_0#");
+
     }
 }

@@ -3,7 +3,6 @@
 #include <inttypes.h>
 #include <sched.h>
 #include <unistd.h>
-#include <sys/mman.h>
 #include "libflush.h"
 
 #include "calibrate.h"
@@ -16,7 +15,6 @@ int calibrate(libflush_session_t* libflush_session)
 {
   char buffer[4096] = {0};
   void* address = &buffer[1024];
-//  mprotect(address, sysconf(_SC_PAGESIZE), PROT_READ|PROT_EXEC);
   //void* address = m;
   size_t min_cache = 300;
   size_t max_cache = 0;
@@ -26,8 +24,6 @@ int calibrate(libflush_session_t* libflush_session)
   // Measure time it takes to access something from the cache
   size_t hit_histogram[CALIBRATION_HISTOGRAM_SIZE] = {0}; 
   //libflush_access_memory(address);
-  LOGD("calibrate start", "starting calibrating");
-  LOGD("calibrate %d", address );
   libflush_reload_address(libflush_session, address);
 
   for (unsigned int i = 0; i < CALIBRATION_HISTOGRAM_ENTRIES; i++) { //entries = 100000

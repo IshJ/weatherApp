@@ -69,3 +69,5 @@
 816	843	1621874961	/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/liboatparser.so	cf1365fd0d8909a2
 1	958	1621874961	CMakeFiles/native-lib.dir/ReadOffset.cpp.o	84969ffa33468b30
 958	973	1621874961	/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	badd03f8bc38b386
+0	28	1622427174	build.ninja	6f997e77ccc03527
+0	1	0	clean	b8c439ba46896fb8

