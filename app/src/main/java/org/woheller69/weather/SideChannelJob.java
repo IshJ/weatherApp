@@ -214,7 +214,7 @@ public class SideChannelJob extends Service {
 //                            Log.d("rainviewerashmem", "side " + ShmLib.getValue("sh1",5));
 
                             localCount++;
-                            if(localCount%yieldVal==0) {
+                            if(localCount%yieldVal==0 ) {
                                 localCount = 0;
                                 long timeCount = scan7(longOffsets, longOffsets.length);
                             }
