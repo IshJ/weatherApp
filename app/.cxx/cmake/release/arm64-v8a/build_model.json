@@ -48,7 +48,7 @@
     "buildTargetSet": []
   },
   "abi": "ARM64_V8A",
-  "abiPlatformVersion": 28,
+  "abiPlatformVersion": 30,
   "cxxBuildFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a",
   "jsonFile": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/android_gradle_build.json",
   "gradleBuildOutputFolder": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cxx/release/arm64-v8a",

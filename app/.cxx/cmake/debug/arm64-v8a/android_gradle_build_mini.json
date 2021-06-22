@@ -26,17 +26,17 @@
       "abi": "arm64-v8a",
       "output": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libs/arm64-v8a/libflush.so"
     },
-    "native-lib-Debug-arm64-v8a": {
-      "artifactName": "native-lib",
-      "buildCommand": "/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja -C \"/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/debug/arm64-v8a\" native-lib",
-      "abi": "arm64-v8a",
-      "output": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so"
-    },
     "oatparser-Debug-arm64-v8a": {
       "artifactName": "oatparser",
       "buildCommand": "/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja -C \"/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/debug/arm64-v8a\" oatparser",
       "abi": "arm64-v8a",
       "output": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/liboatparser.so"
+    },
+    "native-lib-Debug-arm64-v8a": {
+      "artifactName": "native-lib",
+      "buildCommand": "/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja -C \"/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/debug/arm64-v8a\" native-lib",
+      "abi": "arm64-v8a",
+      "output": "/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so"
     }
   }
 }

@@ -156,4 +156,8 @@ public class RadiusSearchResultActivity extends AppCompatActivity {
         return itemsToDisplay;
     }
 
+    private void forThresholdAdjusting(){
+        for(int i=0; i< 100;i++){}
+    }
+
 }

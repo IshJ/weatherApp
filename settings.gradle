@@ -1,1 +1,2 @@
+include ':sharedmemlib2'
 include ':app'

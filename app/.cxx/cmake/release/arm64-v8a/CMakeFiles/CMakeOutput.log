@@ -1,39 +1,39 @@
 The target system is: Android - 1 - aarch64
-The host system is: Linux - 5.8.0-53-generic - x86_64
+The host system is: Linux - 5.8.0-55-generic - x86_64
 Determining if the C compiler works passed with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_1ef38"
-[1/2] Building C object CMakeFiles/cmTC_1ef38.dir/testCCompiler.c.o
-[2/2] Linking C executable cmTC_1ef38
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_1cf00"
+[1/2] Building C object CMakeFiles/cmTC_1cf00.dir/testCCompiler.c.o
+[2/2] Linking C executable cmTC_1cf00
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_1fe6a"
-[1/2] Building C object CMakeFiles/cmTC_1fe6a.dir/CMakeCCompilerABI.c.o
-[2/2] Linking C executable cmTC_1fe6a
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_e70ab"
+[1/2] Building C object CMakeFiles/cmTC_e70ab.dir/CMakeCCompilerABI.c.o
+[2/2] Linking C executable cmTC_e70ab
 Android (7155654, based on r399163b1) clang version 11.0.5 (https://android.googlesource.com/toolchain/llvm-project 87f1315dfbea7c137aa2e6d362dbb457e388158d)
-Target: aarch64-none-linux-android28
+Target: aarch64-none-linux-android30
 Thread model: posix
 InstalledDir: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin
 Found candidate GCC installation: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x
 Selected GCC installation: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
- "/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld" --sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot -pie -z noexecstack -EL --fix-cortex-a53-843419 --warn-shared-textrel -z now -z relro -z max-page-size=4096 --hash-style=gnu --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_1fe6a /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtbegin_dynamic.o -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libgcc_real.a --exclude-libs libatomic.a --build-id=sha1 --no-rosegment --fatal-warnings --no-undefined --gc-sections CMakeFiles/cmTC_1fe6a.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtend_android.o
+ "/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld" --sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot -pie -z noexecstack -EL --fix-cortex-a53-843419 --warn-shared-textrel -z now -z relro -z max-page-size=4096 --hash-style=gnu --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_e70ab /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtbegin_dynamic.o -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libgcc_real.a --exclude-libs libatomic.a --build-id=sha1 --fatal-warnings --no-undefined --gc-sections CMakeFiles/cmTC_e70ab.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtend_android.o
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(CMAKE_LINKER-NOTFOUND|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_1fe6a"]
-  ignore line: [[1/2] Building C object CMakeFiles/cmTC_1fe6a.dir/CMakeCCompilerABI.c.o]
-  ignore line: [[2/2] Linking C executable cmTC_1fe6a]
+  ignore line: [Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_e70ab"]
+  ignore line: [[1/2] Building C object CMakeFiles/cmTC_e70ab.dir/CMakeCCompilerABI.c.o]
+  ignore line: [[2/2] Linking C executable cmTC_e70ab]
   ignore line: [Android (7155654, based on r399163b1) clang version 11.0.5 (https://android.googlesource.com/toolchain/llvm-project 87f1315dfbea7c137aa2e6d362dbb457e388158d)]
-  ignore line: [Target: aarch64-none-linux-android28]
+  ignore line: [Target: aarch64-none-linux-android30]
   ignore line: [Thread model: posix]
   ignore line: [InstalledDir: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin]
   ignore line: [Found candidate GCC installation: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
@@ -42,7 +42,7 @@ Parsed C implicit link information from above output:
   ignore line: [@m64]
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
-  link line: [ "/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld" --sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot -pie -z noexecstack -EL --fix-cortex-a53-843419 --warn-shared-textrel -z now -z relro -z max-page-size=4096 --hash-style=gnu --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_1fe6a /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtbegin_dynamic.o -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libgcc_real.a --exclude-libs libatomic.a --build-id=sha1 --no-rosegment --fatal-warnings --no-undefined --gc-sections CMakeFiles/cmTC_1fe6a.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtend_android.o]
+  link line: [ "/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld" --sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot -pie -z noexecstack -EL --fix-cortex-a53-843419 --warn-shared-textrel -z now -z relro -z max-page-size=4096 --hash-style=gnu --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_e70ab /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtbegin_dynamic.o -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libgcc_real.a --exclude-libs libatomic.a --build-id=sha1 --fatal-warnings --no-undefined --gc-sections CMakeFiles/cmTC_e70ab.dir/CMakeCCompilerABI.c.o -lgcc -ldl -lc -lgcc -ldl /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtend_android.o]
     arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld] ==> ignore
     arg [--sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot] ==> ignore
     arg [-pie] ==> ignore
@@ -61,12 +61,12 @@ Parsed C implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/system/bin/linker64] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_1fe6a] ==> ignore
-    arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtbegin_dynamic.o] ==> ignore
+    arg [cmTC_e70ab] ==> ignore
+    arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtbegin_dynamic.o] ==> ignore
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64]
-    arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28]
+    arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib]
@@ -77,26 +77,25 @@ Parsed C implicit link information from above output:
     arg [--exclude-libs] ==> ignore
     arg [libatomic.a] ==> ignore
     arg [--build-id=sha1] ==> ignore
-    arg [--no-rosegment] ==> ignore
     arg [--fatal-warnings] ==> ignore
     arg [--no-undefined] ==> ignore
     arg [--gc-sections] ==> ignore
-    arg [CMakeFiles/cmTC_1fe6a.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_e70ab.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [-ldl] ==> lib [dl]
     arg [-lc] ==> lib [c]
     arg [-lgcc] ==> lib [gcc]
     arg [-ldl] ==> lib [dl]
-    arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtend_android.o] ==> ignore
+    arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtend_android.o] ==> ignore
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib64]
-  collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28]
+  collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib]
   implicit libs: [gcc;dl;c;gcc;dl]
-  implicit dirs: [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib64;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib]
+  implicit dirs: [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib64;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib]
   implicit fwks: []
 
 
@@ -105,9 +104,9 @@ Parsed C implicit link information from above output:
 Detecting C [-std=c11] compiler features compiled with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_ce42b"
-[1/2] Building C object CMakeFiles/cmTC_ce42b.dir/feature_tests.c.o
-[2/2] Linking C executable cmTC_ce42b
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_2caee"
+[1/2] Building C object CMakeFiles/cmTC_2caee.dir/feature_tests.c.o
+[2/2] Linking C executable cmTC_2caee
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -119,9 +118,9 @@ Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmT
 Detecting C [-std=c99] compiler features compiled with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_b1a57"
-[1/2] Building C object CMakeFiles/cmTC_b1a57.dir/feature_tests.c.o
-[2/2] Linking C executable cmTC_b1a57
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_12ce6"
+[1/2] Building C object CMakeFiles/cmTC_12ce6.dir/feature_tests.c.o
+[2/2] Linking C executable cmTC_12ce6
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -133,9 +132,9 @@ Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmT
 Detecting C [-std=c90] compiler features compiled with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_282f9"
-[1/2] Building C object CMakeFiles/cmTC_282f9.dir/feature_tests.c.o
-[2/2] Linking C executable cmTC_282f9
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_c5c89"
+[1/2] Building C object CMakeFiles/cmTC_c5c89.dir/feature_tests.c.o
+[2/2] Linking C executable cmTC_c5c89
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -145,37 +144,37 @@ Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmT
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_83ec7"
-[1/2] Building CXX object CMakeFiles/cmTC_83ec7.dir/testCXXCompiler.cxx.o
-[2/2] Linking CXX executable cmTC_83ec7
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_fb4dc"
+[1/2] Building CXX object CMakeFiles/cmTC_fb4dc.dir/testCXXCompiler.cxx.o
+[2/2] Linking CXX executable cmTC_fb4dc
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_98517"
-[1/2] Building CXX object CMakeFiles/cmTC_98517.dir/CMakeCXXCompilerABI.cpp.o
-[2/2] Linking CXX executable cmTC_98517
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_f209c"
+[1/2] Building CXX object CMakeFiles/cmTC_f209c.dir/CMakeCXXCompilerABI.cpp.o
+[2/2] Linking CXX executable cmTC_f209c
 Android (7155654, based on r399163b1) clang version 11.0.5 (https://android.googlesource.com/toolchain/llvm-project 87f1315dfbea7c137aa2e6d362dbb457e388158d)
-Target: aarch64-none-linux-android28
+Target: aarch64-none-linux-android30
 Thread model: posix
 InstalledDir: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin
 Found candidate GCC installation: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x
 Selected GCC installation: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
- "/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld" --sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot -pie -z noexecstack -EL --fix-cortex-a53-843419 --warn-shared-textrel -z now -z relro -z max-page-size=4096 --hash-style=gnu --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_98517 /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtbegin_dynamic.o -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libgcc_real.a --exclude-libs libatomic.a --build-id=sha1 --no-rosegment --fatal-warnings --no-undefined --gc-sections CMakeFiles/cmTC_98517.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm -lgcc -ldl -lc -lgcc -ldl /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtend_android.o
+ "/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld" --sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot -pie -z noexecstack -EL --fix-cortex-a53-843419 --warn-shared-textrel -z now -z relro -z max-page-size=4096 --hash-style=gnu --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_f209c /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtbegin_dynamic.o -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libgcc_real.a --exclude-libs libatomic.a --build-id=sha1 --fatal-warnings --no-undefined --gc-sections CMakeFiles/cmTC_f209c.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm -lgcc -ldl -lc -lgcc -ldl /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtend_android.o
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(CMAKE_LINKER-NOTFOUND|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_98517"]
-  ignore line: [[1/2] Building CXX object CMakeFiles/cmTC_98517.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [[2/2] Linking CXX executable cmTC_98517]
+  ignore line: [Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_f209c"]
+  ignore line: [[1/2] Building CXX object CMakeFiles/cmTC_f209c.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [[2/2] Linking CXX executable cmTC_f209c]
   ignore line: [Android (7155654, based on r399163b1) clang version 11.0.5 (https://android.googlesource.com/toolchain/llvm-project 87f1315dfbea7c137aa2e6d362dbb457e388158d)]
-  ignore line: [Target: aarch64-none-linux-android28]
+  ignore line: [Target: aarch64-none-linux-android30]
   ignore line: [Thread model: posix]
   ignore line: [InstalledDir: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin]
   ignore line: [Found candidate GCC installation: /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
@@ -184,7 +183,7 @@ Parsed CXX implicit link information from above output:
   ignore line: [@m64]
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
-  link line: [ "/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld" --sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot -pie -z noexecstack -EL --fix-cortex-a53-843419 --warn-shared-textrel -z now -z relro -z max-page-size=4096 --hash-style=gnu --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_98517 /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtbegin_dynamic.o -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libgcc_real.a --exclude-libs libatomic.a --build-id=sha1 --no-rosegment --fatal-warnings --no-undefined --gc-sections CMakeFiles/cmTC_98517.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm -lgcc -ldl -lc -lgcc -ldl /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtend_android.o]
+  link line: [ "/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld" --sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot -pie -z noexecstack -EL --fix-cortex-a53-843419 --warn-shared-textrel -z now -z relro -z max-page-size=4096 --hash-style=gnu --enable-new-dtags --eh-frame-hdr -m aarch64linux -dynamic-linker /system/bin/linker64 -o cmTC_f209c /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtbegin_dynamic.o -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30 -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib -L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib --exclude-libs libgcc.a --exclude-libs libgcc_real.a --exclude-libs libatomic.a --build-id=sha1 --fatal-warnings --no-undefined --gc-sections CMakeFiles/cmTC_f209c.dir/CMakeCXXCompilerABI.cpp.o -Bstatic -lc++ -Bdynamic -lm -lgcc -ldl -lc -lgcc -ldl /home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtend_android.o]
     arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/ld] ==> ignore
     arg [--sysroot=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot] ==> ignore
     arg [-pie] ==> ignore
@@ -203,12 +202,12 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/system/bin/linker64] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_98517] ==> ignore
-    arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtbegin_dynamic.o] ==> ignore
+    arg [cmTC_f209c] ==> ignore
+    arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtbegin_dynamic.o] ==> ignore
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64]
-    arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28]
+    arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib]
     arg [-L/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib] ==> dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib]
@@ -219,11 +218,10 @@ Parsed CXX implicit link information from above output:
     arg [--exclude-libs] ==> ignore
     arg [libatomic.a] ==> ignore
     arg [--build-id=sha1] ==> ignore
-    arg [--no-rosegment] ==> ignore
     arg [--fatal-warnings] ==> ignore
     arg [--no-undefined] ==> ignore
     arg [--gc-sections] ==> ignore
-    arg [CMakeFiles/cmTC_98517.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_f209c.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-Bstatic] ==> ignore
     arg [-lc++] ==> lib [c++]
     arg [-Bdynamic] ==> ignore
@@ -233,16 +231,16 @@ Parsed CXX implicit link information from above output:
     arg [-lc] ==> lib [c]
     arg [-lgcc] ==> lib [gcc]
     arg [-ldl] ==> lib [dl]
-    arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/crtend_android.o] ==> ignore
+    arg [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/crtend_android.o] ==> ignore
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib/../lib64] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib64]
-  collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28]
+  collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x/../../../../aarch64-linux-android/lib] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib]
   collapse library dir [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib] ==> [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib]
   implicit libs: [c++;m;gcc;dl;c;gcc;dl]
-  implicit dirs: [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib64;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib]
+  implicit dirs: [/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/11.0.5/lib/linux/aarch64;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/lib/gcc/aarch64-linux-android/4.9.x;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib64;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/aarch64-linux-android/lib;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib]
   implicit fwks: []
 
 
@@ -251,9 +249,9 @@ Parsed CXX implicit link information from above output:
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_5bfa5"
-[1/2] Building CXX object CMakeFiles/cmTC_5bfa5.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_5bfa5
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_be310"
+[1/2] Building CXX object CMakeFiles/cmTC_be310.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_be310
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -318,9 +316,9 @@ Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmT
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_9ae2e"
-[1/2] Building CXX object CMakeFiles/cmTC_9ae2e.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_9ae2e
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_a991e"
+[1/2] Building CXX object CMakeFiles/cmTC_a991e.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_a991e
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -385,9 +383,9 @@ Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmT
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_f2f67"
-[1/2] Building CXX object CMakeFiles/cmTC_f2f67.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_f2f67
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_68b8b"
+[1/2] Building CXX object CMakeFiles/cmTC_68b8b.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_68b8b
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -452,9 +450,9 @@ Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmT
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
 Change Dir: /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/CMakeFiles/CMakeTmp
 
-Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_44877"
-[1/2] Building CXX object CMakeFiles/cmTC_44877.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_44877
+Run Build Command:"/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja" "cmTC_f4fa9"
+[1/2] Building CXX object CMakeFiles/cmTC_f4fa9.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_f4fa9
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers

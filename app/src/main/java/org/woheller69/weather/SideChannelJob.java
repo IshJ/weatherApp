@@ -12,10 +12,18 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.TrafficStats;
 import android.os.BatteryManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 //import android.os.Process;
+import android.os.ParcelFileDescriptor;
+import android.os.Process;
+import android.os.storage.StorageManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,9 +33,11 @@ import androidx.core.app.NotificationCompat;
 import org.woheller69.weather.activities.SplashActivity;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -36,6 +46,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.StringTokenizer;
 import java.util.concurrent.locks.Lock;
@@ -45,8 +56,11 @@ import java.util.stream.Collectors;
 //import static org.woheller69.weather.CacheScan.answered;
 //import static org.woheller69.weather.CacheScan.notification;
 //import static org.woheller69.weather.JobInsertRunnable.insert_locker;
+import static org.woheller69.weather.JobInsertRunnable.insert_locker;
 import static org.woheller69.weather.activities.SplashActivity.cs;
+import static org.woheller69.weather.activities.SplashActivity.groundTruthValues;
 import static org.woheller69.weather.activities.SplashActivity.reentrantLock;
+import static org.woheller69.weather.activities.SplashActivity.sideChannelValues;
 
 public class SideChannelJob extends Service {
     public static volatile boolean continueRun;
@@ -60,9 +74,14 @@ public class SideChannelJob extends Service {
     private static final String CHANNEL_ID = "e.smu.devsec";
     private static final String description = "Collecting Data";
     static Lock locker = new ReentrantLock();
+    static String shared_mem_des = "";
     long start_time = 0;
     Thread thread_collect = null;
     Thread thread_notify = null;
+
+    static long localCount = 0;
+    static int yieldVal = 250000;
+
 
     /**
      * Start service by notification
@@ -92,6 +111,23 @@ public class SideChannelJob extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "Job started");
         start_time = System.currentTimeMillis();
+
+//        SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_MULTI_PROCESS);
+//        String savedValueInWriterProcess = sharedPreferences.getString("fd", "");
+//        Log.d("shared_data_shm side channel sharedpref", " sp.toString() " + savedValueInWriterProcess);
+//        sharedPreferences.edit().putString("fd", "56").commit();
+        initializeDB();
+
+//        shared_mem_des = intent.getStringExtra("shared_map_ptr");
+//        Bundle bundle = intent.getExtras();
+//        ParcelFileDescriptor fd = bundle.getParcelable("fd");
+//        intent.getExtras().getBinder("fd");
+//       ParcelFileDescriptor fd = (ParcelFileDescriptor) ((IBinder)intent.getExtras().getBinder("fd")).getData();
+//        ParcelFileDescriptor fd = (ParcelFileDescriptor) intent.getParcelableArrayListExtra("fd").get(0);
+//        Log.d("shared_data_shm side channel", " fd.toString() "+fd.toString());
+
+//        Log.d("shared_data_shm side channel", " shared_mem_ptr "+shared_mem_des);
+
         doBackgroundWork();
         Toast.makeText(this, "Job scheduled successfully", Toast.LENGTH_SHORT)
                 .show();
@@ -113,8 +149,14 @@ public class SideChannelJob extends Service {
                 BigInteger odexMemMapBegin2;
                 try {
                     if (cs == null) {
+
                         cs = new CacheScan(getBaseContext());//Initialize the CacheScan class
+//                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("test", "test123").commit();
+//                        String testString = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("test", "0");
+//                        Log.d("rainviewer sidechannel", "testString "+ testString);
+
                         Log.d(TAG, "Initialize CacheScan");
+//                        setSharedMapChild(2, shared_mem_des.toCharArray());
 
 ////                        exec memory
                         BigInteger odexMemExBegin = new BigInteger(getOdexBeginExAddress(), 16);
@@ -125,34 +167,73 @@ public class SideChannelJob extends Service {
 
 //####
 //######
-                        // exec memory-exec offset+4
-                        odexMemExBegin = odexMemExBegin.subtract(execOffset).add(new BigInteger("4", 10));
+//                         exec memory-exec offset+4
+//                        odexMemExBegin = odexMemExBegin.subtract(execOffset).add(new BigInteger("4", 10));
+                        // exec memory-exec offset
+                        odexMemExBegin = odexMemExBegin.subtract(execOffset);
 
                         odexMemMapBegin = new BigInteger(getOdexBeginAddress(), 16);
 
                         Log.d(TAG, "Odex starting Address: " + odexMemMapBegin.toString(16));
                         Log.d(TAG, "Odex x starting Address: " + odexMemExBegin.toString(16));
 
+//##########
+//                      don't change; this is to adjust the threshold
+                        String addressForAdjusting = "0080f790";
+                        String[] adjustingAddressesString = addressForAdjusting.split(",");
+                        long[] adjustingAddressesLong = new long[adjustingAddressesString.length];
+                        for (int i = 0; i < adjustingAddressesString.length; i++) {
+//                          (exec memory-exec offset)+code offset
+                            adjustingAddressesString[i] = odexMemExBegin
+                                    .add(new BigInteger(adjustingAddressesString[i], 16)).toString(10);
+                            adjustingAddressesLong[i] = Long.parseLong(adjustingAddressesString[i]);
+                        }
+                        adjustThreshold(adjustingAddressesLong, adjustingAddressesLong.length);
+
+
+//##########
                         String[] offsets = getMethodOffsets();
 //don't change
-                        String odexOffsets = "7b8f50,7b9060";
+                        String odexOffsets = "8107c0";
                         Log.d(TAG, "odex offsets:" + odexOffsets);
 
                         Log.d(TAG, "scanned offsets:" + String.join(",", offsets));
                         long[] longOffsets = new long[offsets.length];
-//                        int[] intOffsets = new int[offsets.length];
+                        int[] intOffsets = new int[offsets.length];
 
                         for (int i = 0; i < offsets.length; i++) {
 //                          (exec memory-exec offset)+code offset
                             offsets[i] = odexMemExBegin.add(new BigInteger(offsets[i], 16)).toString(10);
                             longOffsets[i] = Long.parseLong(offsets[i]);
-//                            intOffsets[i] = Integer.valueOf(offsets[i]);
+//                            intOffsets[i] = Integer.parseInt(offsets[i]);
                         }
 
+//                        ShmClientLib.setVal(5,10);
+
                         while (true) {
-                            scan4(longOffsets, longOffsets.length);
+//                            Log.d("rainviewerashmem", "side " + ShmLib.getValue("sh1",5));
+
+                            localCount++;
+                            if(localCount%yieldVal==0) {
+                                localCount = 0;
+                                long timeCount = scan7(longOffsets, longOffsets.length);
+                            }
+
+//                            getSharedPreferences("SideChannelInfo", Context.MODE_MULTI_PROCESS)
+//                                    .edit().putLong("timeCount", timeCount).commit();
+//                            Log.d("sharedPref", " side " + timeCount);
+
+//                            Log.d("shared_data_shm splash sharedpref", "set val" + timeCount);
+
 //                            scanOdex(intOffsets, intOffsets.length);
-//                            Thread.sleep(100);
+//                            long startTime = System.currentTimeMillis();
+//                            while (System.currentTimeMillis() - startTime < 1
+//                            ) {
+//                            }
+
+//                            Thread.yield();
+
+//                            Thread.sleep();
                         }
                     }
                 } catch (Exception e) {
@@ -163,6 +244,62 @@ public class SideChannelJob extends Service {
                     pattern_filter = Utils.getArray(getBaseContext(), "ptfilter");//Retrieve an array of pattern filter; since we only need to monitor partial functions, others will get blocked
             }
         }).start();
+
+
+        thread_collect = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("sidescandb", "thread_collect run");
+
+                // Initializing primitives and objects
+                // Loop to collect side channel values via API calls
+                try {
+                    while (true) {
+
+                        Thread.sleep(100);
+                        while (cs == null) {
+                            Thread.sleep(100);//Waiting until CacheScan class is initialized
+                        }
+//                        Log.d("sidechannel", "groundTruthValues " + groundTruthValues.size());
+
+                        if (sideChannelValues.size() > 1000 || groundTruthValues.size() > 2) {//Do not save collected info when at trial mode
+//                            Log.d("sidescandb", "sidechannel");
+                            new Thread(new JobInsertRunnable(getBaseContext())).start();//start a thread to save data
+//                            Log.d(TAG, "DB Updated");
+                            index = 1;
+                            scValueCount = 0;
+                            cumulativeTime = 0;
+                        }
+                    }//while
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread_collect.start();
+
+
+        //Start a notification thread.
+        thread_notify = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("sidescandb", "thread_notify run");
+                try {
+                    while (cs == null) {
+                        Thread.sleep(100);//Waiting until CacheScan class is initialized
+                    }
+                    while (true) {
+                        Thread.sleep(500);
+                        cs.Notify(getBaseContext());//every 1 second to check if it need to send notification
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread_notify.start();
+
+
 
 
     }
@@ -225,7 +362,7 @@ public class SideChannelJob extends Service {
     public String[] getMethodOffsets() {
 
         //SideChannelOffsets
-        return new String[]{"000000","7b8f50","7b9060"};
+        return new String[]{"000000","8107c0"};
 //        return new String[]{"000000", "000000"};
     }
 
@@ -243,13 +380,18 @@ public class SideChannelJob extends Service {
 
     public native void scan4(long[] arr, int length);
 
-//    public native void scan5(int[] arr, int length);
+    public native void scan5(long[] arr, int length);
 
+    public native long scan7(long[] arr, int length);
+
+    public native void adjustThreshold(long[] arr, int length);
 
 
     public native void scanOdex(long[] arr, int length);
 
     public native void pause();
+
+    public native void setSharedMapChild(int shared_mem_ptr, char[] fileDes);
 
     /**
      * Method to compute battery level based on API call to BatteryManager
@@ -345,25 +487,45 @@ public class SideChannelJob extends Service {
         return null;
     }
 
-    private static String getCommandResult(String command) {
-        StringBuilder log = new StringBuilder();
-
-        try {
-            // Run the command
-            Process process = Runtime.getRuntime().exec(command);
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-
-            // Grab the results
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                log.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return log.toString();
+    /**
+     * Method to initialize database
+     */
+    void initializeDB() {
+        // Creating the database file in the app sandbox
+        SQLiteDatabase db = getBaseContext().openOrCreateDatabase("SideScan.db",
+                MODE_PRIVATE, null);
+        Locale locale = new Locale("EN", "SG");
+        db.setLocale(locale);
+        // Creating the schema of the database
+        String sSQL = "CREATE TABLE IF NOT EXISTS " + SideChannelContract.TABLE_NAME + " (" +
+                //SideChannelContract.Columns._ID + " INTEGER PRIMARY KEY NOT NULL, " +
+                SideChannelContract.Columns.SYSTEM_TIME + " INTEGER NOT NULL, " +
+                SideChannelContract.Columns.SCAN_TIME + " INTEGER NOT NULL, " +
+                SideChannelContract.Columns.ADDRESS + " TEXT, " +
+                SideChannelContract.Columns.COUNT + " INTEGER);";
+        db.execSQL(sSQL);
+        db.close();
     }
+
+//    private static String getCommandResult(String command) {
+//        StringBuilder log = new StringBuilder();
+//
+//        try {
+//            // Run the command
+//            Process process = Runtime.getRuntime().exec(command);
+//            BufferedReader bufferedReader = new BufferedReader(
+//                    new InputStreamReader(process.getInputStream()));
+//
+//            // Grab the results
+//            String line;
+//            while ((line = bufferedReader.readLine()) != null) {
+//                log.append(line + "\n");
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return log.toString();
+//    }
 }
 
 

@@ -3,14 +3,14 @@ arguments :
 -H/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp
 -B/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a
 -DANDROID_ABI=arm64-v8a
--DANDROID_PLATFORM=android-28
+-DANDROID_PLATFORM=android-30
 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj/arm64-v8a
 -DCMAKE_BUILD_TYPE=Release
 -DANDROID_NDK=/home/ishadi/Android/Sdk/ndk/22.1.7171670
 -DCMAKE_CXX_FLAGS=
 -DCMAKE_SYSTEM_NAME=Android
 -DCMAKE_ANDROID_ARCH_ABI=arm64-v8a
--DCMAKE_SYSTEM_VERSION=28
+-DCMAKE_SYSTEM_VERSION=30
 -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 -DCMAKE_ANDROID_NDK=/home/ishadi/Android/Sdk/ndk/22.1.7171670
 -DCMAKE_TOOLCHAIN_FILE=/home/ishadi/Android/Sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake

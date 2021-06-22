@@ -21,7 +21,7 @@ ANDROID_ABI:UNINITIALIZED=arm64-v8a
 ANDROID_NDK:UNINITIALIZED=/home/ishadi/Android/Sdk/ndk/22.1.7171670
 
 //No help, variable specified on the command line.
-ANDROID_PLATFORM:UNINITIALIZED=android-28
+ANDROID_PLATFORM:UNINITIALIZED=android-30
 
 //No help, variable specified on the command line.
 CMAKE_ANDROID_ARCH_ABI:UNINITIALIZED=arm64-v8a
@@ -199,10 +199,10 @@ CMAKE_STRIP:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/p
 CMAKE_SYSTEM_NAME:UNINITIALIZED=Android
 
 //No help, variable specified on the command line.
-CMAKE_SYSTEM_VERSION:UNINITIALIZED=28
+CMAKE_SYSTEM_VERSION:UNINITIALIZED=30
 
-//No help, variable specified on the command line.
-CMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/ishadi/Android/Sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake
+//The CMake toolchain file
+CMAKE_TOOLCHAIN_FILE:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
@@ -217,10 +217,10 @@ Project_BINARY_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weather/wea
 Project_SOURCE_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp
 
 //Dependencies for the target
-dexinfo_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/liblog.so;
+dexinfo_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so;
 
 //Dependencies for the target
-flush_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/liblog.so;
+flush_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so;
 
 //Value Computed by CMake
 libdexinfo_BINARY_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/dexinfo
@@ -244,13 +244,13 @@ liboatparser_BINARY_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weathe
 liboatparser_SOURCE_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser
 
 //Path to a library.
-log-lib:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/liblog.so
+log-lib:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so
 
 //Dependencies for the target
-native-lib_LIB_DEPENDS:STATIC=general;oatparser;general;flush;general;dexinfo;general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/liblog.so;
+native-lib_LIB_DEPENDS:STATIC=general;oatparser;general;flush;general;dexinfo;general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so;
 
 //Dependencies for the target
-oatparser_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/28/liblog.so;
+oatparser_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so;
 
 
 ########################
