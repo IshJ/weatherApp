@@ -5,11 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"> </uses-permission>
 
-    <uses-sdk
-        android:minSdkVersion="28"
-        android:targetSdkVersion="28"
-        />
+
 
     <application
         android:allowBackup="true"
@@ -117,8 +117,8 @@
         <service
             android:name="org.woheller69.weather.SideChannelJob"
             android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:process=":externalProcess" />
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+<!--            android:process=":externalProcess" />-->
 <!--            android:process=":externalProcess" />-->
 
         <receiver android:name="org.woheller69.weather.widget.WeatherWidget">

@@ -18,19 +18,19 @@
 ANDROID_ABI:UNINITIALIZED=arm64-v8a
 
 //No help, variable specified on the command line.
-ANDROID_NDK:UNINITIALIZED=/home/ishadi/Android/Sdk/ndk/22.1.7171670
+ANDROID_NDK:UNINITIALIZED=/home/ishadi/Android/Sdk/ndk/21.1.6352462
 
 //No help, variable specified on the command line.
-ANDROID_PLATFORM:UNINITIALIZED=android-30
+ANDROID_PLATFORM:UNINITIALIZED=android-29
 
 //No help, variable specified on the command line.
 CMAKE_ANDROID_ARCH_ABI:UNINITIALIZED=arm64-v8a
 
 //No help, variable specified on the command line.
-CMAKE_ANDROID_NDK:UNINITIALIZED=/home/ishadi/Android/Sdk/ndk/22.1.7171670
+CMAKE_ANDROID_NDK:UNINITIALIZED=/home/ishadi/Android/Sdk/ndk/21.1.6352462
 
 //Archiver
-CMAKE_AR:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar
+CMAKE_AR:FILEPATH=/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ar
 
 //Flags used by the compiler during all build types.
 CMAKE_ASM_FLAGS:STRING=
@@ -113,6 +113,9 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 //Enable/Disable output of compile commands during generation.
 CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=ON
 
+//No help, variable specified on the command line.
+CMAKE_FIND_ROOT_PATH:UNINITIALIZED=/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/prefab/arm64-v8a/prefab
+
 //Install path prefix, prepended onto install directories.
 CMAKE_INSTALL_PREFIX:PATH=/usr/local
 
@@ -120,7 +123,7 @@ CMAKE_INSTALL_PREFIX:PATH=/usr/local
 CMAKE_LIBRARY_OUTPUT_DIRECTORY:UNINITIALIZED=/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj/arm64-v8a
 
 //Path to a program.
-CMAKE_LINKER:FILEPATH=CMAKE_LINKER-NOTFOUND
+CMAKE_LINKER:FILEPATH=/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ld
 
 //No help, variable specified on the command line.
 CMAKE_MAKE_PROGRAM:UNINITIALIZED=/home/ishadi/Android/Sdk/cmake/3.10.2.4988404/bin/ninja
@@ -141,19 +144,19 @@ CMAKE_MODULE_LINKER_FLAGS_RELEASE:STRING=
 CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
 //Path to a program.
-CMAKE_NM:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-nm
+CMAKE_NM:FILEPATH=/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-nm
 
 //Path to a program.
-CMAKE_OBJCOPY:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-objcopy
+CMAKE_OBJCOPY:FILEPATH=/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-objcopy
 
 //Path to a program.
-CMAKE_OBJDUMP:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-objdump
+CMAKE_OBJDUMP:FILEPATH=/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-objdump
 
 //Value Computed by CMake
 CMAKE_PROJECT_NAME:STATIC=Project
 
 //Ranlib
-CMAKE_RANLIB:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ranlib
+CMAKE_RANLIB:FILEPATH=/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-ranlib
 
 //Flags used by the linker during the creation of dll's.
 CMAKE_SHARED_LINKER_FLAGS:STRING=
@@ -192,17 +195,17 @@ CMAKE_STATIC_LINKER_FLAGS_RELEASE:STRING=
 //Flags used by the linker during Release with Debug Info builds.
 CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
-//Strip
-CMAKE_STRIP:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip
+//Path to a program.
+CMAKE_STRIP:FILEPATH=/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android-strip
 
 //No help, variable specified on the command line.
 CMAKE_SYSTEM_NAME:UNINITIALIZED=Android
 
 //No help, variable specified on the command line.
-CMAKE_SYSTEM_VERSION:UNINITIALIZED=30
+CMAKE_SYSTEM_VERSION:UNINITIALIZED=29
 
 //The CMake toolchain file
-CMAKE_TOOLCHAIN_FILE:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake
+CMAKE_TOOLCHAIN_FILE:FILEPATH=/home/ishadi/Android/Sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
@@ -217,10 +220,10 @@ Project_BINARY_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weather/wea
 Project_SOURCE_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp
 
 //Dependencies for the target
-dexinfo_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so;
+dexinfo_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/29/liblog.so;
 
 //Dependencies for the target
-flush_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so;
+flush_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/29/liblog.so;
 
 //Value Computed by CMake
 libdexinfo_BINARY_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a/dexinfo
@@ -244,13 +247,13 @@ liboatparser_BINARY_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weathe
 liboatparser_SOURCE_DIR:STATIC=/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser
 
 //Path to a library.
-log-lib:FILEPATH=/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so
+log-lib:FILEPATH=/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/29/liblog.so
 
 //Dependencies for the target
-native-lib_LIB_DEPENDS:STATIC=general;oatparser;general;flush;general;dexinfo;general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so;
+native-lib_LIB_DEPENDS:STATIC=general;oatparser;general;flush;general;dexinfo;general;/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/29/liblog.so;
 
 //Dependencies for the target
-oatparser_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/22.1.7171670/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/30/liblog.so;
+oatparser_LIB_DEPENDS:STATIC=general;/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/29/liblog.so;
 
 
 ########################

@@ -14,6 +14,9 @@
 
 #if TIME_SOURCE == TIME_SOURCE_MONOTONIC_CLOCK
 uint64_t get_monotonic_time(void);
+bool thread_counter_init(libflush_session_t* session, libflush_session_args_t* args);
+uint64_t thread_counter_get_timing(libflush_session_t* session);
+bool thread_counter_terminate(libflush_session_t* session);
 #endif
 
 #if TIME_SOURCE == TIME_SOURCE_PERF

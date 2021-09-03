@@ -8,6 +8,7 @@ Keep scanning functions to get the access time to check if there are functions a
 
 //#include <sys/mman.h>
 #define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -82,7 +83,8 @@ is_address_in_use1(libflush_session_t *libflush_session, void *address, int thre
 static void is_address_in_use7(libflush_session_t *libflush_session, void *address, int threshold,
                                long *timingCount,
                                long *times, int *logs, long *timingCounts, long *addresses,
-                               int *log_length, pthread_mutex_t *g_lock);
+                               int *log_length, pthread_mutex_t *g_lock, long *buffer,
+                               int *hitCounts, int *pauses, int addressId, int pauseVal, int hitVal, bool resetHitCounter);
 
 static int
 is_address_in_use_adjust(libflush_session_t *libflush_session, void *address, int threshold);
@@ -625,10 +627,13 @@ int hit6(jlong *param, int length, int threshold, int count) {
 }
 
 int hit7(jlong *param, int length, int threshold, long *timingCount, long *times, int *logs,
-         long *timingCounts, long *addresses, int *log_length, pthread_mutex_t *g_lock) {
+         long *timingCounts, long *addresses, int *log_length, pthread_mutex_t *g_lock,
+         long *buffer,
+         libflush_session_t *libflush_session,
+         int *hitCounts, int *pauses, int pauseVal, int hitVal, bool resetHitCounter) {
 //    LOGD("Start AddressScan hit2.\n");
-    libflush_session_t *libflush_session;
-    libflush_init(&libflush_session, NULL);
+//    libflush_session_t *libflush_session;
+//    libflush_init(&libflush_session, NULL);
     size_t count2;
 
     for (int i = 1; i < length; i++) {
@@ -639,9 +644,13 @@ int hit7(jlong *param, int length, int threshold, long *timingCount, long *times
         }
 //        LOGD("scan4 hit6 %zu ", *(param + i));
         is_address_in_use7(libflush_session, *(param + i), threshold, timingCount, times, logs,
-                           timingCounts, addresses, log_length, g_lock);
-
+                           timingCounts, addresses, log_length, g_lock, buffer, hitCounts, pauses,
+                           i, pauseVal, hitVal,resetHitCounter);
+        *timingCount = (*timingCount + 1);
+        *buffer = *timingCount;
     }
+//    libflush_terminate(libflush_session);
+
 //    for (int i = 1; i < length; i++) {
 //        void *target = (void *) *((size_t *) param + i);
 //        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", target, 0);
@@ -653,13 +662,14 @@ int hit7(jlong *param, int length, int threshold, long *timingCount, long *times
 }
 
 
-int adjust_threshold2(jlong *param, int length, int threshold) {
-//    LOGD("Start AddressScan hit2.\n");
-    libflush_session_t *libflush_session;
-    libflush_init(&libflush_session, NULL);
+int
+adjust_threshold2(jlong *param, int length, int threshold, libflush_session_t *libflush_session) {
+//    LOGD("adjust_threshold2 Start AddressScan hit2.\n");
+//    libflush_session_t *libflush_session;
+//    libflush_init(&libflush_session, NULL);
     size_t count2;
 
-    for (int j = 0; j < 500; j++) {
+    for (int j = 0; j < 1000; j++) {
         for (int i = 0; i < length; i++) {
 //        void *target = (void *) *((size_t *) param + i);
             if (param == NULL || param + i == NULL) {
@@ -781,8 +791,24 @@ int get_threshold() {
     LOGD("Start get_threshold.\n");
     /* Initialize libflush */
     int threshold = 0;
-    libflush_session_t* libflush_session;
+    libflush_session_t *libflush_session;
     libflush_init(&libflush_session, NULL);
+    /* Start calibration */
+    threshold = calibrate(libflush_session);//calibrate the threshold
+    LOGD("Currently the threshold is %d", threshold);
+    if (threshold == 9999)
+        return threshold;
+    /* Terminate libflush */
+    //LOGD("Be adjusted to %d.\n",threshold);
+//    gives the error
+    libflush_terminate(libflush_session);
+    return threshold;
+}
+
+int get_threshold_wsessiom(libflush_session_t *libflush_session) {
+    LOGD("Start get_threshold.\n");
+    /* Initialize libflush */
+    int threshold = 0;
     /* Start calibration */
     threshold = calibrate(libflush_session);//calibrate the threshold
     LOGD("Currently the threshold is %d", threshold);
@@ -951,7 +977,7 @@ is_address_in_use1(libflush_session_t *libflush_session, void *address, int thre
 
     count2 = libflush_reload_address_and_flush(libflush_session, address);
 ///    count2 = libflush_probe(libflush_session, address);
-    LOGD("Count %d Address: %lu Time taken: %d", count, address, count2);
+//    LOGD("Count %d Address: %lu Time taken: %d", count, address, count2);
 
 
 //    if (count2 < 800) {
@@ -963,18 +989,35 @@ is_address_in_use1(libflush_session_t *libflush_session, void *address, int thre
 static void
 is_address_in_use7(libflush_session_t *libflush_session, void *address, int threshold,
                    long *timingCount, long *times, int *logs, long *timingCounts, long *addresses,
-                   int *log_length, pthread_mutex_t *g_lock) {
+                   int *log_length, pthread_mutex_t *g_lock, long *buffer, int *hitCounts,
+                   int *pauses, int addressId, int pauseVal, int hitVal, bool resetHitCounter) {
 //    LOGD("scan4: Address: %lu", address);
 
-    int i = 0;
+
+    int i = addressId;
 
     size_t scanTime;
 
     scanTime = libflush_reload_address_and_flush(libflush_session, address);
 ///    count2 = libflush_probe(libflush_session, address);
 
-//    LOGD("Count %d Address: %lu Time taken: %d",*timingCount,  address, scanTime);
+//    LOGD("TIME_SOURCE_THREAD_COUNTER Count %d Address: %lu Time taken: %d",*timingCount,  address, scanTime);
+//    LOGD(" #1 Count %d Address: %lu Time taken: %d",*timingCount,  address, scanTime);
+//to filter hits
 
+//    LOGD("hitcounter %d pause %d hit %d scantime %d", i, pauses[i], hitCounts[i], scanTime);
+
+    if (scanTime < 215) {
+        if (pauses[i] > pauseVal || hitCounts[i]>0) {
+            hitCounts[i]++;
+        }
+        pauses[i] = 0;
+    } else {
+        pauses[i]++;
+        hitCounts[i] = 0;
+    }
+
+//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, scanTime);
 
 
     if (*log_length >= 99000) {
@@ -986,22 +1029,26 @@ is_address_in_use7(libflush_session_t *libflush_session, void *address, int thre
     struct timeval tv;//for quering time stamp
     gettimeofday(&tv, NULL);
     pthread_mutex_lock(g_lock);
-    logs[*log_length] = scanTime;
-    addresses[*log_length] = address;
+    if (hitCounts[i] > hitVal ) {
+
+        if(resetHitCounter){
+            LOGD("resetHitCounter: %d", resetHitCounter);
+
+            hitCounts[i]=0;
+        }
+        logs[*log_length] = scanTime;
+        addresses[*log_length] = address;
 //    times[*log_length] = count;
-    times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-    timingCounts[*log_length] = *timingCount;
-    *log_length = (*log_length + 1) % 99000;
-    *timingCount = (*timingCount + 1);
+        times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+        timingCounts[*log_length] = *timingCount;
+        *log_length = (*log_length + 1) % 99000;
+    }
+
     pthread_mutex_unlock(g_lock);
 
 
-//to filter hits
-//    if (count2 < 800) {
-//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, count2);
-//    }
-
 }
+
 
 int getNanoSecondTiming() {
     struct timespec ts;
@@ -1014,12 +1061,17 @@ int getNanoSecondTiming() {
 
 static int
 is_address_in_use_adjust(libflush_session_t *libflush_session, void *address, int threshold) {
-//    LOGD("scan4: Address: %lu", address);
+//    LOGD("adjust_threshold inside is_address_in_use_adjust");
     size_t count2;
 
     count2 = libflush_reload_address_and_flush(libflush_session, address);
-    if (count2 < threshold) {
-        threshold = threshold - 20;
+    if (threshold > 0 && count2 < threshold) {
+        if (count2 > threshold - 20) {
+            threshold = count2;
+        } else {
+            threshold = threshold - 20;
+
+        }
     }
 
 ///    count2 = libflush_probe(libflush_session, address);
@@ -1033,7 +1085,7 @@ is_address_in_use_adjust(libflush_session_t *libflush_session, void *address, in
 
 }
 
-int set_shared_mem(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *shared_mem_lock ) {
+int set_shared_mem(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *shared_mem_lock) {
     pthread_mutex_lock(shared_mem_lock);
     shared_data_shm_fd = open("/" ASHMEM_NAME_DEF, O_RDWR);
     LOGD("shared_data_shm_fd %d", shared_data_shm_fd);
@@ -1048,7 +1100,7 @@ int set_shared_mem(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *sh
 //        close(shared_data_shm_fd);
         return -1;
     }
-    shared_data[0]=5;
+    shared_data[0] = 5;
     pthread_mutex_unlock(shared_mem_lock);
 
     LOGD("shared_data_shm_fd shared_data %d", shared_data);
@@ -1059,23 +1111,23 @@ int set_shared_mem(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *sh
 //    close(*shared_data_shm_fd);
 }
 
-int set_shared_memfd(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *shared_mem_lock ) {
-    pthread_mutex_lock(shared_mem_lock);
+int set_shared_memfd(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *shared_mem_lock) {
+//    pthread_mutex_lock(shared_mem_lock);
+//
+//    int fd = memfd_create("shared_data", MFD_ALLOW_SEALING);
+//    if (fd == -1) {
+//        LOGD("shared_data_shm_fd fd -1");
+//        pthread_mutex_unlock(shared_mem_lock);
+//
+//        return -1;
+//    }
+//    pthread_mutex_unlock(shared_mem_lock);
 
-    int fd = memfd_create("shared_data", MFD_ALLOW_SEALING);
-    if(fd==-1){
-        LOGD("shared_data_shm_fd fd -1");
-        pthread_mutex_unlock(shared_mem_lock);
-
-        return -1;
-    }
-    pthread_mutex_unlock(shared_mem_lock);
-
-    return fd;
+    return 1;
 }
 
 
-int set_shared_mem_child(jchar *fileDes, pthread_mutex_t *shared_mem_lock ) {
+int set_shared_mem_child(jchar *fileDes, pthread_mutex_t *shared_mem_lock) {
     LOGD("shared_data_shm inside set_shared_mem_child");
 
     pthread_mutex_lock(shared_mem_lock);
@@ -1095,7 +1147,7 @@ int set_shared_mem_child(jchar *fileDes, pthread_mutex_t *shared_mem_lock ) {
         close(shared_data_shm_fd);
         return -1;
     }
-    shared_data[0]=9;
+    shared_data[0] = 9;
     pthread_mutex_unlock(shared_mem_lock);
 
     LOGD("shared_data_shm_fd child shared_data %d", shared_data);
@@ -1107,16 +1159,15 @@ int set_shared_mem_child(jchar *fileDes, pthread_mutex_t *shared_mem_lock ) {
 }
 
 
-
 int set_shared_mem_val(int *shared_data, int val, pthread_mutex_t *shared_mem_lock) {
     pthread_mutex_lock(shared_mem_lock);
     int fd = open("/proc/19187/fd/49", O_RDWR);
-    if(fd==-1){
+    if (fd == -1) {
         LOGD("shared_data_shm passsed sharwd_data is null");
         pthread_mutex_unlock(shared_mem_lock);
         return -1;
     }
-    shared_data[0]=val;
+    shared_data[0] = val;
     pthread_mutex_unlock(shared_mem_lock);
 
     return 1;
@@ -1124,7 +1175,7 @@ int set_shared_mem_val(int *shared_data, int val, pthread_mutex_t *shared_mem_lo
 
 int get_shared_mem_val(int *shared_data, pthread_mutex_t *shared_mem_lock) {
     pthread_mutex_lock(shared_mem_lock);
-    if(shared_data==NULL){
+    if (shared_data == NULL) {
         LOGD("shared_data_shm passsed sharwd_data is null");
         return -1;
     }

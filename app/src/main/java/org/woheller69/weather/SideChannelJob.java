@@ -18,10 +18,14 @@ import android.net.TrafficStats;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 //import android.os.Process;
+import android.os.Message;
+import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
 import android.os.Process;
+import android.os.RemoteException;
 import android.os.storage.StorageManager;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -34,6 +38,7 @@ import org.woheller69.weather.activities.SplashActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
@@ -45,9 +50,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -80,8 +89,13 @@ public class SideChannelJob extends Service {
     Thread thread_notify = null;
 
     static long localCount = 0;
-    static int yieldVal = 250000;
+    //    don't change the format
+    static int yieldVal = 100;
 
+    static int fd = -2;
+
+    Map<String, String> configMap = new HashMap<>();
+    static final String CONFIG_FILE_PATH = "/data/local/tmp/config.out";
 
     /**
      * Start service by notification
@@ -117,6 +131,9 @@ public class SideChannelJob extends Service {
 //        Log.d("shared_data_shm side channel sharedpref", " sp.toString() " + savedValueInWriterProcess);
 //        sharedPreferences.edit().putString("fd", "56").commit();
         initializeDB();
+        configMap = readConfigFile();
+        configMap.entrySet().forEach(e-> Log.d("configMap: " , e.getKey()+" "+e.getValue()));
+        yieldVal = Integer.parseInt(Objects.requireNonNull(configMap.get("yield")));
 
 //        shared_mem_des = intent.getStringExtra("shared_map_ptr");
 //        Bundle bundle = intent.getExtras();
@@ -147,7 +164,11 @@ public class SideChannelJob extends Service {
             public void run() {
                 BigInteger odexMemMapBegin;
                 BigInteger odexMemMapBegin2;
+
                 try {
+                    while (fd < 0) {
+                        Thread.sleep(10);
+                    }
                     if (cs == null) {
 
                         cs = new CacheScan(getBaseContext());//Initialize the CacheScan class
@@ -162,7 +183,8 @@ public class SideChannelJob extends Service {
                         BigInteger odexMemExBegin = new BigInteger(getOdexBeginExAddress(), 16);
                         Log.d("OdexScan::", "exec memory: " + odexMemExBegin.toString(16));
 ////                        exec offset
-                        BigInteger execOffset = new BigInteger("11a000", 16);
+                        String execOffsetString = configMap.get("execOffset");
+                        BigInteger execOffset = new BigInteger(execOffsetString, 16);
                         Log.d("OdexScan::", "exec offset: " + execOffset.toString(16));
 
 //####
@@ -170,16 +192,17 @@ public class SideChannelJob extends Service {
 //                         exec memory-exec offset+4
 //                        odexMemExBegin = odexMemExBegin.subtract(execOffset).add(new BigInteger("4", 10));
                         // exec memory-exec offset
-                        odexMemExBegin = odexMemExBegin.subtract(execOffset);
+                        odexMemExBegin = odexMemExBegin.add(execOffset);
 
                         odexMemMapBegin = new BigInteger(getOdexBeginAddress(), 16);
+                        odexMemMapBegin = odexMemMapBegin.add(execOffset);
 
                         Log.d(TAG, "Odex starting Address: " + odexMemMapBegin.toString(16));
                         Log.d(TAG, "Odex x starting Address: " + odexMemExBegin.toString(16));
 
 //##########
-//                      don't change; this is to adjust the threshold
-                        String addressForAdjusting = "0080f790";
+
+                        String addressForAdjusting = configMap.get("addressForAdjusting");
                         String[] adjustingAddressesString = addressForAdjusting.split(",");
                         long[] adjustingAddressesLong = new long[adjustingAddressesString.length];
                         for (int i = 0; i < adjustingAddressesString.length; i++) {
@@ -188,35 +211,49 @@ public class SideChannelJob extends Service {
                                     .add(new BigInteger(adjustingAddressesString[i], 16)).toString(10);
                             adjustingAddressesLong[i] = Long.parseLong(adjustingAddressesString[i]);
                         }
-                        adjustThreshold(adjustingAddressesLong, adjustingAddressesLong.length);
+                        if(("1").equals(configMap.get("isAdjust"))) {
+                            adjustThreshold(adjustingAddressesLong, adjustingAddressesLong.length);
+                        }
 
 
 //##########
-                        String[] offsets = getMethodOffsets();
+                        String[] offsets = configMap.get("sideChannelOffsets").split(",");
+                        int pauseVal = Integer.parseInt(configMap.get("pauseVal").trim());
+                        int hitVal = Integer.parseInt(configMap.get("hitVal").trim());
+                        boolean resetHitCounter = "1".equals(configMap.get("resetHitCounter").trim());
 //don't change
-                        String odexOffsets = "8107c0";
-                        Log.d(TAG, "odex offsets:" + odexOffsets);
+//                        String ode++xOffsets = "6c1934,6c1958,6c196c,6c1984,6c199c,6c19c4,6c19f0";
+//                        Log.d(TAG, "odex offsets:" + odexOffsets);
 
-                        Log.d(TAG, "scanned offsets:" + String.join(",", offsets));
                         long[] longOffsets = new long[offsets.length];
                         int[] intOffsets = new int[offsets.length];
 
                         for (int i = 0; i < offsets.length; i++) {
 //                          (exec memory-exec offset)+code offset
-                            offsets[i] = odexMemExBegin.add(new BigInteger(offsets[i], 16)).toString(10);
+                            offsets[i] = odexMemMapBegin.add(new BigInteger(offsets[i], 16))
+//                                    .add(new BigInteger("4",16))
+                                    .toString(10);
                             longOffsets[i] = Long.parseLong(offsets[i]);
 //                            intOffsets[i] = Integer.parseInt(offsets[i]);
                         }
 
 //                        ShmClientLib.setVal(5,10);
+                        Log.d(TAG, "scanned offsets:" + String.join(",", offsets));
 
                         while (true) {
 //                            Log.d("rainviewerashmem", "side " + ShmLib.getValue("sh1",5));
 
                             localCount++;
-                            if(localCount%yieldVal==0 ) {
+                            if (localCount % yieldVal == 0) {
                                 localCount = 0;
-                                long timeCount = scan7(longOffsets, longOffsets.length);
+                                long timeCount = scan7(longOffsets, longOffsets.length, pauseVal, hitVal, resetHitCounter );
+                                if (fd < 0) {
+                                    Log.d("ashmem ", "not set yet" + fd);
+                                } else {
+//                                    setAshMemVal(fd, timeCount);
+                                }
+                                Thread.sleep(1);
+
                             }
 
 //                            getSharedPreferences("SideChannelInfo", Context.MODE_MULTI_PROCESS)
@@ -233,7 +270,6 @@ public class SideChannelJob extends Service {
 
 //                            Thread.yield();
 
-//                            Thread.sleep();
                         }
                     }
                 } catch (Exception e) {
@@ -262,7 +298,7 @@ public class SideChannelJob extends Service {
                         }
 //                        Log.d("sidechannel", "groundTruthValues " + groundTruthValues.size());
 
-                        if (sideChannelValues.size() > 1000 || groundTruthValues.size() > 2) {//Do not save collected info when at trial mode
+                        if (sideChannelValues.size() > 2 || groundTruthValues.size() > 2) {//Do not save collected info when at trial mode
 //                            Log.d("sidescandb", "sidechannel");
                             new Thread(new JobInsertRunnable(getBaseContext())).start();//start a thread to save data
 //                            Log.d(TAG, "DB Updated");
@@ -300,8 +336,6 @@ public class SideChannelJob extends Service {
         thread_notify.start();
 
 
-
-
     }
 
     public String getOdexBeginAddress() {
@@ -331,19 +365,44 @@ public class SideChannelJob extends Service {
     public String
     getOdexBeginExAddress() {
 
+        boolean isMemMapping = false;
         // get Process ID of the running app
         int pid = android.os.Process.myPid();
         Log.d(TAG, "%%%% spLASH! pid " + pid);
 
         try {
-            Log.d(TAG, "%%%% spLASH! grep woheller69 /proc/self/maps | grep odex");
 
             List<String> lines = Files.lines(Paths.get("/proc/self/maps")).collect(Collectors.toList());
+            Optional<String> odexFilePathOpt = lines.stream().sequential().filter(s -> s.contains("woheller69") && s.contains("base.odex"))
+                    .findAny();
+            String odexFilePath = "";
+            long startInd = -1l;
+            if(odexFilePathOpt.isPresent())
+            {
+                   odexFilePath = "/data/app/"+odexFilePathOpt.get().split("/data/app/")[1];
+                   if(isMemMapping) {
+                       startInd = getOdexBegin(odexFilePath);
+                       Log.d("odex begin ", String.valueOf(startInd));
+                   }
+            }
+
+
             for (String line : lines) {
                 if (line.contains("odex")) {
                     Log.d("OdexScan\n ", line);
                 }
             }
+            if(isMemMapping && startInd>0){
+                String odexBegin = new BigInteger(String.valueOf(startInd),10).toString(16);
+                Log.d("odex sc mapped", odexBegin);
+                return odexBegin;
+            }
+
+//            for (String line : lines) {
+//                if (line.contains("odex")) {
+//                    Log.d("OdexScan\n ", line);
+//                }
+//            }
 
             Optional<String> odc = Files.lines(Paths.get("/proc/self/maps")).collect(Collectors.toList())
                     .stream().sequential().filter(s -> s.contains("woheller69") && s.contains("base.odex") && s.contains("r-xp"))
@@ -362,8 +421,8 @@ public class SideChannelJob extends Service {
     public String[] getMethodOffsets() {
 
         //SideChannelOffsets
-        return new String[]{"000000","8107c0"};
-//        return new String[]{"000000", "000000"};
+        return new String[]{"000000","6c2404","6c2428","6c243c","6c2454","6c246c","6c2494","6c24c0"};
+//        return new String[]{"000000", "123"};
     }
 
     public String[] getClassOffsets() {
@@ -374,24 +433,26 @@ public class SideChannelJob extends Service {
 
     public native void scan(int[] pattern, int length);
 
-    public native void scan1(int[] pattern, int length);
-
-    public native void scan3(String[] stringArray, int length);
-
-    public native void scan4(long[] arr, int length);
-
-    public native void scan5(long[] arr, int length);
-
-    public native long scan7(long[] arr, int length);
+    public native long scan7(long[] arr, int length, int pauseVal, int hitVal, boolean resetHitCounter);
 
     public native void adjustThreshold(long[] arr, int length);
 
+    public static native long readAshMem(int fd);
+
+    public static native void setAshMemVal(int fd, long val);
 
     public native void scanOdex(long[] arr, int length);
 
     public native void pause();
 
     public native void setSharedMapChild(int shared_mem_ptr, char[] fileDes);
+
+    public native long getOdexBegin(String fileName);
+
+
+
+
+
 
     /**
      * Method to compute battery level based on API call to BatteryManager
@@ -481,10 +542,40 @@ public class SideChannelJob extends Service {
 //                .show();
     }
 
+    private static class MessengerHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.d("ashmem", " got the message sent by the client: ");
+            ParcelFileDescriptor pfd = msg.getData().getParcelable("msg");
+            fd = pfd.getFd();
+            if (fd < 0) {
+                Log.d("ashmem ", "not set MessengerHandler " + fd);
+            }
+            long c = readAshMem(fd);
+            setAshMemVal(fd, 5l);
+            Log.d("ashmem", " got the message sent by the client: " + pfd.getFd() + " " + c);
+            Log.d("ashmem", " got the message sent by the client: new val " + readAshMem(fd));
+
+            Messenger client = msg.replyTo; // 1
+            Message replyMessage = Message.obtain(null, 1);
+            Bundle bundle = new Bundle();
+            bundle.putString("reply", "The server has received the message!");
+            replyMessage.setData(bundle);
+            try {
+                client.send(replyMessage);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    private final Messenger mMessenger = new Messenger(new MessengerHandler());
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mMessenger.getBinder();
     }
 
     /**
@@ -504,7 +595,22 @@ public class SideChannelJob extends Service {
                 SideChannelContract.Columns.ADDRESS + " TEXT, " +
                 SideChannelContract.Columns.COUNT + " INTEGER);";
         db.execSQL(sSQL);
+        sSQL = "DELETE FROM "+SideChannelContract.TABLE_NAME;
+        db.execSQL(sSQL);
         db.close();
+    }
+
+    private Map<String, String> readConfigFile() {
+        Map<String, String> configMap = new HashMap<>();
+        try {
+            List<String> configs = Files.lines(Paths.get(CONFIG_FILE_PATH)).collect(Collectors.toList());
+            configs.stream().filter(c -> c.contains(":")).forEach(c -> configMap.put(c.split(":")[0].trim(), c.split(":")[1].trim()));
+//            configMap.entrySet().forEach(e-> Log.d("configMap: " , e.getKey()+" "+e.getValue()));
+
+        } catch (IOException e) {
+            Log.d(TAG + "#", e.toString());
+        }
+        return configMap;
     }
 
 //    private static String getCommandResult(String command) {

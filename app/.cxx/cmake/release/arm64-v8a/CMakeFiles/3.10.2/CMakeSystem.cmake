@@ -1,9 +1,9 @@
-set(CMAKE_HOST_SYSTEM "Linux-5.8.0-55-generic")
+set(CMAKE_HOST_SYSTEM "Linux-5.11.0-27-generic")
 set(CMAKE_HOST_SYSTEM_NAME "Linux")
-set(CMAKE_HOST_SYSTEM_VERSION "5.8.0-55-generic")
+set(CMAKE_HOST_SYSTEM_VERSION "5.11.0-27-generic")
 set(CMAKE_HOST_SYSTEM_PROCESSOR "x86_64")
 
-include("/home/ishadi/Android/Sdk/ndk/22.1.7171670/build/cmake/android.toolchain.cmake")
+include("/home/ishadi/Android/Sdk/ndk/21.1.6352462/build/cmake/android.toolchain.cmake")
 
 set(CMAKE_SYSTEM "Android-1")
 set(CMAKE_SYSTEM_NAME "Android")

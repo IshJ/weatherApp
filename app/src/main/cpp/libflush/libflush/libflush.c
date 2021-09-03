@@ -30,6 +30,8 @@
 
 static uint64_t libflush_get_timing_start(libflush_session_t* session);
 static uint64_t libflush_get_timing_end(libflush_session_t* session);
+//static uint64_t libflush_get_timing_start_counter(libflush_session_t* session, long *buffer);
+//static uint64_t libflush_get_timing_end_counter(libflush_session_t* session, long *buffer);
 
 #if HAVE_PAGEMAP_ACCESS == 1
 static size_t get_frame_number_from_pagemap(size_t value);
@@ -38,6 +40,8 @@ static size_t get_frame_number_from_pagemap(size_t value);
 bool
 libflush_init(libflush_session_t** session, libflush_session_args_t* args)
 {
+
+
     (void) session;
     (void) args;
 
@@ -53,6 +57,22 @@ libflush_init(libflush_session_t** session, libflush_session_args_t* args)
         (*session)->performance_register_div64 = args->performance_register_div64;
     }
 
+#if TIME_SOURCE == TIME_SOURCE_THREAD_COUNTER
+   LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER libflush");
+    LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER libflush init");
+
+    bool counter_status = thread_counter_init(*session, args);
+    LOGD("Timer TIME_SOURCE_THREAD_COUNTER counter_status %d", counter_status);
+#endif
+
+#if TIME_SOURCE == TIME_SOURCE_MONOTONIC_CLOCK
+//    LOGD("Timer TIME_SOURCE TIME_SOURCE_MONOTONIC_CLOCK");
+    LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER libflush");
+    LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER libflush init");
+
+    bool counter_status = thread_counter_init(*session, args);
+    LOGD("Timer TIME_SOURCE_THREAD_COUNTER counter_status %d", counter_status);
+#endif
 #if HAVE_PAGEMAP_ACCESS == 1
     (*session)->memory.pagemap = open("/proc/self/pagemap", O_RDONLY);
     if ((*session)->memory.pagemap == -1) {
@@ -65,7 +85,10 @@ libflush_init(libflush_session_t** session, libflush_session_args_t* args)
 #if TIME_SOURCE == TIME_SOURCE_PERF
     perf_init(*session, args);
 #elif TIME_SOURCE == TIME_SOURCE_THREAD_COUNTER
-    thread_counter_init(*session, args);
+//    LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER libflush init");
+//
+//    counter_status = thread_counter_init(*session, args);
+//    LOGD("Timer TIME_SOURCE_THREAD_COUNTER counter_status %d", counter_status);
 #endif
 
     /* Initialize eviction */
@@ -89,6 +112,8 @@ libflush_terminate(libflush_session_t* session)
     if (session == NULL) {
         return false;
     }
+    thread_counter_terminate(session);
+
 
     /* Pagemap access */
 #if HAVE_PAGEMAP_ACCESS == 1
@@ -219,23 +244,8 @@ libflush_get_timing(libflush_session_t* session)
     uint64_t result = 0;
 
     libflush_memory_barrier();
-
-#if TIME_SOURCE == TIME_SOURCE_MONOTONIC_CLOCK
-    result = get_monotonic_time();
-#elif TIME_SOURCE == TIME_SOURCE_PERF
-    result = perf_get_timing(session);
-#elif TIME_SOURCE == TIME_SOURCE_THREAD_COUNTER
-  result = thread_counter_get_timing(session);
-#elif TIME_SOURCE == TIME_SOURCE_REGISTER
-#if defined(__ARM_ARCH_7A__)
-  result = arm_v7_get_timing();
-#elif defined(__ARM_ARCH_8A__)
-  result = arm_v8_get_timing();
-#elif defined(__i386__) || defined(__x86_64__)
-  result = x86_get_timing();
-#endif
-#endif
-
+//    result = get_monotonic_time();
+    result = thread_counter_get_timing(session);
     libflush_memory_barrier();
 
     return result;
@@ -273,6 +283,38 @@ libflush_get_timing_end(libflush_session_t* session)
     return result;
 }
 
+//static uint64_t
+//libflush_get_timing_start_counter(libflush_session_t* session, long *buffer)
+//{
+//    (void) session;
+//
+//    uint64_t result = 0;
+//
+//#if defined(__i386__) || defined(__x86_64__)
+//    result = x86_get_timing_start();
+//#else
+//    result = libflush_get_timing_counter(session, buffer, true);
+//#endif
+//
+//    return result;
+//}
+//
+//static uint64_t
+//libflush_get_timing_end_counter(libflush_session_t* session, long *buffer)
+//{
+//    (void) session;
+//
+//    uint64_t result = 0;
+//
+//#if defined(__i386__) || defined(__x86_64__)
+//    result = x86_get_timing_end();
+//#else
+//    result = libflush_get_timing_counter(session, buffer, false);
+//#endif
+//
+//    return result;
+//}
+
 void
 libflush_reset_timing(libflush_session_t* session)
 {
@@ -306,6 +348,7 @@ uint64_t
 libflush_reload_address(libflush_session_t *session, void *address) {//called in calibrate
     uint64_t time = libflush_get_timing(session);
     libflush_access_memory(address);
+//    LOGD("TIME_SOURCE_THREAD_COUNTER libflush_reload_address %ld", time);
     return libflush_get_timing(session) - time;
 }
 
@@ -315,8 +358,27 @@ libflush_reload_address_and_flush(libflush_session_t *session, void* address) {
     libflush_access_memory(address);
     uint64_t delta = libflush_get_timing_end(session);
     libflush_flush(session, address);
+//    LOGD("Timer TIME_SOURCE_THREAD_COUNTER libflush_reload_address_and_flush %ld %ld %ld", time, delta, (delta - time));
+
     return delta - time;
 }
+
+//uint64_t
+//libflush_reload_address_and_flush_counter(libflush_session_t *session, void* address, long *buffer) {
+//    uint64_t time = libflush_get_timing_start_counter(session, buffer);
+////    LOGD("Timer start %ld %ld", time, buffer[1]);
+//    libflush_access_memory(address);
+//    uint64_t delta = libflush_get_timing_end_counter(session, buffer);
+////    LOGD("Timer delta %ld %ld", delta, buffer[2]);
+//
+//    libflush_flush(session, address);
+//    buffer[3] = buffer[2]-buffer[1];
+//    if((delta-time) != buffer[3]) {
+//        LOGD("Time T delta - time %ld %ld", (delta - time), buffer[3]);
+//    }
+//
+//    return delta - time;
+//}
 
 uint64_t
 libflush_reload_address_and_evict(libflush_session_t* session, void* address)

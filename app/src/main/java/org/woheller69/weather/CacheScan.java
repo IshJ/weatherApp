@@ -364,6 +364,9 @@ public class CacheScan {
             ArrayList<SideChannelValue> scvs = new ArrayList<SideChannelValue>();
             // Store these data into an array, they will be save in a database eventually.
             for (int i = 0; i < times.length; i++) {
+//                if(logs[i]>120){
+//                    continue;
+//                }
                 SideChannelValue sideChannelValue = new SideChannelValue();
                 sideChannelValue.setSystemTime(times[i]);
                 sideChannelValue.setScanTime(logs[i]);

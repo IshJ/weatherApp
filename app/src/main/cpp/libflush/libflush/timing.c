@@ -1,6 +1,7 @@
 /* See LICENSE file for license and copyright information */
 
 #define _GNU_SOURCE
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,14 +19,124 @@
 #include "logoutput.h"
 
 #if TIME_SOURCE == TIME_SOURCE_MONOTONIC_CLOCK
+static void* thread_counter_func(void*);
+
 #include <time.h>
+#include <pthread.h>
 
 uint64_t
-get_monotonic_time(void)
+get_monotonic_time(void) {
+    struct timespec t1;
+    clock_gettime(CLOCK_MONOTONIC, &t1);
+    return t1.tv_sec * 1000 * 1000 * 1000ULL + t1.tv_nsec;
+}
+
+static void* thread_counter_func(void*);
+#include <pthread.h>
+
+bool thread_counter_init(libflush_session_t* session, libflush_session_args_t* args)
 {
-  struct timespec t1;
-  clock_gettime(CLOCK_MONOTONIC, &t1);
-  return t1.tv_sec * 1000*1000*1000ULL + t1.tv_nsec;
+  LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER inside init");
+  if (session == NULL) {
+    return false;
+  }
+  LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER session not null");
+
+  session->thread_counter.data.cpu = (args != NULL) ? (ssize_t) args->bind_to_cpu : -1;
+  session->thread_counter.data.session = session;
+
+  if (pthread_create(&(session->thread_counter.thread), NULL,
+        thread_counter_func, &(session->thread_counter.data)) != 0) {
+    return false;
+  }
+
+  return true;
+}
+
+bool thread_counter_terminate(libflush_session_t* session)
+{
+  if (session == NULL) {
+    return false;
+  }
+
+  #if __BIONIC__
+  pthread_kill(session->thread_counter.thread, SIGUSR1);
+#else
+  pthread_cancel(session->thread_counter.thread);
+#endif
+  pthread_join(session->thread_counter.thread, NULL);
+
+  return true;
+}
+
+uint64_t thread_counter_get_timing(libflush_session_t* session)
+{
+  libflush_memory_barrier(session);
+//       LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER inside thread_counter_get_timing");
+
+
+  uint64_t time = session->thread_counter.value;
+//       LOGD("Timer TIME_SOURCE_THREAD_COUNTER inside thread_counter_get_timing %d ", time);
+       if(time>1000000){
+           session->thread_counter.value = 0;
+       }
+
+  libflush_memory_barrier(session);
+
+  return time;
+}
+
+#if __BIONIC__
+static void
+thread_exit_handler(int sig)
+{
+  (void) sig;
+
+  pthread_exit(NULL);
+}
+#endif
+
+static void*
+thread_counter_func(void* data) {
+#ifndef __BIONIC__
+  /* Set cancel able */
+  pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+#endif
+
+  /* Unpack data */
+  thread_data_t* thread_data = (thread_data_t*) data;
+  libflush_session_t* session = thread_data->session;
+  ssize_t cpu = thread_data->cpu;
+
+  /* Bind to CPU */
+  if (cpu > 0) {
+    if (libflush_bind_to_cpu(cpu) == false) {
+      fprintf(stderr, "Could not bind to CPU: %zu\n", cpu);
+    } else {
+      fprintf(stderr, "Bind thread to CPU: %zu\n", cpu);
+    }
+  }
+
+#if __BIONIC__
+  /* Setup cancel signal */
+  struct sigaction action;
+  memset(&action, 0, sizeof(struct sigaction));
+  memset(&action.sa_mask, 0, sizeof(sigset_t));
+  action.sa_flags = 0;
+#if defined(__ARM_ARCH_7A__)
+  //action._u._sa_handler = thread_exit_handler;
+  action.sa_handler = thread_exit_handler;
+#else
+  action.sa_handler = thread_exit_handler;
+#endif
+  sigaction(SIGUSR1, &action, NULL);
+#endif
+
+  while (true) {
+    session->thread_counter.value++;
+  }
+
+  pthread_exit(NULL);
 }
 #endif
 
@@ -88,12 +199,13 @@ perf_reset_timing(libflush_session_t* session)
 static void* thread_counter_func(void*);
 #include <pthread.h>
 
-inline bool
-thread_counter_init(libflush_session_t* session, libflush_session_args_t* args)
+bool thread_counter_init(libflush_session_t* session, libflush_session_args_t* args)
 {
+  LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER inside init");
   if (session == NULL) {
     return false;
   }
+  LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER session not null");
 
   session->thread_counter.data.cpu = (args != NULL) ? (ssize_t) args->bind_to_cpu : -1;
   session->thread_counter.data.session = session;
@@ -106,8 +218,7 @@ thread_counter_init(libflush_session_t* session, libflush_session_args_t* args)
   return true;
 }
 
-inline bool
-thread_counter_terminate(libflush_session_t* session)
+bool thread_counter_terminate(libflush_session_t* session)
 {
   if (session == NULL) {
     return false;
@@ -123,12 +234,14 @@ thread_counter_terminate(libflush_session_t* session)
   return true;
 }
 
-inline uint64_t
-thread_counter_get_timing(libflush_session_t* session)
+uint64_t thread_counter_get_timing(libflush_session_t* session)
 {
   libflush_memory_barrier(session);
+       LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER inside thread_counter_get_timing");
+
 
   uint64_t time = session->thread_counter.value;
+       LOGD("Timer TIME_SOURCE_THREAD_COUNTER inside thread_counter_get_timing %d ", time);
 
   libflush_memory_barrier(session);
 

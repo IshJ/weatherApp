@@ -50,6 +50,7 @@ bool libflush_terminate(libflush_session_t* session);
  * @return Current time measurements
  */
 uint64_t libflush_get_timing(libflush_session_t* session);
+//uint64_t libflush_get_timing_counter(libflush_session_t* session, long *buffer, bool start);
 
 /**
  * Resets the time measurement
@@ -121,6 +122,7 @@ uint64_t libflush_reload_address(libflush_session_t* session, void* address);
  * @return Timing measurement
  */
 uint64_t libflush_reload_address_and_flush(libflush_session_t* session, void* address);
+//uint64_t libflush_reload_address_and_flush_counter(libflush_session_t* session, void* address, long *buffer);
 
 /**
  * Measures the time it takes to access the given address. Then the address is

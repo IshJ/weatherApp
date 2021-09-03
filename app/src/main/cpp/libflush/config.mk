@@ -97,7 +97,7 @@ HAVE_PAGEMAP_ACCESS ?= 1
 
 # time sources
 TIME_SOURCES = (register perf monotonic_clock thread_counter)
-TIME_SOURCE ?= monotonic_clock 
+TIME_SOURCE ?= monotonic_clock
 
 # use eviction instead of flush
 USE_EVICTION ?= 0

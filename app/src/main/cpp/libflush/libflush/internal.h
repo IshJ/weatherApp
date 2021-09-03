@@ -4,19 +4,22 @@
 #define INTERNAL_H
 
 #include "libflush.h"
-
-#if TIME_SOURCE == TIME_SOURCE_THREAD_COUNTER
 #include <pthread.h>
 
 typedef struct thread_data_s {
   libflush_session_t* session;
   ssize_t cpu;
 } thread_data_t;
-#endif
+
 
 struct libflush_session_s {
   void* data;
   bool performance_register_div64;
+    struct {
+        pthread_t thread;
+        volatile uint64_t value; //number for counter
+        thread_data_t data;
+    } thread_counter;
 
 #if HAVE_PAGEMAP_ACCESS == 1
   struct {
@@ -25,11 +28,11 @@ struct libflush_session_s {
 #endif
 
 #if TIME_SOURCE == TIME_SOURCE_THREAD_COUNTER
-  struct {
-    pthread_t thread;
-    volatile uint64_t value; //number for counter
-    thread_data_t data;
-  } thread_counter; 
+//  struct {
+//    pthread_t thread;
+//    volatile uint64_t value; //number for counter
+//    thread_data_t data;
+//  } thread_counter;
 #endif
 
 #if TIME_SOURCE == TIME_SOURCE_PERF
