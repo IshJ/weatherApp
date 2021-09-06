@@ -18,6 +18,7 @@ public class JobInsertRunnable implements Runnable {
     ContentValues values;
     long startTime;
     public static Lock insert_locker = new ReentrantLock();
+    public static Lock aspect_insert_locker = new ReentrantLock();
 
     private static final String TAG = "JobInsertRunnable";
     /**

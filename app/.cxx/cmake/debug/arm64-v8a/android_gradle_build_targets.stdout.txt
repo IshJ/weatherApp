@@ -1,2 +1,2 @@
 ninja: Entering directory `/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/debug/arm64-v8a'
-[1/1] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so
+ninja: no work to do.

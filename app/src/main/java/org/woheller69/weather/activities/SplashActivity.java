@@ -25,11 +25,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 
-
 import org.woheller69.weather.CacheScan;
 import org.woheller69.weather.GroundTruthValue;
 import org.woheller69.weather.JobInsertRunnable;
 import org.woheller69.weather.JobMainAppInsertRunnable;
+import org.woheller69.weather.MethodStat;
 import org.woheller69.weather.ObjectWrapperForBinder;
 import org.woheller69.weather.R;
 import org.woheller69.weather.ShmClientLib;
@@ -62,12 +62,12 @@ import java.util.Random;
 import java.util.SortedSet;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 
 
 import static org.woheller69.weather.JobInsertRunnable.insert_locker;
@@ -77,7 +77,7 @@ import static org.woheller69.weather.JobInsertRunnable.insert_locker;
  */
 
 public class SplashActivity extends AppCompatActivity {
-    public static final String TAG = "SplashActivity11";
+    public static final String TAG = "SplashActivity";
     private static int currentViewId = 0;
     private static int currentLoopId = 0;
     public static CacheScan cs = null;
@@ -88,32 +88,25 @@ public class SplashActivity extends AppCompatActivity {
     static SortedSet<Integer> keys;
     static List<String> views;
     static List<ReentrantLock> viewLocks = Collections.synchronizedList(new ArrayList<>());
-    public static ReentrantLock reentrantLock = new ReentrantLock();
-    static final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
     static private Integer obj = 0;
-    static boolean isOnceRun = false;
-    static String shared_file_des = "";
-    private static SharedPreferences sharedPreferences;
     private static Long timingCount;
     static Lock ground_truth_insert_locker = new ReentrantLock();
     static int waitVal = 1000;
     Map<String, String> configMap = new HashMap<>();
     static final String CONFIG_FILE_PATH = "/data/local/tmp/config.out";
+    public static Map<String, Integer> methodIdMap = new HashMap<>();
 
-    static int fd = -2;
+    public static int fd = -2;
     private Messenger mService;
 
     private Messenger replyMessenger = new Messenger(new MessengerHandler());
-
-
-//        List<ActivityRunner> runners = new ArrayList<>();
-//        views.stream().forEach(view -> runners.add(new ActivityRunner(view, pkgName)));
 
     static List<SequentialActivityRunner>
             sequentialRunners = new ArrayList<>();
 
     public static ArrayList<SideChannelValue> sideChannelValues = new ArrayList<>();
     public static ArrayList<GroundTruthValue> groundTruthValues = new ArrayList<>();
+    public static final List<MethodStat> methodStats = new CopyOnWriteArrayList<>();
 
     static {
         System.loadLibrary("native-lib");
@@ -143,7 +136,7 @@ public class SplashActivity extends AppCompatActivity {
     private AppPreferencesManager prefManager;
 
     @Override
-   protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Inside oncreate");
 
@@ -155,7 +148,7 @@ public class SplashActivity extends AppCompatActivity {
                             , Manifest.permission.WRITE_EXTERNAL_STORAGE
                             , Manifest.permission.CAMERA},
                     10);
-        }else{
+        } else {
             setUpandRun();
         }
 
@@ -175,7 +168,8 @@ public class SplashActivity extends AppCompatActivity {
             }
         }
     }
-    protected void setUpandRun(){
+
+    protected void setUpandRun() {
 
         fd = createAshMem();
         if (fd < 0) {
@@ -185,34 +179,26 @@ public class SplashActivity extends AppCompatActivity {
 
         IntStream.range(0, views.size())
                 .forEach(i -> sequentialRunners.add(new SequentialActivityRunner(views.get(i), pkgName, i)));
-//        views.stream().forEach(view -> sequentialRunners.add(new SequentialActivityRunner(view, pkgName,sequentialRunners.size())));
 
         copyOdex();
 
         configMap = readConfigFile();
-        configMap.entrySet().forEach(e-> Log.d("configMap: " , e.getKey()+" "+e.getValue()));
+//        configMap.entrySet().forEach(e -> Log.d("configMap: ", e.getKey() + " " + e.getValue()));
 
         loopCount = Integer.parseInt(Objects.requireNonNull(configMap.get("interLoopCount")));
         waitVal = Integer.parseInt(Objects.requireNonNull(configMap.get("delayWithinViews")));
 
-
         initializeDB();
+        initializeDBAop();
         Intent begin = new Intent(this, SideChannelJob.class);
         bindService(begin, conn, Context.BIND_AUTO_CREATE);
         startForegroundService(begin);
 
-//        #####
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-//        #####
-
-
-//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-//        startActivity(intent);
-//        Debug.startMethodTracing("sample");
 
         runView();
     }
@@ -221,10 +207,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "Inside onStart");
-//        SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_MULTI_PROCESS);
-//        String savedValueInWriterProcess = sharedPreferences.getString("fd", "");
-
-
     }
 
     @Override
@@ -237,10 +219,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
+
         Log.d(TAG, "Inside onActivityResult requestCode " + requestCode + " resultCode: " + resultCode);
 
         long startTime = System.currentTimeMillis();
-        int waitRnd = (int) (Math.random()*waitVal);
+        int waitRnd = (int) (Math.random() * waitVal);
         while (System.currentTimeMillis() - startTime < waitRnd
         ) {
         }
@@ -250,18 +235,21 @@ public class SplashActivity extends AppCompatActivity {
 
     private void runView() {
         Log.d(TAG + "#", "currentViewId:" + currentViewId);
+
         currentViewId++;
         if (currentViewId == sequentialRunners.size()) {
             if (currentLoopId >= loopCount) {
                 try {
 //                    Debug.stopMethodTracing();
-
+                    copyMethodMap();
                     Log.d(TAG + "#", getDatabasePath("SideScan").toString());
 
                     Process p = Runtime.getRuntime().exec("cp " + getDatabasePath("SideScan") + ".db /sdcard/Documents");
 //                    p.waitFor();
+//                    p = Runtime.getRuntime().exec("cp " + getDatabasePath("MainApp") + ".db /sdcard/Documents");
                     p = Runtime.getRuntime().exec("cp " + getDatabasePath("MainApp") + ".db /sdcard/Documents");
 //                    p.waitFor();
+
                 } catch (Exception e) {
                     Log.d(TAG + "#", e.toString());
                 }
@@ -290,40 +278,13 @@ public class SplashActivity extends AppCompatActivity {
 
             Log.d("weather:AddressScan2", "#" + inverseViewMap.get(view) + "_1#");
             Intent intent = new Intent();
-            configMap.entrySet().forEach(e-> intent.putExtra(e.getKey(), e.getValue()));
+            configMap.entrySet().forEach(e -> intent.putExtra(e.getKey(), e.getValue()));
             intent.setComponent(new ComponentName(pkgName,
                     pkgName + view));
 
-
-//            startActivity(intent);
             startActivityIfNeeded(intent, id + 1);
 
-//            CountDownTimer mcd = new CountDownTimer(1000, 1000) {
-//                public void onTick(long millisUntilFinished) {}
-//                public void onFinish() {
-//                    try
-//                    {
-//                        finishActivity(id);
-//                        Log.d(TAG, "inside mcd");
-//                    }
-//                    catch (Exception ex)
-//                    {}
-//                }
-//            }.start();
 
-
-//
-//
-////            finish();
-////            Log.d("###", view);
-//            Log.d("weather:AddressScan2",  "#"+inverseViewMap.get(view)+"#0#1");
-//            overridePendingTransition(0, 0);
-//            Intent intent = new Intent();
-//            intent.setComponent(new ComponentName(pkgName,
-//                    pkgName + view));
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//            startActivity(intent);
         }
     }
 
@@ -383,10 +344,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void copyOdex() {
         try {
-//            Map<String, String> configMap = new HashMap<>();
-//            List<String> configs = Files.lines(Paths.get("/sdcard/Documents/config/config.out")).collect(Collectors.toList());
-//            configs.stream().filter(c->c.contains(":")).forEach(c->configMap.put(c.split(":")[0], c.split(":")[1]));
-//
+
             String oatHome = "/sdcard/Documents/oatFolder/oat/arm64/";
             Optional<String> baseOdexLine = Files.lines(Paths.get("/proc/self/maps")).collect(Collectors.toList())
                     .stream().sequential().filter(s -> s.contains("woheller69") && s.contains("base.odex"))
@@ -396,11 +354,11 @@ public class SplashActivity extends AppCompatActivity {
                 String vdexpath = "/data/app/" + baseOdexLine.get().split("/data/app/")[1].replace("odex", "vdex");
 //                String odexRootPath = "/data/app/"+baseOdexLine.get().split("/data/app/")[1].replace("/oat/arm64/base.odex","*");
                 Log.d(TAG + "#", odexpath);
-                Log.d(TAG + "#", "cp " + odexpath + " "+oatHome);
-                Process p = Runtime.getRuntime().exec("cp " + odexpath + " "+oatHome);
+                Log.d(TAG + "#", "cp " + odexpath + " " + oatHome);
+                Process p = Runtime.getRuntime().exec("cp " + odexpath + " " + oatHome);
                 p.waitFor();
-                p = Runtime.getRuntime().exec("cp " + vdexpath + " "+oatHome);
-                Log.d(TAG + "#", "cp " + vdexpath + " "+oatHome);
+                p = Runtime.getRuntime().exec("cp " + vdexpath + " " + oatHome);
+                Log.d(TAG + "#", "cp " + vdexpath + " " + oatHome);
 
                 p.waitFor();
                 Log.d(TAG + "#", "odex copied");
@@ -412,6 +370,13 @@ public class SplashActivity extends AppCompatActivity {
         } catch (IOException | InterruptedException e) {
             Log.d(TAG + "#", e.toString());
         }
+    }
+
+    private void copyMethodMap() {
+        String methodMapString = methodIdMap.entrySet().parallelStream().map(Object::toString).collect(Collectors.joining("|"));
+        Log.d("MethodMap", methodMapString);
+        Log.d("MethodMapCount", String.valueOf(methodIdMap.size()));
+
     }
 
 
@@ -502,6 +467,23 @@ public class SplashActivity extends AppCompatActivity {
                 SideChannelContract.Columns.COUNT + " INTEGER);";
         db.execSQL(sSQL);
         sSQL = "DELETE FROM " + SideChannelContract.GROUND_TRUTH;
+        db.execSQL(sSQL);
+        db.close();
+    }
+
+    void initializeDBAop() {
+        // Creating the database file in the app sandbox
+        SQLiteDatabase db = getBaseContext().openOrCreateDatabase("MainApp.db",
+                MODE_PRIVATE, null);
+        Locale locale = new Locale("EN", "SG");
+        db.setLocale(locale);
+        // Creating the schema of the database
+        String sSQL = "CREATE TABLE IF NOT EXISTS " + SideChannelContract.GROUND_TRUTH_AOP + " (" +
+                SideChannelContract.Columns.METHOD_ID + " INTEGER NOT NULL, " +
+                SideChannelContract.Columns.START_COUNT + " INTEGER, " +
+                SideChannelContract.Columns.END_COUNT + " INTEGER);";
+        db.execSQL(sSQL);
+        sSQL = "DELETE FROM " + SideChannelContract.GROUND_TRUTH_AOP;
         db.execSQL(sSQL);
         db.close();
     }

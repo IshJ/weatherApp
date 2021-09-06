@@ -96,8 +96,7 @@ Java_org_woheller69_weather_activities_RainViewerActivity_stringFromJNI(
 }
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_org_woheller69_weather_activities_RainViewerActivity_GetTimingCount(JNIEnv *env,
-                                                                         jobject thiz) {
+Java_org_woheller69_weather_activities_RainViewerActivity_GetTimingCount(JNIEnv *env, jobject thiz) {
     long lp = get_timingCount(&g_lock, &timingCount);
     LOGD("rainviewer timing count %ld", lp);
 
@@ -106,8 +105,7 @@ Java_org_woheller69_weather_activities_RainViewerActivity_GetTimingCount(JNIEnv 
 }
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_org_woheller69_weather_activities_SplashActivity_GetTimingCount(JNIEnv *env,
-                                                                     jobject thiz) {
+Java_org_woheller69_weather_activities_SplashActivity_GetTimingCount(JNIEnv *env,jobject thiz) {
     long lp = get_timingCount(&g_lock, &timingCount);
     LOGD("rainviewer timing count %ld", lp);
 

@@ -350,14 +350,22 @@ public class CacheScan {
         int[] logs;
         long[] timingCounts;
         long[] addresses;
+        Log.d("sidescandb", " in notify " + times.length);
+
         if (times != null && times.length > 0) {
+            Log.d("sidescandb", " in notify if " );
+
+            timingCounts = GetTimingCounts();
+            Log.d("sidescandb", " times: " + times.length);
+
 //            int[] thresholds = GetThresholds();//Get the thresholds during the period.(when a function was activated, we record the threshold) In native-lib/CheckFlags.cpp
             logs = GetLogs();//Get all activated functions during the period. In native-lib/CheckFlags.cpp
-            timingCounts = GetTimingCounts();
+            Log.d("sidescandb", " logs: " + logs.length);
+
+
+
             addresses = GetAddresses();
-//            Log.d("sidescandb", " addresses: " + addresses.length);
-//            Log.d("sidescandb", " logs: " + logs.length);
-//            Log.d("sidescandb", " times: " + times.length);
+            Log.d("sidescandb", " addresses: " + addresses.length);
 //            if (addresses.length > 0) {
 //                Log.d("sidescandb", " addresses[0]: " + addresses[0]);
 //            }

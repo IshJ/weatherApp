@@ -134,7 +134,7 @@ Java_org_woheller69_weather_CacheScan_addr(JNIEnv *env, jobject thiz) {
 extern "C" JNIEXPORT jlongArray JNICALL
 Java_org_woheller69_weather_CacheScan_GetTimes(JNIEnv *env, jobject thiz) {
     length = log_length;
-//    LOGD("sidescandb Loglength %d", length);
+    LOGD("sidescandb GetTimes Loglength %d", length);
     if (length - 1 > 0) {
         jlongArray ja = env->NewLongArray(length);
         jlong *arr = env->GetLongArrayElements(ja, NULL);
@@ -147,7 +147,7 @@ Java_org_woheller69_weather_CacheScan_GetTimes(JNIEnv *env, jobject thiz) {
 
 extern "C" JNIEXPORT jlongArray JNICALL
 Java_org_woheller69_weather_CacheScan_GetAddresses(JNIEnv *env, jobject thiz) {
-//    LOGD("sidescandb Loglength %d", length);
+    LOGD("sidescandb GetAddresses Loglength %d", length);
     jlongArray ja = env->NewLongArray(length);
     jlong *arr = env->GetLongArrayElements(ja, NULL);
     memcpy(arr, addresses, sizeof(long) * length);
@@ -171,6 +171,7 @@ Java_org_woheller69_weather_CacheScan_GetThresholds(JNIEnv *env, jobject thiz) {
 //do not check the length because it only called after GetTimes.
 extern "C" JNIEXPORT jintArray JNICALL
 Java_org_woheller69_weather_CacheScan_GetLogs(JNIEnv *env, jobject thiz) {
+    LOGD("sidescandb getLogs");
     jintArray ja = env->NewIntArray(length);
     jint *arr = env->GetIntArrayElements(ja, NULL);
     memcpy(arr, logs, sizeof(int) * length);
@@ -183,6 +184,7 @@ Java_org_woheller69_weather_CacheScan_GetLogs(JNIEnv *env, jobject thiz) {
 
 extern "C" JNIEXPORT jlongArray JNICALL
 Java_org_woheller69_weather_CacheScan_GetTimingCounts(JNIEnv *env, jobject thiz) {
+    LOGD("sidescandb timingCounts %d", length);
     jlongArray ja = env->NewLongArray(length);
     jlong *arr = env->GetLongArrayElements(ja, NULL);
     memcpy(arr, timingCounts, sizeof(long) * length);

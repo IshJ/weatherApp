@@ -68,7 +68,8 @@ import java.util.stream.Collectors;
 import static org.woheller69.weather.JobInsertRunnable.insert_locker;
 import static org.woheller69.weather.activities.SplashActivity.cs;
 import static org.woheller69.weather.activities.SplashActivity.groundTruthValues;
-import static org.woheller69.weather.activities.SplashActivity.reentrantLock;
+
+import static org.woheller69.weather.activities.SplashActivity.methodStats;
 import static org.woheller69.weather.activities.SplashActivity.sideChannelValues;
 
 public class SideChannelJob extends Service {
@@ -132,7 +133,7 @@ public class SideChannelJob extends Service {
 //        sharedPreferences.edit().putString("fd", "56").commit();
         initializeDB();
         configMap = readConfigFile();
-        configMap.entrySet().forEach(e-> Log.d("configMap: " , e.getKey()+" "+e.getValue()));
+//        configMap.entrySet().forEach(e -> Log.d("configMap: ", e.getKey() + " " + e.getValue()));
         yieldVal = Integer.parseInt(Objects.requireNonNull(configMap.get("yield")));
 
 //        shared_mem_des = intent.getStringExtra("shared_map_ptr");
@@ -180,8 +181,11 @@ public class SideChannelJob extends Service {
 //                        setSharedMapChild(2, shared_mem_des.toCharArray());
 
 ////                        exec memory
-                        BigInteger odexMemExBegin = new BigInteger(getOdexBeginExAddress(), 16);
-                        Log.d("OdexScan::", "exec memory: " + odexMemExBegin.toString(16));
+                        String odexExLine = getOdexExLine();
+                        BigInteger odexMemExEnd = new BigInteger(odexExLine.split("-")[1], 16);
+                        BigInteger odexMemExBegin = new BigInteger(odexExLine.split("-")[0], 16);
+                        Log.d("OdexScan::", "exec memory begin: " + odexMemExBegin.toString(16));
+                        Log.d("OdexScan::", "exec memory end: " + odexMemExEnd.toString(16));
 ////                        exec offset
                         String execOffsetString = configMap.get("execOffset");
                         BigInteger execOffset = new BigInteger(execOffsetString, 16);
@@ -192,28 +196,27 @@ public class SideChannelJob extends Service {
 //                         exec memory-exec offset+4
 //                        odexMemExBegin = odexMemExBegin.subtract(execOffset).add(new BigInteger("4", 10));
                         // exec memory-exec offset
-                        odexMemExBegin = odexMemExBegin.add(execOffset);
 
                         odexMemMapBegin = new BigInteger(getOdexBeginAddress(), 16);
-                        odexMemMapBegin = odexMemMapBegin.add(execOffset);
+//                        odexMemMapBegin = odexMemMapBegin.add(execOffset);
 
                         Log.d(TAG, "Odex starting Address: " + odexMemMapBegin.toString(16));
                         Log.d(TAG, "Odex x starting Address: " + odexMemExBegin.toString(16));
 
 //##########
 
-                        String addressForAdjusting = configMap.get("addressForAdjusting");
-                        String[] adjustingAddressesString = addressForAdjusting.split(",");
-                        long[] adjustingAddressesLong = new long[adjustingAddressesString.length];
-                        for (int i = 0; i < adjustingAddressesString.length; i++) {
-//                          (exec memory-exec offset)+code offset
-                            adjustingAddressesString[i] = odexMemExBegin
-                                    .add(new BigInteger(adjustingAddressesString[i], 16)).toString(10);
-                            adjustingAddressesLong[i] = Long.parseLong(adjustingAddressesString[i]);
-                        }
-                        if(("1").equals(configMap.get("isAdjust"))) {
-                            adjustThreshold(adjustingAddressesLong, adjustingAddressesLong.length);
-                        }
+//                        String addressForAdjusting = configMap.get("addressForAdjusting");
+//                        String[] adjustingAddressesString = addressForAdjusting.split(",");
+//                        long[] adjustingAddressesLong = new long[adjustingAddressesString.length];
+//                        for (int i = 0; i < adjustingAddressesString.length; i++) {
+////                          (exec memory-exec offset)+code offset
+//                            adjustingAddressesString[i] = odexMemExBegin
+//                                    .add(new BigInteger(adjustingAddressesString[i], 16)).toString(10);
+//                            adjustingAddressesLong[i] = Long.parseLong(adjustingAddressesString[i]);
+//                        }
+//                        if (("1").equals(configMap.get("isAdjust"))) {
+//                            adjustThreshold(adjustingAddressesLong, adjustingAddressesLong.length);
+//                        }
 
 
 //##########
@@ -231,14 +234,17 @@ public class SideChannelJob extends Service {
                         for (int i = 0; i < offsets.length; i++) {
 //                          (exec memory-exec offset)+code offset
                             offsets[i] = odexMemMapBegin.add(new BigInteger(offsets[i], 16))
-//                                    .add(new BigInteger("4",16))
                                     .toString(10);
-                            longOffsets[i] = Long.parseLong(offsets[i]);
+                            if (odexMemExEnd.compareTo(new BigInteger(offsets[i], 10)) > 0) {
+                                longOffsets[i] = Long.parseLong(offsets[i]);
+                            } else {
+                                Log.d("odex ", offsets[i] + new BigInteger(offsets[i],10).toString(16) + " is out of range");
+                            }
 //                            intOffsets[i] = Integer.parseInt(offsets[i]);
                         }
-
+Log.d("odex", " end of for");
 //                        ShmClientLib.setVal(5,10);
-                        Log.d(TAG, "scanned offsets:" + String.join(",", offsets));
+                        Log.d(TAG, "odex scanned offsets:" + String.join(",", offsets));
 
                         while (true) {
 //                            Log.d("rainviewerashmem", "side " + ShmLib.getValue("sh1",5));
@@ -246,7 +252,7 @@ public class SideChannelJob extends Service {
                             localCount++;
                             if (localCount % yieldVal == 0) {
                                 localCount = 0;
-                                long timeCount = scan7(longOffsets, longOffsets.length, pauseVal, hitVal, resetHitCounter );
+                                long timeCount = scan7(longOffsets, longOffsets.length, pauseVal, hitVal, resetHitCounter);
                                 if (fd < 0) {
                                     Log.d("ashmem ", "not set yet" + fd);
                                 } else {
@@ -306,6 +312,10 @@ public class SideChannelJob extends Service {
                             scValueCount = 0;
                             cumulativeTime = 0;
                         }
+
+                        if (methodStats.size() > 50) {
+                            new Thread(new JobMainAppInsertRunnable(getBaseContext())).start();
+                        }
                     }//while
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -347,7 +357,6 @@ public class SideChannelJob extends Service {
 
         try {
 
-            Log.d(TAG, "%%%% spLASH! grep woheller69 /proc/self/maps | grep odex");
             Optional<String> odc = Files.lines(Paths.get("/proc/self/maps")).collect(Collectors.toList())
                     .stream().sequential().filter(s -> s.contains("woheller69") && s.contains("base.odex"))
                     .findFirst().map(s -> new StringTokenizer(s, "-")).filter(StringTokenizer::hasMoreElements)
@@ -362,66 +371,33 @@ public class SideChannelJob extends Service {
         return "77a6425000";
     }
 
-    public String
-    getOdexBeginExAddress() {
+    public String getOdexExLine() {
 
         boolean isMemMapping = false;
         // get Process ID of the running app
         int pid = android.os.Process.myPid();
-        Log.d(TAG, "%%%% spLASH! pid " + pid);
+        Log.d(TAG, "pid " + pid);
 
         try {
 
-            List<String> lines = Files.lines(Paths.get("/proc/self/maps")).collect(Collectors.toList());
-            Optional<String> odexFilePathOpt = lines.stream().sequential().filter(s -> s.contains("woheller69") && s.contains("base.odex"))
-                    .findAny();
-            String odexFilePath = "";
-            long startInd = -1l;
-            if(odexFilePathOpt.isPresent())
-            {
-                   odexFilePath = "/data/app/"+odexFilePathOpt.get().split("/data/app/")[1];
-                   if(isMemMapping) {
-                       startInd = getOdexBegin(odexFilePath);
-                       Log.d("odex begin ", String.valueOf(startInd));
-                   }
-            }
-
-
-            for (String line : lines) {
-                if (line.contains("odex")) {
-                    Log.d("OdexScan\n ", line);
-                }
-            }
-            if(isMemMapping && startInd>0){
-                String odexBegin = new BigInteger(String.valueOf(startInd),10).toString(16);
-                Log.d("odex sc mapped", odexBegin);
-                return odexBegin;
-            }
-
-//            for (String line : lines) {
-//                if (line.contains("odex")) {
-//                    Log.d("OdexScan\n ", line);
-//                }
-//            }
-
             Optional<String> odc = Files.lines(Paths.get("/proc/self/maps")).collect(Collectors.toList())
                     .stream().sequential().filter(s -> s.contains("woheller69") && s.contains("base.odex") && s.contains("r-xp"))
-                    .findFirst().map(s -> new StringTokenizer(s, "-")).filter(StringTokenizer::hasMoreElements)
-                    .map(StringTokenizer::nextToken);
-            Log.d(TAG, "%%%% spLASH! odc " + odc);
+                    .findFirst();
+
+            Log.d(TAG, "odc " + odc);
             if (odc.isPresent()) {
-                return odc.get();
+                return odc.get().split("r-xp")[0].trim();
             }
         } catch (Exception e) {
             Log.d(TAG, "ERROR!!!!" + e.toString());
         }
-        return "77a6425000";
+        return "";
     }
 
     public String[] getMethodOffsets() {
 
         //SideChannelOffsets
-        return new String[]{"000000","6c2404","6c2428","6c243c","6c2454","6c246c","6c2494","6c24c0"};
+        return new String[]{"000000", "6c2404", "6c2428", "6c243c", "6c2454", "6c246c", "6c2494", "6c24c0"};
 //        return new String[]{"000000", "123"};
     }
 
@@ -448,10 +424,6 @@ public class SideChannelJob extends Service {
     public native void setSharedMapChild(int shared_mem_ptr, char[] fileDes);
 
     public native long getOdexBegin(String fileName);
-
-
-
-
 
 
     /**
@@ -595,7 +567,7 @@ public class SideChannelJob extends Service {
                 SideChannelContract.Columns.ADDRESS + " TEXT, " +
                 SideChannelContract.Columns.COUNT + " INTEGER);";
         db.execSQL(sSQL);
-        sSQL = "DELETE FROM "+SideChannelContract.TABLE_NAME;
+        sSQL = "DELETE FROM " + SideChannelContract.TABLE_NAME;
         db.execSQL(sSQL);
         db.close();
     }
@@ -604,7 +576,7 @@ public class SideChannelJob extends Service {
         Map<String, String> configMap = new HashMap<>();
         try {
             List<String> configs = Files.lines(Paths.get(CONFIG_FILE_PATH)).collect(Collectors.toList());
-            configs.stream().filter(c -> c.contains(":")).forEach(c -> configMap.put(c.split(":")[0].trim(), c.split(":")[1].trim()));
+            configs.stream().filter(c -> !c.contains("//") && c.contains(":")).forEach(c -> configMap.put(c.split(":")[0].trim(), c.split(":")[1].trim()));
 //            configMap.entrySet().forEach(e-> Log.d("configMap: " , e.getKey()+" "+e.getValue()));
 
         } catch (IOException e) {

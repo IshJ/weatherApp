@@ -84,7 +84,8 @@ static void is_address_in_use7(libflush_session_t *libflush_session, void *addre
                                long *timingCount,
                                long *times, int *logs, long *timingCounts, long *addresses,
                                int *log_length, pthread_mutex_t *g_lock, long *buffer,
-                               int *hitCounts, int *pauses, int addressId, int pauseVal, int hitVal, bool resetHitCounter);
+                               int *hitCounts, int *pauses, int addressId, int pauseVal, int hitVal,
+                               bool resetHitCounter);
 
 static int
 is_address_in_use_adjust(libflush_session_t *libflush_session, void *address, int threshold);
@@ -645,7 +646,7 @@ int hit7(jlong *param, int length, int threshold, long *timingCount, long *times
 //        LOGD("scan4 hit6 %zu ", *(param + i));
         is_address_in_use7(libflush_session, *(param + i), threshold, timingCount, times, logs,
                            timingCounts, addresses, log_length, g_lock, buffer, hitCounts, pauses,
-                           i, pauseVal, hitVal,resetHitCounter);
+                           i, pauseVal, hitVal, resetHitCounter);
         *timingCount = (*timingCount + 1);
         *buffer = *timingCount;
     }
@@ -1005,10 +1006,11 @@ is_address_in_use7(libflush_session_t *libflush_session, void *address, int thre
 //    LOGD(" #1 Count %d Address: %lu Time taken: %d",*timingCount,  address, scanTime);
 //to filter hits
 
-//    LOGD("hitcounter %d pause %d hit %d scantime %d", i, pauses[i], hitCounts[i], scanTime);
+//    LOGD("threshold %d hitcounter %d pause %d hit %d scantime %d", threshold, i, pauses[i],
+//         hitCounts[i], scanTime);
 
     if (scanTime < 215) {
-        if (pauses[i] > pauseVal || hitCounts[i]>0) {
+        if (pauses[i] > pauseVal || hitCounts[i] > 0) {
             hitCounts[i]++;
         }
         pauses[i] = 0;
@@ -1029,12 +1031,12 @@ is_address_in_use7(libflush_session_t *libflush_session, void *address, int thre
     struct timeval tv;//for quering time stamp
     gettimeofday(&tv, NULL);
     pthread_mutex_lock(g_lock);
-    if (hitCounts[i] > hitVal ) {
-
-        if(resetHitCounter){
+    if (hitCounts[i] > hitVal) {
+//        LOGD("sidescandb inside hit");
+        if (resetHitCounter) {
             LOGD("resetHitCounter: %d", resetHitCounter);
 
-            hitCounts[i]=0;
+            hitCounts[i] = 0;
         }
         logs[*log_length] = scanTime;
         addresses[*log_length] = address;
