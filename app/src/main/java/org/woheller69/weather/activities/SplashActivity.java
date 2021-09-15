@@ -106,7 +106,7 @@ public class SplashActivity extends AppCompatActivity {
 
     public static ArrayList<SideChannelValue> sideChannelValues = new ArrayList<>();
     public static ArrayList<GroundTruthValue> groundTruthValues = new ArrayList<>();
-    public static final List<MethodStat> methodStats = new CopyOnWriteArrayList<>();
+    public static final List<MethodStat> methodStats = new ArrayList<>();
 
     static {
         System.loadLibrary("native-lib");

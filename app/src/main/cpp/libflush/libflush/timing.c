@@ -36,11 +36,11 @@ static void* thread_counter_func(void*);
 
 bool thread_counter_init(libflush_session_t* session, libflush_session_args_t* args)
 {
-  LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER inside init");
+//  LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER inside init");
   if (session == NULL) {
     return false;
   }
-  LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER session not null");
+//  LOGD("Timer TIME_SOURCE TIME_SOURCE_THREAD_COUNTER session not null");
 
   session->thread_counter.data.cpu = (args != NULL) ? (ssize_t) args->bind_to_cpu : -1;
   session->thread_counter.data.session = session;

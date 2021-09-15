@@ -1,2 +1,933 @@
 ninja: Entering directory `/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/debug/arm64-v8a'
-ninja: no work to do.
+[1/19] Building C object libflush/CMakeFiles/flush.dir/libflush/utils.c.o
+[2/19] Building C object libflush/CMakeFiles/flush.dir/libflush/armv8/libflush.c.o
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.c:3:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.h:8:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/flush.h:9:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("DC CIVAC, %0" :: "r"(address));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/flush.h:10:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("DSB ISH");
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/flush.h:11:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("ISB");
+  ^
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.c:3:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.h:9:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:7:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:9:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("LDR %0, [%1]\n\t"
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:10:15: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+      : "=r" (value)
+              ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:9:22: note: use constraint modifier "w"
+  asm volatile ("LDR %0, [%1]\n\t"
+                     ^~
+                     %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:18:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("DSB SY");
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:19:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("ISB");
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:25:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("PRFM PLDL3KEEP, [%x0]" :: "p" (pointer));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:26:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("PRFM PLDL2KEEP, [%x0]" :: "p" (pointer));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:27:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("PRFM PLDL1KEEP, [%x0]" :: "p" (pointer));
+  ^
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.c:3:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.h:9:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:24:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCCNTR_EL0" : "=r" (result));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:36:15: warning: invalid conversion specifier ',' [-Wformat-invalid-specifier]
+  LOGD("MRS %0, PMCR_EL0");
+            ~~^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/../logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.c:3:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.h:9:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:37:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:37:43: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:37:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:42:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:42:44: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:42:31: note: use constraint modifier "w"
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+                              ^~
+                              %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:45:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:45:49: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:45:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:47:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:47:50: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value));
+                                                 ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:47:37: note: use constraint modifier "w"
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value));
+                                    ^~
+                                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:57:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:57:43: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:57:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:62:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value & ~mask));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:62:44: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value & ~mask));
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:62:31: note: use constraint modifier "w"
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value & ~mask));
+                              ^~
+                              %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:65:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:65:49: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:65:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:68:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value & ~mask));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:68:50: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value & ~mask));
+                                                 ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:68:37: note: use constraint modifier "w"
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value & ~mask));
+                                    ^~
+                                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:75:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:75:43: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:75:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:77:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:77:44: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:77:31: note: use constraint modifier "w"
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+                              ^~
+                              %w0
+32 warnings generated.
+[3/19] Building C object libflush/CMakeFiles/flush.dir/libflush/timing.c.o
+[4/19] Building C object libflush/CMakeFiles/flush.dir/libflush/eviction/eviction.c.o
+[5/19] Building C object libflush/CMakeFiles/flush.dir/libflush/calibrate.c.o
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/calibrate.c:13:25: warning: named variadic macros are a GNU extension [-Wvariadic-macros]
+#define log_err(fmt,args...) __android_log_print(ANDROID_LOG_ERROR, TAG_NAME, (const char *) fmt, ##args)
+                        ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/calibrate.c:58:43: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+      LOGD("index %d, Hit %d, Miss %d", i,hit_histogram[i],miss_histogram[i]);
+                          ~~              ^~~~~~~~~~~~~~~~
+                          %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/calibrate.c:58:60: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+      LOGD("index %d, Hit %d, Miss %d", i,hit_histogram[i],miss_histogram[i]);
+                                   ~~                      ^~~~~~~~~~~~~~~~~
+                                   %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/calibrate.c:87:63: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+  LOGD("cache %d, mem %d, max cache %d, max mem %d",cache,mem,max_cache,max_mem);
+                                    ~~                        ^~~~~~~~~
+                                    %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/calibrate.c:87:73: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+  LOGD("cache %d, mem %d, max cache %d, max mem %d",cache,mem,max_cache,max_mem);
+                                                ~~                      ^~~~~~~
+                                                %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/calibrate.c:19:10: warning: unused variable 'min_cache' [-Wunused-variable]
+  size_t min_cache = 300;
+         ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/calibrate.c:21:10: warning: unused variable 'min_mem' [-Wunused-variable]
+  size_t min_mem = 300;
+         ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/calibrate.c:86:7: warning: unused variable 'threshold' [-Wunused-variable]
+  int threshold = mem - (mem - cache) / 2;
+      ^
+8 warnings generated.
+[6/19] Building C object libflush/CMakeFiles/flush.dir/libflush/lock.c.o
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/lock.c:21:5: warning: static function 'memcpy' is used in an inline function with external linkage [-Wstatic-in-inline]
+    memcpy(&(lock->attr), attr, sizeof(lock_attr_t));
+    ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/lock.h:42:1: note: use 'static' to give inline function 'tal_init' internal linkage
+void tal_init(lock_t* lock, lock_attr_t* attr);
+^
+static 
+/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/string.h:58:7: note: 'memcpy' declared here
+void* memcpy(void* const dst __pass_object_size0, const void* src, size_t copy_amount)
+      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/lock.c:41:3: warning: static function 'atomic_flag_clear' is used in an inline function with external linkage [-Wstatic-in-inline]
+  atomic_flag_clear(&(lock->cat));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/lock.h:42:1: note: use 'static' to give inline function 'tal_init' internal linkage
+void tal_init(lock_t* lock, lock_attr_t* attr);
+^
+static 
+/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/9.0.8/include/stdatomic.h:381:22: note: 'atomic_flag_clear' declared here
+static __inline void atomic_flag_clear(volatile atomic_flag *__object) {
+                     ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/lock.c:58:10: warning: static function 'atomic_flag_test_and_set' is used in an inline function with external linkage [-Wstatic-in-inline]
+  while (atomic_flag_test_and_set(&lock->cat)) {
+         ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/lock.h:43:1: note: use 'static' to give inline function 'tal_lock' internal linkage
+void tal_lock(lock_t* lock);
+^
+static 
+/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/9.0.8/include/stdatomic.h:377:22: note: 'atomic_flag_test_and_set' declared here
+static __inline bool atomic_flag_test_and_set(volatile atomic_flag *__object) {
+                     ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/lock.c:76:3: warning: static function 'atomic_flag_clear' is used in an inline function with external linkage [-Wstatic-in-inline]
+  atomic_flag_clear(&(lock->cat));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/lock.h:44:1: note: use 'static' to give inline function 'tal_unlock' internal linkage
+void tal_unlock(lock_t* lock);
+^
+static 
+/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/9.0.8/include/stdatomic.h:381:22: note: 'atomic_flag_clear' declared here
+static __inline void atomic_flag_clear(volatile atomic_flag *__object) {
+                     ^
+4 warnings generated.
+[7/19] Building C object libflush/CMakeFiles/flush.dir/libflush/libflush.c.o
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/libflush.c:26:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.h:8:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/flush.h:9:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("DC CIVAC, %0" :: "r"(address));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/flush.h:10:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("DSB ISH");
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/flush.h:11:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("ISB");
+  ^
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/libflush.c:26:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.h:9:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:7:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:9:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("LDR %0, [%1]\n\t"
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:10:15: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+      : "=r" (value)
+              ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:9:22: note: use constraint modifier "w"
+  asm volatile ("LDR %0, [%1]\n\t"
+                     ^~
+                     %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:18:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("DSB SY");
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:19:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("ISB");
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:25:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("PRFM PLDL3KEEP, [%x0]" :: "p" (pointer));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:26:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("PRFM PLDL2KEEP, [%x0]" :: "p" (pointer));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:27:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile ("PRFM PLDL1KEEP, [%x0]" :: "p" (pointer));
+  ^
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/libflush.c:26:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.h:9:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:24:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCCNTR_EL0" : "=r" (result));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:36:15: warning: invalid conversion specifier ',' [-Wformat-invalid-specifier]
+  LOGD("MRS %0, PMCR_EL0");
+            ~~^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/../logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/libflush.c:26:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/libflush.h:9:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:37:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:37:43: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:37:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:42:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:42:44: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:42:31: note: use constraint modifier "w"
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+                              ^~
+                              %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:45:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:45:49: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:45:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:47:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:47:50: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value));
+                                                 ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:47:37: note: use constraint modifier "w"
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value));
+                                    ^~
+                                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:57:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:57:43: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:57:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:62:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value & ~mask));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:62:44: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value & ~mask));
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:62:31: note: use constraint modifier "w"
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value & ~mask));
+                              ^~
+                              %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:65:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:65:49: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:65:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCNTENSET_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:68:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value & ~mask));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:68:50: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value & ~mask));
+                                                 ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:68:37: note: use constraint modifier "w"
+  asm volatile("MSR PMCNTENSET_EL0, %0" : : "r" (value & ~mask));
+                                    ^~
+                                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:75:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:75:43: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:75:21: note: use constraint modifier "w"
+  asm volatile("MRS %0, PMCR_EL0" : "=r" (value));
+                    ^~
+                    %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:77:3: warning: extension used [-Wlanguage-extension-token]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:77:44: warning: value size does not match register size specified by the constraint and modifier [-Wasm-operand-widths]
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/timing.h:77:31: note: use constraint modifier "w"
+  asm volatile("MSR PMCR_EL0, %0" : : "r" (value));
+                              ^~
+                              %w0
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/libflush.c:341:5: warning: static function 'arm_v8_access_memory' is used in an inline function with external linkage [-Wstatic-in-inline]
+    arm_v8_access_memory(address);
+    ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/../libflush.h:103:1: note: use 'static' to give inline function 'libflush_access_memory' internal linkage
+void libflush_access_memory(void *address);
+^
+static 
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:6:1: note: 'arm_v8_access_memory' declared here
+arm_v8_access_memory(void* pointer)
+^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/libflush.c:400:5: warning: static function 'arm_v8_memory_barrier' is used in an inline function with external linkage [-Wstatic-in-inline]
+    arm_v8_memory_barrier();
+    ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/../libflush.h:141:1: note: use 'static' to give inline function 'libflush_memory_barrier' internal linkage
+void libflush_memory_barrier();
+^
+static 
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/armv8/memory.h:16:1: note: 'arm_v8_memory_barrier' declared here
+arm_v8_memory_barrier(void)
+^
+34 warnings generated.
+[8/19] Building C object libflush/CMakeFiles/flush.dir/libflush/hit.c.o
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:202:60: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                        LOGD("Camera hit %d-%d-%d.", j, i, count);
+                                               ~~          ^~~~~
+                                               %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:205:25: warning: expression result unused [-Wunused-value]
+                        i;//1XXXX means camera set(it's only for our data collection and analysis)
+                        ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:224:63: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                        LOGD("Audio hit %d-%d-%d.", j + 1, i, count);
+                                              ~~              ^~~~~
+                                              %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:251:53: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                        LOGD("Cache hit %d-%d.", j, count);
+                                           ~~       ^~~~~
+                                           %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:171:66: warning: unused parameter 'times' [-Wunused-parameter]
+              int *continueRun, int threshold, int *flags, long *times, int *thresholds, int *logs,
+                                                                 ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:171:78: warning: unused parameter 'thresholds' [-Wunused-parameter]
+              int *continueRun, int threshold, int *flags, long *times, int *thresholds, int *logs,
+                                                                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:171:95: warning: unused parameter 'logs' [-Wunused-parameter]
+              int *continueRun, int threshold, int *flags, long *times, int *thresholds, int *logs,
+                                                                                              ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:200:31: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                    if (count <= threshold) {
+                        ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:222:31: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                    if (count <= threshold) {
+                        ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:241:27: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                if (count <= threshold) {
+                    ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:332:48: warning: data argument not used by format string [-Wformat-extra-args]
+                    LOGD("Compiler activated", j, count, addr[j]);
+                         ~~~~~~~~~~~~~~~~~~~~  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:273:85: warning: unused parameter 'camera_audio' [-Wunused-parameter]
+stage1_(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
+                                                                                    ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:345:84: warning: unused parameter 'camera_audio' [-Wunused-parameter]
+stage1(int *arr, size_t threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
+                                                                                   ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:432:81: warning: unused parameter 'camera_audio' [-Wunused-parameter]
+adjust_threshold(int threshold, int *length_of_camera_audio, size_t *addr, int *camera_audio,
+                                                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:433:23: warning: unused parameter 'finishtrial1' [-Wunused-parameter]
+                 int *finishtrial1) {
+                      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:454:27: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                if (count <= threshold) {
+                    ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:466:27: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                if (count <= threshold) {
+                    ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:512:27: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                if (count <= threshold) {
+                    ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:537:26: warning: unused parameter 'g_lock' [-Wunused-parameter]
+int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int threshold, int *flags,
+                         ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:537:38: warning: unused parameter 'compiler_position' [-Wunused-parameter]
+int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int threshold, int *flags,
+                                     ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:537:62: warning: unused parameter 'continueRun' [-Wunused-parameter]
+int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int threshold, int *flags,
+                                                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:537:95: warning: unused parameter 'flags' [-Wunused-parameter]
+int hit(pthread_mutex_t *g_lock, int compiler_position, int *continueRun, int threshold, int *flags,
+                                                                                              ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:538:15: warning: unused parameter 'times' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+              ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:538:27: warning: unused parameter 'thresholds' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:538:44: warning: unused parameter 'logs' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:538:55: warning: unused parameter 'log_length' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+                                                      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:538:71: warning: unused parameter 'sum_length' [-Wunused-parameter]
+        long *times, int *thresholds, int *logs, int *log_length, int sum_length,
+                                                                      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:539:17: warning: unused parameter 'addr' [-Wunused-parameter]
+        size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio) {
+                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:539:28: warning: unused parameter 'camera_pattern' [-Wunused-parameter]
+        size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio) {
+                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:539:49: warning: unused parameter 'audio_pattern' [-Wunused-parameter]
+        size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio) {
+                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:539:69: warning: unused parameter 'length_of_camera_audio' [-Wunused-parameter]
+        size_t *addr, int *camera_pattern, int *audio_pattern, int *length_of_camera_audio) {
+                                                                    ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:571:11: warning: unused variable 'address' [-Wunused-variable]
+    void *address = &foo;
+          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:561:17: warning: unused parameter 'param' [-Wunused-parameter]
+int hit2(char **param, int length, int threshold) {
+                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:593:27: warning: unused parameter 'length' [-Wunused-parameter]
+int hit5(void *param, int length, int threshold) {
+                          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:617:46: warning: incompatible integer to pointer conversion passing 'jlong' (aka 'long') to parameter of type 'void *' [-Wint-conversion]
+        is_address_in_use1(libflush_session, *(param + i), threshold, count);
+                                             ^~~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:81:64: note: passing argument to parameter 'address' here
+is_address_in_use1(libflush_session_t *libflush_session, void *address, int threshold, int count);
+                                                               ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:608:12: warning: unused variable 'count2' [-Wunused-variable]
+    size_t count2;
+           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:648:46: warning: incompatible integer to pointer conversion passing 'jlong' (aka 'long') to parameter of type 'void *' [-Wint-conversion]
+        is_address_in_use7(libflush_session, *(param + i), threshold, timingCount, times, logs,
+                                             ^~~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:83:76: note: passing argument to parameter 'address' here
+static void is_address_in_use7(libflush_session_t *libflush_session, void *address, int threshold,
+                                                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:638:12: warning: unused variable 'count2' [-Wunused-variable]
+    size_t count2;
+           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:682:68: warning: incompatible integer to pointer conversion passing 'jlong' (aka 'long') to parameter of type 'void *' [-Wint-conversion]
+            threshold = is_address_in_use_adjust(libflush_session, *(param + i), threshold);
+                                                                   ^~~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:91:70: note: passing argument to parameter 'address' here
+is_address_in_use_adjust(libflush_session_t *libflush_session, void *address, int threshold);
+                                                                     ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:672:12: warning: unused variable 'count2' [-Wunused-variable]
+    size_t count2;
+           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:722:48: warning: format specifies type 'unsigned long' but the argument has type 'void *' [-Wformat]
+    LOGD("OdexScan:: Address:start for : %lu", param);
+                                         ~~~   ^~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:727:47: warning: format specifies type 'unsigned long' but the argument has type 'void *' [-Wformat]
+    LOGD("OdexScan:: Address:finished : %lu", param);
+                                        ~~~   ^~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:709:37: warning: unused parameter 'length' [-Wunused-parameter]
+int scanOdexMemory(void *param, int length, int threshold) {
+                                    ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:709:49: warning: unused parameter 'threshold' [-Wunused-parameter]
+int scanOdexMemory(void *param, int length, int threshold) {
+                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:771:11: warning: unused variable 'address' [-Wunused-variable]
+    void *address = &foo;
+          ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:765:36: warning: unused parameter 'libflush_session' [-Wunused-parameter]
+bool scan_cfg1(libflush_session_t *libflush_session, int threshold) {
+                                   ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:765:58: warning: unused parameter 'threshold' [-Wunused-parameter]
+bool scan_cfg1(libflush_session_t *libflush_session, int threshold) {
+                                                         ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:838:65: warning: unused parameter 'times' [-Wunused-parameter]
+             int *continueRun, int threshold, int *flags, long *times, int *thresholds, int *logs,
+                                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:838:77: warning: unused parameter 'thresholds' [-Wunused-parameter]
+             int *continueRun, int threshold, int *flags, long *times, int *thresholds, int *logs,
+                                                                            ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:838:94: warning: unused parameter 'logs' [-Wunused-parameter]
+             int *continueRun, int threshold, int *flags, long *times, int *thresholds, int *logs,
+                                                                                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:876:31: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+                    if (count <= threshold) {
+                        ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:910:23: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+            if (count <= threshold) {
+                ~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:954:50: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        libflush_flush(libflush_session, address + i);
+                                         ~~~~~~~ ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:955:78: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        count1 = libflush_reload_address_and_flush(libflush_session, address + i);
+                                                                     ~~~~~~~ ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:956:68: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        count2 = libflush_reload_address(libflush_session, address + i);
+                                                           ~~~~~~~ ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:957:68: warning: arithmetic on a pointer to void is a GNU extension [-Wpointer-arith]
+        count2 = libflush_reload_address(libflush_session, address + i);
+                                                           ~~~~~~~ ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:959:60: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+        LOGD("AddressScan: not_in_cache: %d in_cache: %d", count1, count2);
+                                         ~~                ^~~~~~
+                                         %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:959:68: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+        LOGD("AddressScan: not_in_cache: %d in_cache: %d", count1, count2);
+                                                      ~~           ^~~~~~
+                                                      %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:966:16: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+    if (count1 <= threshold) {
+        ~~~~~~ ^  ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:976:9: warning: unused variable 'i' [-Wunused-variable]
+    int i = 0;
+        ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:973:77: warning: unused parameter 'threshold' [-Wunused-parameter]
+is_address_in_use1(libflush_session_t *libflush_session, void *address, int threshold, int count) {
+                                                                            ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:973:92: warning: unused parameter 'count' [-Wunused-parameter]
+is_address_in_use1(libflush_session_t *libflush_session, void *address, int threshold, int count) {
+                                                                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1043:32: warning: incompatible pointer to integer conversion assigning to 'long' from 'void *' [-Wint-conversion]
+        addresses[*log_length] = address;
+                               ^ ~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:994:68: warning: unused parameter 'buffer' [-Wunused-parameter]
+                   int *log_length, pthread_mutex_t *g_lock, long *buffer, int *hitCounts,
+                                                                   ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1013:18: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+    if (scanTime < threshold) {
+        ~~~~~~~~ ^ ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1062:1: warning: control reaches end of non-void function [-Wreturn-type]
+}
+^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1071:33: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+    if (threshold > 0 && count2 < threshold) {
+                         ~~~~~~ ^ ~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1072:20: warning: comparison of integers of different signs: 'size_t' (aka 'unsigned long') and 'int' [-Wsign-compare]
+        if (count2 > threshold - 20) {
+            ~~~~~~ ^ ~~~~~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1109:47: warning: format specifies type 'int' but the argument has type 'int *' [-Wformat]
+    LOGD("shared_data_shm_fd shared_data %d", shared_data);
+                                         ~~   ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1117:26: warning: unused parameter 'shared_data_shm_fd' [-Wunused-parameter]
+int set_shared_memfd(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *shared_mem_lock) {
+                         ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1117:51: warning: unused parameter 'shared_data' [-Wunused-parameter]
+int set_shared_memfd(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *shared_mem_lock) {
+                                                  ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1117:81: warning: unused parameter 'shared_mem_lock' [-Wunused-parameter]
+int set_shared_memfd(int shared_data_shm_fd, int *shared_data, pthread_mutex_t *shared_mem_lock) {
+                                                                                ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1142:35: warning: incompatible pointer types passing 'jchar *' (aka 'unsigned short *') to parameter of type 'const char *' [-Wincompatible-pointer-types]
+    int shared_data_shm_fd = open(fileDes, O_RDONLY);
+                                  ^~~~~~~
+/home/ishadi/Android/Sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/bits/fortify/fcntl.h:63:47: note: passing argument to parameter 'pathname' here
+int open(const char* const __pass_object_size pathname, int flags)
+                                              ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1156:53: warning: format specifies type 'int' but the argument has type 'int *' [-Wformat]
+    LOGD("shared_data_shm_fd child shared_data %d", shared_data);
+                                               ~~   ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/logoutput.h:5:66: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG_NAME,__VA_ARGS__) // 定义LOGD类型
+                                                                 ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:1195:1: warning: control reaches end of non-void function [-Wreturn-type]
+}
+^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:836:1: warning: unused function 'attack_slave' [-Wunused-function]
+attack_slave(libflush_session_t *libflush_session, int sum_length, pthread_mutex_t *g_lock,
+^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libflush/hit.c:169:1: warning: unused function 'attack_slaveX' [-Wunused-function]
+attack_slaveX(libflush_session_t *libflush_session, int sum_length, pthread_mutex_t *g_lock,
+^
+77 warnings generated.
+[9/19] Linking C shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/libflush/libs/arm64-v8a/libflush.so
+[10/19] Building CXX object CMakeFiles/native-lib.dir/fakedl.cpp.o
+[11/19] Building CXX object dexinfo/CMakeFiles/dexinfo.dir/dexinfo.cpp.o
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.cpp:27:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.h:305:22: warning: address of array 'classDefItem.source_file_idx' will always evaluate to 'true' [-Wpointer-bool-conversion]
+    if (classDefItem.source_file_idx){
+    ~~  ~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.h:307:44: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        class_name = printUnsignedLebValue("(%s)\n",stringData,strIdOff,DexFile);
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.h:322:22: warning: address of array 'classDefItem.class_idx' will always evaluate to 'true' [-Wpointer-bool-conversion]
+    if (classDefItem.class_idx){
+    ~~  ~~~~~~~~~~~~~^~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.h:324:31: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        printUnsignedLebValue("%s\n",stringData,strIdOff,DexFile);
+                              ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.cpp:159:87: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+                        printTypeDesc(string_id_list,type_id_list,*class_def_item.superclass_idx,input,str,"%s\n");
+                                                                                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.cpp:163:78: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+                        printStringValue(string_id_list,*class_def_item.source_file_idx,input,str,"%s\n"); //causes a seg fault on some dex files
+                                                                                                  ^
+6 warnings generated.
+[12/19] Building CXX object CMakeFiles/native-lib.dir/CheckFlags.cpp.o
+[13/19] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/libdexinfo.so
+[14/19] Building CXX object oat-parser/CMakeFiles/oatparser.dir/elf/elfloader.cpp.o
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/elf/elfloader.cpp:100:53: warning: format specifies type 'int' but the argument has type 'off_t' (aka 'long') [-Wformat]
+                printf("file offset %d and data size %d\n",efile.section_contents(i).file_offset, efile.section_contents(i).data_size);
+                                    ~~                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                    %ld
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/elf/elfloader.cpp:100:92: warning: format specifies type 'int' but the argument has type 'off_t' (aka 'long') [-Wformat]
+                printf("file offset %d and data size %d\n",efile.section_contents(i).file_offset, efile.section_contents(i).data_size);
+                                                     ~~                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                     %ld
+2 warnings generated.
+[15/19] Building CXX object oat-parser/CMakeFiles/oatparser.dir/oat/OATParser.cpp.o
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.cpp:16:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.h:7:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATHeader.h:5:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:28:7: warning: class 'DexFile' does not declare any constructor to initialize its non-modifiable members
+class DexFile {
+      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:247:24: note: const member 'begin_' will never be initialized
+  const uint8_t* const begin_;
+                       ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:250:16: note: const member 'size_' will never be initialized
+  const size_t size_;
+               ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:253:24: note: const member 'data_begin_' will never be initialized
+  const uint8_t* const data_begin_;
+                       ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:256:16: note: const member 'data_size_' will never be initialized
+  const size_t data_size_;
+               ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:264:18: note: const member 'location_checksum_' will never be initialized
+  const uint32_t location_checksum_;
+                 ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:267:23: note: const member 'header_' will never be initialized
+  const Header* const header_;
+                      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:270:30: note: const member 'string_ids_' will never be initialized
+  const dex::StringId* const string_ids_;
+                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:272:28: note: const member 'type_ids_' will never be initialized
+  const dex::TypeId* const type_ids_;
+                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:275:29: note: const member 'field_ids_' will never be initialized
+  const dex::FieldId* const field_ids_;
+                            ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:278:30: note: const member 'method_ids_' will never be initialized
+  const dex::MethodId* const method_ids_;
+                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:281:29: note: const member 'proto_ids_' will never be initialized
+  const dex::ProtoId* const proto_ids_;
+                            ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:284:30: note: const member 'class_defs_' will never be initialized
+  const dex::ClassDef* const class_defs_;
+                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:309:14: note: const member 'is_compact_dex_' will never be initialized
+  const bool is_compact_dex_;
+             ^
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.cpp:16:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.h:57:7: warning: control reaches end of non-void function [-Wreturn-type]
+      }
+      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.cpp:313:62: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+            LOGE("Read dex_file_location_size error!,%d,%d", i, dex_file_location_size);
+                                                     ~~      ^
+                                                     %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../logoutput.h:7:62: note: expanded from macro 'LOGE'
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG ,__VA_ARGS__) // 定义LOGE类型
+                                                             ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.cpp:335:44: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                LOGE("Read checksum error!,%d,%d",i,dex_file_checksum);
+                                           ~~     ^
+                                           %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../logoutput.h:7:62: note: expanded from macro 'LOGE'
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG ,__VA_ARGS__) // 定义LOGE类型
+                                                             ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.cpp:342:48: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+          LOGE("Read file offset error!,%d,%x",i,dex_file_offset);
+                                        ~~     ^
+                                        %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../logoutput.h:7:62: note: expanded from macro 'LOGE'
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG ,__VA_ARGS__) // 定义LOGE类型
+                                                             ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.cpp:363:50: warning: format specifies type 'int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+           LOGE("Read class offset error!,%d,%x",i,class_offsets_offset);
+                                          ~~     ^
+                                          %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../logoutput.h:7:62: note: expanded from macro 'LOGE'
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG ,__VA_ARGS__) // 定义LOGE类型
+                                                             ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.cpp:409:36: warning: format specifies type 'int' but the argument has type 'std::__ndk1::vector<const Art::OatDexFile *, std::__ndk1::allocator<const Art::OatDexFile *> >::size_type' (aka 'unsigned long') [-Wformat]
+            LOGD("Create OatDexFile:%d\n",oat_dex_files_storage_.size());
+                                    ~~    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                    %lu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../logoutput.h:4:62: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
+                                                             ^~~~~~~~~~~
+7 warnings generated.
+[16/19] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/native-lib.cpp:699:50: warning: format specifies type 'int' but the argument has type 'off_t' (aka 'long') [-Wformat]
+    LOGD("size: %d of filename %s, loaded at %p",sb.st_size,filename.c_str(),s);
+                ~~                               ^~~~~~~~~~
+                %ld
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/logoutput.h:5:62: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
+                                                             ^~~~~~~~~~~
+1 warning generated.
+[17/19] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/liboatparser.so
+[18/19] Building CXX object CMakeFiles/native-lib.dir/ReadOffset.cpp.o
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/ReadOffset.cpp:12:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.h:7:
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATHeader.h:5:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:28:7: warning: class 'DexFile' does not declare any constructor to initialize its non-modifiable members
+class DexFile {
+      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:247:24: note: const member 'begin_' will never be initialized
+  const uint8_t* const begin_;
+                       ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:250:16: note: const member 'size_' will never be initialized
+  const size_t size_;
+               ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:253:24: note: const member 'data_begin_' will never be initialized
+  const uint8_t* const data_begin_;
+                       ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:256:16: note: const member 'data_size_' will never be initialized
+  const size_t data_size_;
+               ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:264:18: note: const member 'location_checksum_' will never be initialized
+  const uint32_t location_checksum_;
+                 ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:267:23: note: const member 'header_' will never be initialized
+  const Header* const header_;
+                      ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:270:30: note: const member 'string_ids_' will never be initialized
+  const dex::StringId* const string_ids_;
+                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:272:28: note: const member 'type_ids_' will never be initialized
+  const dex::TypeId* const type_ids_;
+                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:275:29: note: const member 'field_ids_' will never be initialized
+  const dex::FieldId* const field_ids_;
+                            ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:278:30: note: const member 'method_ids_' will never be initialized
+  const dex::MethodId* const method_ids_;
+                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:281:29: note: const member 'proto_ids_' will never be initialized
+  const dex::ProtoId* const proto_ids_;
+                            ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:284:30: note: const member 'class_defs_' will never be initialized
+  const dex::ClassDef* const class_defs_;
+                             ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../dex/dex_file.h:309:14: note: const member 'is_compact_dex_' will never be initialized
+  const bool is_compact_dex_;
+             ^
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/ReadOffset.cpp:12:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/OATParser.h:57:7: warning: control reaches end of non-void function [-Wreturn-type]
+      }
+      ^
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/ReadOffset.cpp:13:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.h:305:22: warning: address of array 'classDefItem.source_file_idx' will always evaluate to 'true' [-Wpointer-bool-conversion]
+    if (classDefItem.source_file_idx){
+    ~~  ~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.h:307:44: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        class_name = printUnsignedLebValue("(%s)\n",stringData,strIdOff,DexFile);
+                                           ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.h:322:22: warning: address of array 'classDefItem.class_idx' will always evaluate to 'true' [-Wpointer-bool-conversion]
+    if (classDefItem.class_idx){
+    ~~  ~~~~~~~~~~~~~^~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/dexinfo.h:324:31: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+        printUnsignedLebValue("%s\n",stringData,strIdOff,DexFile);
+                              ^
+In file included from /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/ReadOffset.cpp:18:
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/logoutput.h:3:9: warning: 'TAG' macro redefined [-Wmacro-redefined]
+#define TAG "CacheScan_DexInfo" // 这个是自定义的LOG的标识
+        ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/oat-parser/oat/../logoutput.h:3:9: note: previous definition is here
+#define TAG "CacheScan_OatParser" // 这个是自定义的LOG的标识
+        ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/ReadOffset.cpp:24:24: warning: data argument not used by format string [-Wformat-extra-args]
+        LOGE("ZipRead","Can't find jclass");
+             ~~~~~~~~~ ^
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/logoutput.h:8:62: note: expanded from macro 'LOGE'
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,TAG ,__VA_ARGS__) // 定义LOGE类型
+                                                             ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/ReadOffset.cpp:59:42: warning: format specifies type 'unsigned int' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+    LOGD("Size: 0x%x and %d Oat DexFile",oatParser.Size(),oat_dex_storages.size());
+                  ~~                     ^~~~~~~~~~~~~~~~
+                  %zx
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/logoutput.h:5:62: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
+                                                             ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/ReadOffset.cpp:59:59: warning: format specifies type 'int' but the argument has type 'std::__ndk1::vector<const Art::OatDexFile *, std::__ndk1::allocator<const Art::OatDexFile *> >::size_type' (aka 'unsigned long') [-Wformat]
+    LOGD("Size: 0x%x and %d Oat DexFile",oatParser.Size(),oat_dex_storages.size());
+                         ~~                               ^~~~~~~~~~~~~~~~~~~~~~~
+                         %lu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/logoutput.h:5:62: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
+                                                             ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/ReadOffset.cpp:124:118: warning: format specifies type 'void *' but the argument has type 'size_t' (aka 'unsigned long') [-Wformat]
+                                LOGD("OutputFunction: %s and offset %x, %p",func_list[cls][fc].c_str(),m.GetOffset(),addr[current_length+t]);
+                                                                        ~~                                           ^~~~~~~~~~~~~~~~~~~~~~
+                                                                        %zu
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/logoutput.h:5:62: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
+                                                             ^~~~~~~~~~~
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/ReadOffset.cpp:195:50: warning: format specifies type 'int' but the argument has type 'off_t' (aka 'long') [-Wformat]
+    LOGD("size: %d of filename %s, loaded at %p",sb.st_size,filename.c_str(),s);
+                ~~                               ^~~~~~~~~~
+                %ld
+/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/logoutput.h:5:62: note: expanded from macro 'LOGD'
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
+                                                             ^~~~~~~~~~~
+12 warnings generated.
+[19/19] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so

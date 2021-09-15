@@ -1,13 +1,4 @@
 ninja: Entering directory `/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/.cxx/cmake/release/arm64-v8a'
-[1/4] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj/arm64-v8a/libdexinfo.so
-[2/4] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj/arm64-v8a/liboatparser.so
-[3/4] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
-/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/native-lib.cpp:699:50: warning: format specifies type 'int' but the argument has type 'off_t' (aka 'long') [-Wformat]
-    LOGD("size: %d of filename %s, loaded at %p",sb.st_size,filename.c_str(),s);
-                ~~                               ^~~~~~~~~~
-                %ld
-/home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/src/main/cpp/dexinfo/logoutput.h:5:62: note: expanded from macro 'LOGD'
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG,TAG ,__VA_ARGS__) // 定义LOGD类型
-                                                             ^~~~~~~~~~~
-1 warning generated.
-[4/4] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj/arm64-v8a/libnative-lib.so
+[1/3] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj/arm64-v8a/libdexinfo.so
+[2/3] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj/arm64-v8a/liboatparser.so
+[3/3] Linking CXX shared library /home/ishadi/Documents/AndroidCFI/app-code/weather/weather/app/build/intermediates/cmake/release/obj/arm64-v8a/libnative-lib.so

@@ -221,17 +221,17 @@ public class RainViewerActivity extends AppCompatActivity {
 
 //        timingCount = -1l;
 
-        GroundTruthValue groundTruthValue = new GroundTruthValue();
-        groundTruthValue.setCount(fd > 0 ? readAshMem(fd) : -1);
-        groundTruthValue.setLabel(label);
-        groundTruthValue.setSystemTime(System.currentTimeMillis());
-
-        insert_locker.lock();
-        groundTruthValues.add(groundTruthValue);
-        insert_locker.unlock();
-        if (groundTruthValues.size() > 0 && isFinish) {
-            new Thread(new JobMainAppInsertRunnable(getBaseContext())).start();
-        }
+//        GroundTruthValue groundTruthValue = new GroundTruthValue();
+//        groundTruthValue.setCount(-1);
+//        groundTruthValue.setLabel(label);
+//        groundTruthValue.setSystemTime(System.currentTimeMillis());
+//
+//        insert_locker.lock();
+//        groundTruthValues.add(groundTruthValue);
+//        insert_locker.unlock();
+//        if (groundTruthValues.size() > 0 && isFinish) {
+//            new Thread(new JobMainAppInsertRunnable(getBaseContext())).start();
+//        }
     }
 
 
@@ -363,13 +363,13 @@ abstract class Parent {
 //                .getLong("timeCount", -1l);
         long timingCount = -1l;
 
-        GroundTruthValue groundTruthValue = new GroundTruthValue();
-        groundTruthValue.setLabel(label);
-        groundTruthValue.setSystemTime(System.currentTimeMillis());
-        groundTruthValue.setCount(timingCount);
-        insert_locker.lock();
-        groundTruthValues.add(groundTruthValue);
-        insert_locker.unlock();
+//        GroundTruthValue groundTruthValue = new GroundTruthValue();
+//        groundTruthValue.setLabel(label);
+//        groundTruthValue.setSystemTime(System.currentTimeMillis());
+//        groundTruthValue.setCount(timingCount);
+//        insert_locker.lock();
+//        groundTruthValues.add(groundTruthValue);
+//        insert_locker.unlock();
     }
 
     int binarySearch(int array[], int element, int low, int high) {

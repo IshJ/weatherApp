@@ -158,6 +158,27 @@ public class SideChannelJob extends Service {
     public void doBackgroundWork() {
         Log.d(TAG, "New Thread Created");
 
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    while (fd < 0) {
+//                        Thread.sleep(10);
+//                    }
+//                    int i=1;
+//                   while (true) {
+//                       i=1;
+//                       setAshMemVal(fd, readAshMem(fd));
+//                       while (i % 5 != 0) {
+//                           i++;
+//                       }
+//
+//                   }
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
 
         // Send the job to a different thread
         new Thread(new Runnable() {
@@ -190,6 +211,8 @@ public class SideChannelJob extends Service {
                         String execOffsetString = configMap.get("execOffset");
                         BigInteger execOffset = new BigInteger(execOffsetString, 16);
                         Log.d("OdexScan::", "exec offset: " + execOffset.toString(16));
+
+                        odexMemExBegin = odexMemExBegin.subtract(execOffset);
 
 //####
 //######
@@ -233,7 +256,7 @@ public class SideChannelJob extends Service {
 
                         for (int i = 0; i < offsets.length; i++) {
 //                          (exec memory-exec offset)+code offset
-                            offsets[i] = odexMemMapBegin.add(new BigInteger(offsets[i], 16))
+                            offsets[i] = odexMemExBegin.add(new BigInteger(offsets[i], 16))
                                     .toString(10);
                             if (odexMemExEnd.compareTo(new BigInteger(offsets[i], 10)) > 0) {
                                 longOffsets[i] = Long.parseLong(offsets[i]);

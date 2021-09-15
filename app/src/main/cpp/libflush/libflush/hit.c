@@ -644,6 +644,7 @@ int hit7(jlong *param, int length, int threshold, long *timingCount, long *times
             break;
         }
 //        LOGD("scan4 hit6 %zu ", *(param + i));
+
         is_address_in_use7(libflush_session, *(param + i), threshold, timingCount, times, logs,
                            timingCounts, addresses, log_length, g_lock, buffer, hitCounts, pauses,
                            i, pauseVal, hitVal, resetHitCounter);
@@ -994,7 +995,7 @@ is_address_in_use7(libflush_session_t *libflush_session, void *address, int thre
                    int *pauses, int addressId, int pauseVal, int hitVal, bool resetHitCounter) {
 //    LOGD("scan4: Address: %lu", address);
 
-
+    *timingCount = (*timingCount + 1);
     int i = addressId;
 
     size_t scanTime;
