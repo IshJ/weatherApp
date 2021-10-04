@@ -4,10 +4,11 @@ import java.util.Objects;
 
 public class MethodStat {
     Integer id;
-    Long startCount;
-    Long endCount;
+    long startCount;
+    long endCount;
+    long time;
 
-    public MethodStat(Integer id, Long startCount, Long endCount) {
+    public MethodStat(Integer id, long startCount, long endCount) {
         this.id = id;
         this.startCount = startCount;
         this.endCount = endCount;
@@ -21,19 +22,19 @@ public class MethodStat {
         this.id = id;
     }
 
-    public Long getStartCount() {
+    public long getStartCount() {
         return startCount;
     }
 
-    public void setStartCount(Long startCount) {
+    public void setStartCount(long startCount) {
         this.startCount = startCount;
     }
 
-    public Long getEndCount() {
+    public long getEndCount() {
         return endCount;
     }
 
-    public void setEndCount(Long endCount) {
+    public void setEndCount(long endCount) {
         this.endCount = endCount;
     }
 

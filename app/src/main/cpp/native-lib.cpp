@@ -77,7 +77,7 @@ int pauses[100000] = {1};
 pthread_mutex_t g_lock;
 pthread_mutex_t shared_mem_lock;
 
-libflush_session_t* libflush_session;
+libflush_session_t *libflush_session;
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_org_woheller69_weather_MainActivity_stringFromJNI(
@@ -96,7 +96,8 @@ Java_org_woheller69_weather_activities_RainViewerActivity_stringFromJNI(
 }
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_org_woheller69_weather_activities_RainViewerActivity_GetTimingCount(JNIEnv *env, jobject thiz) {
+Java_org_woheller69_weather_activities_RainViewerActivity_GetTimingCount(JNIEnv *env,
+                                                                         jobject thiz) {
     long lp = get_timingCount(&g_lock, &timingCount);
     LOGD("rainviewer timing count %ld", lp);
 
@@ -105,7 +106,7 @@ Java_org_woheller69_weather_activities_RainViewerActivity_GetTimingCount(JNIEnv 
 }
 
 extern "C" JNIEXPORT jlong JNICALL
-Java_org_woheller69_weather_activities_SplashActivity_GetTimingCount(JNIEnv *env,jobject thiz) {
+Java_org_woheller69_weather_activities_SplashActivity_GetTimingCount(JNIEnv *env, jobject thiz) {
     long lp = get_timingCount(&g_lock, &timingCount);
     LOGD("rainviewer timing count %ld", lp);
 
@@ -142,10 +143,11 @@ static void setAshMemVal(jint fd, jlong val) {
 }
 
 static jlong readAshMem(jint fd) {
-
     if (buffer == NULL) {
         buffer = (long *) mmap(NULL, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
     }
+//    LOGD("read_ashmem %ld", buffer[0]);
+
     return buffer[0];
 }
 
@@ -174,6 +176,19 @@ Java_org_woheller69_weather_activities_SplashActivity_createAshMem(
 
 extern "C" JNIEXPORT long JNICALL
 Java_org_woheller69_weather_activities_SplashActivity_readAshMem(
+        JNIEnv *env,
+        jobject thiz, jint fd) {
+
+    return readAshMem(fd);
+
+//    if (buffer == NULL) {
+//        buffer = (long *) mmap(NULL, 128, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+//    }
+//    return buffer[0];
+}
+
+extern "C" JNIEXPORT long JNICALL
+Java_org_woheller69_weather_aspects_AspectLoggingJava_readAshMem1(
         JNIEnv *env,
         jobject thiz, jint fd) {
 
@@ -371,7 +386,8 @@ Java_org_woheller69_weather_SideChannelJob_scan(
 extern "C" JNIEXPORT long JNICALL
 Java_org_woheller69_weather_SideChannelJob_scan7(
         JNIEnv *env,
-        jobject thiz, jlongArray arr, jint length, jint pauseVal, jint hitVal, jboolean resetHitCounter) {
+        jobject thiz, jlongArray arr, jint length, jint pauseVal, jint hitVal,
+        jboolean resetHitCounter) {
 
     jlong *arrp;
     arrp = env->GetLongArrayElements(arr, 0);
@@ -389,27 +405,11 @@ Java_org_woheller69_weather_SideChannelJob_scan7(
             LOGD("scan4 null %d", i);
             break;
         }
-//        size_t target = *((size_t *) addr[i]);
-//        LOGD("scan4 %lu", arrp[i]);
-//        *(addr + i) = arrp[i];
-
-
 
     }
-//    if(shared_data_ptr==NULL){
-//        LOGD("shared_data_shm shared_data_ptr null");
-//    }
-//
-//    if(shared_data_ptr!=NULL){
-//        int ans = get_shared_mem_val(shared_data_ptr, &shared_mem_lock);
-//        LOGD("shared_data_shm ans %d", ans);
-//    }
 
-
-//    set_shared_mem_val(shared_data_ptr, timingCount, &shared_mem_lock);
     hit7(arrp, length, threshold, &timingCount, times, logs, timingCounts, addresses, &log_length,
          &g_lock, buffer, libflush_session, hitCounts, pauses, pauseVal, hitVal, resetHitCounter);
-//    get_shared_mem_val(shared_data_ptr, &shared_mem_lock);
 //    LOGD("Finished scanning %d", running);
     (env)->ReleaseLongArrayElements(arr, arrp, 0);
 
@@ -664,41 +664,39 @@ static JNINativeMethod method_table[] = {
 
 extern "C" JNIEXPORT jlong JNICALL
 Java_org_woheller69_weather_SideChannelJob_getOdexBegin(JNIEnv *env, jobject thiz,
-                                                             jstring fileName) {
+                                                        jstring fileName) {
 
     static size_t current_length = 0;
     void *start = NULL;
     void *end = NULL;
     //get all address list
     //=================Read Offset===============================
-    std::string filename = env->GetStringUTFChars(fileName,NULL);
+    std::string filename = env->GetStringUTFChars(fileName, NULL);
     LOGD("The filename is %s", filename.c_str());
     //map file in memory
     int fd;
     struct stat sb;
-    if((access(filename.c_str(),F_OK))==-1)
-    {
-        LOGD("odex Filename %s do not exists",filename.c_str());
+    if ((access(filename.c_str(), F_OK)) == -1) {
+        LOGD("odex Filename %s do not exists", filename.c_str());
         return 0;
     }
-    LOGD("odex Filename %s exists",filename.c_str());
+    LOGD("odex Filename %s exists", filename.c_str());
 
     fd = open(filename.c_str(), O_RDONLY);
     fstat(fd, &sb);
     LOGD("odex fd %d", fd);
 
-    unsigned char* s = (unsigned char *)mmap(0, sb.st_size, PROT_READ, MAP_SHARED, fd, 0);
-    if(s == MAP_FAILED)
-    {
+    unsigned char *s = (unsigned char *) mmap(0, sb.st_size, PROT_READ, MAP_SHARED, fd, 0);
+    if (s == MAP_FAILED) {
         LOGD("odex Mapping Error, file is too big or app do not have the permisson!");
         return 0;
         //exit(0);
     }
     LOGD("odex Mapping success");
 
-    LOGD("size: %d of filename %s, loaded at %p",sb.st_size,filename.c_str(),s);
+    LOGD("size: %d of filename %s, loaded at %p", sb.st_size, filename.c_str(), s);
 
-    return (size_t)s;
+    return (size_t) s;
 
 }
 

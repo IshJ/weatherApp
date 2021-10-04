@@ -206,140 +206,6 @@ public class CacheScan {
         }
     }
 
-    /**
-     * Function to get front application
-     */
-//    public static String getTopApp(Context mContext) {
-//        UsageStatsManager mUsageStatsManager = (UsageStatsManager) mContext.getSystemService(Context.USAGE_STATS_SERVICE);//usagestats
-//        long time = System.currentTimeMillis();
-//        String topPackageName = "None";
-//        int gt = 0;
-//        List<UsageStats> usageStatsList = mUsageStatsManager != null ? mUsageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, time - 3000, time) : null;
-//        if (usageStatsList != null && !usageStatsList.isEmpty()) {
-//            SortedMap<Long, UsageStats> usageStatsMap = new TreeMap<>();//e.smu.questlocation
-//            for (UsageStats usageStats : usageStatsList) {
-//                usageStatsMap.put(usageStats.getLastTimeUsed(), usageStats);
-//                //Log.e("TopPackage Name", usageStatsMap.get(usageStatsMap.lastKey()).getPackageName());
-//            }
-//            if (!usageStatsMap.isEmpty()) {
-//                topPackageName = usageStatsMap.get(usageStatsMap.lastKey()).getPackageName();
-//                //Log.d(TAG, "TopPackage Name is "+topPackageName+' '+//usageStatsMap.get(usageStatsMap.lastKey()).getLastTimeForegroundServiceUsed()+
-//                //        "Last Time Used:"+usageStatsMap.get(usageStatsMap.lastKey()).getLastTimeUsed()+" Permisson Type:"+name_permisson.get(topPackageName));
-//            }
-//        }
-//        String temp = pkg_name.get(topPackageName);
-//        if(temp!=null)
-//            topPackageName = temp;
-//        return topPackageName;
-//    }
-
-    /**
-     * Function to update UI
-     */
-    private void updateUI(final int result) {
-//        final long iday;
-//        if(isCollected) {
-//            if(System.currentTimeMillis() / (1000 * 60 * 60 * 24) - lastday>0){
-//                day = day + 1;//(System.currentTimeMillis() / (1000 * 60 * 60 * 24) - lastday);
-//                lastday = System.currentTimeMillis() / (1000 * 60 * 60 * 24);
-//            }
-//        }
-//        //Log.d(TAG,day+" "+firstday);
-//        status[result].post(new Runnable() {
-//            @Override
-//            public void run() {
-//                switch (result) {
-//                    case 0:
-//                        quering++;
-//                        status[result].setText("QueryInformation - " + quering);
-//                        break;
-//                    case 1:
-//                        camera++;
-//                        status[result].setText("Camera - " + camera);
-//                        break;
-//                    case 2:
-//                        audio++;
-//                        status[result].setText("AudioRecoding - " + audio);
-//                        break;
-//                    case 3:
-//                        location++;
-//                        status[result].setText("RequestLocation - " + location);
-//                        break;
-//                    case 4:
-//                        if(lastday!=0)
-//                            status[result+1].setText("Day "+day);
-//                        status[result].setText("# of Notifications/Answered Today - " + notification + "/" + answered);
-//                        break;
-//                }
-//            }
-//        });
-//        try {
-//            Thread.sleep(50);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-    }
-
-    /**
-     * Function to check if parse address successfully
-     */
-    private static void unparsedaddr(final int success, final int result) {
-//        if (success == 0) {
-//            status[result].post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    switch (result) {
-//                        case 0:
-//                            status[result].setText("Unable to parse offset for Queryinformation");
-//                            break;
-//                        case 1:
-//                            status[result].setText("Unable to parse offset for Camera");
-//                            break;
-//                        case 2:
-//                            status[result].setText("Unable to parse offset for Audio");
-//                            break;
-//                        case 3:
-//                            status[result].setText("Unable to parse offset for Location");
-//                            break;
-//                    }
-//                }
-//            });
-//        } else {
-//            status[result].post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    switch (result) {
-//                        case 0:
-//                            status[result].setText("QueryInformation - " + quering);
-//                            break;
-//                        case 1:
-//                            status[result].setText("Camera - " + camera);
-//                            break;
-//                        case 2:
-//                            status[result].setText("AudioRecoding - " + audio);
-//                            break;
-//                        case 3:
-//                            status[result].setText("RequestLocation - " + location);
-//                            break;
-//                    }
-//                }
-//            });
-//        }
-//        try {
-//            Thread.sleep(50);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-    }
-
-    /**
-     * Method to get current activated pattern
-     */
-//    static int[] getPattern(int c){
-//        int []p =GetPattern(c);
-//        ClearPattern(3);//clear the activations
-//        return p;
-//    }
 
     /**
      * Function to check and send notification
@@ -353,11 +219,14 @@ public class CacheScan {
         if (times != null && times.length > 0) {
 //            int[] thresholds = GetThresholds();//Get the thresholds during the period.(when a function was activated, we record the threshold) In native-lib/CheckFlags.cpp
             logs = GetLogs();//Get all activated functions during the period. In native-lib/CheckFlags.cpp
+            Log.d("sidescandb", "returned from getLogs");
             timingCounts = GetTimingCounts();
             addresses = GetAddresses();
-//            Log.d("sidescandb", " addresses: " + addresses.length);
-//            Log.d("sidescandb", " logs: " + logs.length);
-//            Log.d("sidescandb", " times: " + times.length);
+
+
+            Log.d("sidescandb", " addresses: " + addresses.length);
+            Log.d("sidescandb", " logs: " + logs.length);
+            Log.d("sidescandb", " times: " + times.length);
 //            if (addresses.length > 0) {
 //                Log.d("sidescandb", " addresses[0]: " + addresses[0]);
 //            }
@@ -382,14 +251,21 @@ public class CacheScan {
 //                Log.d("sidescandb", "cachescan");
 //                new Thread(new JobInsertRunnable(mContext)).start();
             }
-
-
-
-
             Log.d("sidescandb", "sideChannelValues.size() " + sideChannelValues.size());
         }
 
     }
+
+    public static native long[] GetTimes(); //for compiler
+
+    public static native long[] GetAddresses();
+
+    //    /**
+//     * Function to get all activations.
+//     */
+    public static native int[] GetLogs(); //for compiler
+
+    public static native long[] GetTimingCounts(); //for compiler
 
     private void intentBuild(Intent intent, long time, String app, int flag, int ignored, int cmp) {
         intent.putExtra("arise", time);
@@ -488,16 +364,7 @@ public class CacheScan {
 //    /**
 //     * Function to get activated time for all activations.
 //     */
-    public static native long[] GetTimes(); //for compiler
 
-    public static native long[] GetAddresses();
-
-    //    /**
-//     * Function to get all activations.
-//     */
-    public static native int[] GetLogs(); //for compiler
-
-    public static native long[] GetTimingCounts(); //for compiler
 //    /**
 //     * Function to increase threshold.
 //     */

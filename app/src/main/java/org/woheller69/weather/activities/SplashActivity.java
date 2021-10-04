@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
@@ -114,8 +115,6 @@ public class SplashActivity extends AppCompatActivity {
 
         viewMap = new HashMap<>();
 
-//        viewMap.put(0, ".activities.RadiusSearchActivity"
-//        );
         viewMap.put(7, ".activities.ManageLocationsActivity"
         );
         viewMap.put(4, ".activities.RainViewerActivity"
@@ -220,16 +219,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
-
         Log.d(TAG, "Inside onActivityResult requestCode " + requestCode + " resultCode: " + resultCode);
 
         long startTime = System.currentTimeMillis();
         int waitRnd = (int) (Math.random() * waitVal);
-        while (System.currentTimeMillis() - startTime < waitRnd
-        ) {
-        }
-//        temp switch off to enable just one UI
+        while (System.currentTimeMillis() - startTime < waitRnd) {}
         runView();
     }
 
@@ -259,6 +253,7 @@ public class SplashActivity extends AppCompatActivity {
             currentLoopId++;
             currentViewId = 0;
         }
+
         sequentialRunners.get(currentViewId).run();
 
     }
@@ -352,7 +347,6 @@ public class SplashActivity extends AppCompatActivity {
             if (baseOdexLine.isPresent()) {
                 String odexpath = "/data/app/" + baseOdexLine.get().split("/data/app/")[1];
                 String vdexpath = "/data/app/" + baseOdexLine.get().split("/data/app/")[1].replace("odex", "vdex");
-//                String odexRootPath = "/data/app/"+baseOdexLine.get().split("/data/app/")[1].replace("/oat/arm64/base.odex","*");
                 Log.d(TAG + "#", odexpath);
                 Log.d(TAG + "#", "cp " + odexpath + " " + oatHome);
                 Process p = Runtime.getRuntime().exec("cp " + odexpath + " " + oatHome);
@@ -379,77 +373,6 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-
-    private static String getCommandResult(String command) {
-        StringBuilder log = new StringBuilder();
-
-        try {
-            // Run the command
-            Process process = Runtime.getRuntime().exec(command);
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-
-            // Grab the results
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                log.append(line + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return log.toString();
-    }
-
-//    public static void parallelRun(List<ActivityRunner> runners) {
-//        for (int j = 0; j < runners.size(); j++) {
-//            Handler handler = new Handler();
-//            handler.postDelayed(runners.get(j), 5000);
-//        }
-//    }
-
-    public static void sequentialRun(List<SequentialActivityRunner> runners) {
-        for (int j = 0; j < runners.size(); j++) {
-            runners.get(j).run();
-            long startTime = System.currentTimeMillis();
-            while (System.currentTimeMillis() - startTime < waitVal
-            ) {
-            }
-        }
-    }
-
-
-//    class ActivityRunner implements Runnable {
-//        private final String view;
-//        private final String pkgName;
-//
-//        public ActivityRunner(String view, String pkgName) {
-//            this.view = view;
-//            this.pkgName = pkgName;
-//        }
-//
-//        public void run() {
-//            finish();
-//            Log.d("###", view);
-//            overridePendingTransition(0, 0);
-//            Intent intent = new Intent();
-//            intent.setComponent(new ComponentName(pkgName,
-//                    pkgName + view));
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            startActivity(intent);
-//        }
-//    }
-
-
-    protected void automate() {
-
-
-        for (int i = 0; i < loopCount; i++) {
-
-//            parallelRun(runners);
-            sequentialRun(sequentialRunners);
-        }
-        Log.d("###", "Done!");
-    }
 
     /**
      * Method to initialize database
@@ -485,28 +408,18 @@ public class SplashActivity extends AppCompatActivity {
         db.execSQL(sSQL);
         sSQL = "DELETE FROM " + SideChannelContract.GROUND_TRUTH_AOP;
         db.execSQL(sSQL);
+        Log.d("dbinfo", SideChannelContract.GROUND_TRUTH_AOP+" count: "+ getRecordCount(SideChannelContract.GROUND_TRUTH_AOP));
         db.close();
     }
 
-
-    protected void recordGroundTruth(String label, boolean isFinish) {
-
-//        uncomment to get the timing count. Might lag the app if the scanning frequency is high
-//        timingCount = getSharedPreferences("SideChannelInfo", Context.MODE_MULTI_PROCESS)
-//                .getLong("timeCount", -1l);
-        timingCount = -1l;
-
-        GroundTruthValue groundTruthValue = new GroundTruthValue();
-        groundTruthValue.setLabel(label);
-        groundTruthValue.setSystemTime(System.currentTimeMillis());
-        groundTruthValue.setCount(timingCount);
-        insert_locker.lock();
-        groundTruthValues.add(groundTruthValue);
-        insert_locker.unlock();
-        if (groundTruthValues.size() > 0 && isFinish) {
-            new Thread(new JobMainAppInsertRunnable(getBaseContext())).start();
-        }
+    public long getRecordCount(String tableName) {
+        SQLiteDatabase db = getBaseContext().openOrCreateDatabase("MainApp.db",
+                MODE_PRIVATE, null);
+        long count = DatabaseUtils.queryNumEntries(db, tableName);
+        db.close();
+        return count;
     }
+
 
 
     public static native long GetTimingCount();

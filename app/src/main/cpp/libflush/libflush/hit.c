@@ -632,46 +632,33 @@ int hit7(jlong *param, int length, int threshold, long *timingCount, long *times
          long *buffer,
          libflush_session_t *libflush_session,
          int *hitCounts, int *pauses, int pauseVal, int hitVal, bool resetHitCounter) {
-//    LOGD("Start AddressScan hit2.\n");
-//    libflush_session_t *libflush_session;
-//    libflush_init(&libflush_session, NULL);
-    size_t count2;
 
+    int testV = 1;
+    int *ptr;
+    ptr = (int *) malloc(sizeof(int));
+
+//    for (int i = 1; i < length; i++) {
     for (int i = 1; i < length; i++) {
-//        void *target = (void *) *((size_t *) param + i);
         if (param == NULL || param + i == NULL) {
             LOGD("scan4 hit6 param null ");
             break;
         }
-//        LOGD("scan4 hit6 %zu ", *(param + i));
 
-        is_address_in_use7(libflush_session, *(param + i), threshold, timingCount, times, logs,
+        is_address_in_use7(libflush_session, (void *) *(param + i), threshold, timingCount, times, logs,
                            timingCounts, addresses, log_length, g_lock, buffer, hitCounts, pauses,
                            i, pauseVal, hitVal, resetHitCounter);
-        *timingCount = (*timingCount + 1);
-        *buffer = *timingCount;
     }
-//    libflush_terminate(libflush_session);
-
-//    for (int i = 1; i < length; i++) {
-//        void *target = (void *) *((size_t *) param + i);
-//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", target, 0);
-//
-//        is_address_in_use1(libflush_session, target, threshold);
-//
-//    }
+    free(ptr);
     return 0;
 }
 
 
 int
 adjust_threshold2(jlong *param, int length, int threshold, libflush_session_t *libflush_session) {
-//    LOGD("adjust_threshold2 Start AddressScan hit2.\n");
-//    libflush_session_t *libflush_session;
-//    libflush_init(&libflush_session, NULL);
+
     size_t count2;
 
-    for (int j = 0; j < 1000; j++) {
+    for (int j = 0; j < 5000; j++) {
         for (int i = 0; i < length; i++) {
 //        void *target = (void *) *((size_t *) param + i);
             if (param == NULL || param + i == NULL) {
@@ -679,7 +666,8 @@ adjust_threshold2(jlong *param, int length, int threshold, libflush_session_t *l
                 break;
             }
 //        LOGD("adjust_threshold address %zu ", *(param + i));
-            threshold = is_address_in_use_adjust(libflush_session, *(param + i), threshold);
+
+            threshold = is_address_in_use_adjust(libflush_session, (void *) *(param + i), threshold);
 
         }
     }
@@ -825,9 +813,9 @@ int get_threshold_wsessiom(libflush_session_t *libflush_session) {
 
 long get_timingCount(pthread_mutex_t *g_lock, long *timingCount) {
     long timingCnt = 0l;
-    pthread_mutex_lock(g_lock);
+//    pthread_mutex_lock(g_lock);
     timingCnt = *timingCount;
-    pthread_mutex_unlock(g_lock);
+//    pthread_mutex_unlock(g_lock);
     return timingCnt;
 }
 
@@ -995,22 +983,15 @@ is_address_in_use7(libflush_session_t *libflush_session, void *address, int thre
                    int *pauses, int addressId, int pauseVal, int hitVal, bool resetHitCounter) {
 //    LOGD("scan4: Address: %lu", address);
 
-    *timingCount = (*timingCount + 1);
+//    *timingCount = (*timingCount + 1);
     int i = addressId;
 
     size_t scanTime;
-
     scanTime = libflush_reload_address_and_flush(libflush_session, address);
-///    count2 = libflush_probe(libflush_session, address);
+//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, scanTime);
 
-//    LOGD("TIME_SOURCE_THREAD_COUNTER Count %d Address: %lu Time taken: %d",*timingCount,  address, scanTime);
-//    LOGD(" #1 Count %d Address: %lu Time taken: %d",*timingCount,  address, scanTime);
-//to filter hits
 
-//    LOGD("threshold %d hitcounter %d pause %d hit %d scantime %d", threshold, i, pauses[i],
-//         hitCounts[i], scanTime);
-
-    if (scanTime < 215) {
+    if (scanTime < threshold) {
         if (pauses[i] > pauseVal || hitCounts[i] > 0) {
             hitCounts[i]++;
         }
@@ -1020,34 +1001,35 @@ is_address_in_use7(libflush_session_t *libflush_session, void *address, int thre
         hitCounts[i] = 0;
     }
 
-//        LOGD("weather:AddressScan2: Address: %lu Time taken: %d", address, scanTime);
-
 
     if (*log_length >= 99000) {
-        LOGD("Log Length is larger than 50000, set to 0.");
         pthread_mutex_lock(g_lock);
         *log_length = 0;
         pthread_mutex_unlock(g_lock);
+        LOGD("Log Length is larger than 50000, set to 0.");
+
     }
     struct timeval tv;//for quering time stamp
     gettimeofday(&tv, NULL);
-    pthread_mutex_lock(g_lock);
-    if (hitCounts[i] > hitVal) {
+
+//    if (hitCounts[i] > hitVal) {
+//        if(scanTime<0 || scanTime)
 //        LOGD("sidescandb inside hit");
         if (resetHitCounter) {
             LOGD("resetHitCounter: %d", resetHitCounter);
 
             hitCounts[i] = 0;
         }
+        pthread_mutex_lock(g_lock);
         logs[*log_length] = scanTime;
         addresses[*log_length] = address;
 //    times[*log_length] = count;
         times[*log_length] = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-        timingCounts[*log_length] = *timingCount;
+        timingCounts[*log_length] = buffer[0];
         *log_length = (*log_length + 1) % 99000;
-    }
-
-    pthread_mutex_unlock(g_lock);
+//        *timingCount = (*timingCount + 1);
+        pthread_mutex_unlock(g_lock);
+//    }
 
 
 }
@@ -1066,6 +1048,7 @@ static int
 is_address_in_use_adjust(libflush_session_t *libflush_session, void *address, int threshold) {
 //    LOGD("adjust_threshold inside is_address_in_use_adjust");
     size_t count2;
+    libflush_flush(libflush_session, address);
 
     count2 = libflush_reload_address_and_flush(libflush_session, address);
     if (threshold > 0 && count2 < threshold) {

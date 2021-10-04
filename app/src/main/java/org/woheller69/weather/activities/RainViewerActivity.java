@@ -122,52 +122,42 @@ public class RainViewerActivity extends AppCompatActivity {
         Log.d("configMap rain ", "" + targetMethods + " " + delayBetween + " " + delayWithin + " " + innerLoopCount);
         int i = 0;
 
-//        List<Parent> classList = new ArrayList<>();
-//        for (int j = 0; j < 10; j++) {
-//            int rnd = ThreadLocalRandom.current().nextInt(1, 3);
-//            if (rnd == 1) {
-//                classList.add(new ChildA());
-//            } else classList.add(new ChildB());
-//        }
+
         int a = 0;
         long startTime;
         ChildC childC = new ChildC();
         ChildB childB = new ChildB();
-
+        int delay=delayWithin;
         while (i < innerLoopCount) {
 
             if (targetMethods.contains("ChildC.methodB")) {
 
-                int delay = (int) (Math.random()*delayWithin);
+                delay = delay*(i+1);
                 Log.d("delay: ", String.valueOf(delay));
                 startTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - startTime < delay) {
                 }
 
                 Log.d("weather:AddressScan2", "#4_0_1#");
-                recordGroundTruth("4_0_1", false);
                 a = childC.methodB(delayWithin);
-                recordGroundTruth("4_0_0", true);
                 Log.d("weather:AddressScan2", "#4_0_0#");
             }
 
 
             if (targetMethods.contains("ChildC.methodC")) {
-                int delay = (int) (Math.random()*delayWithin);
+                delay = (int) (Math.random()*delayWithin)*i;
                 Log.d("delay: ", String.valueOf(delay));
                 startTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - startTime < delay) {
                 }
 
                 Log.d("weather:AddressScan2", "#4_1_1#");
-                recordGroundTruth("4_1_1", false);
                 a = childC.methodC(delayWithin);
-                recordGroundTruth("4_1_0", true);
                 Log.d("weather:AddressScan2", "#4_1_0#" + a);
             }
 
             if (targetMethods.contains("ChildB.methodB")) {
-                int delay = (int) (Math.random()*delayWithin);
+                delay = (int) (Math.random()*delayWithin)*(i+1);
 //                delay=10000;
                 Log.d("delay: ", String.valueOf(delay));
                 startTime = System.currentTimeMillis();
@@ -175,12 +165,10 @@ public class RainViewerActivity extends AppCompatActivity {
                 }
 
                 Log.d("weather:AddressScan2", "#4_2_1#");
-                recordGroundTruth("4_2_1", false);
 
 //                startActivity(intent);
 
                 a = childB.methodB(delayWithin);
-                recordGroundTruth("4_2_0", true);
                 Log.d("weather:AddressScan2", "#4_2_0#" + a);
             }
 
@@ -188,12 +176,8 @@ public class RainViewerActivity extends AppCompatActivity {
 
             i++;
         }
-//        temp switch off to allow method looping
-//        Log.d("weather:AddressScan2", "#4_0_1#");
-//        int a = method0(3);
-        setContentView(R.layout.activity_radius_search_result);
-//        Debug.stopMethodTracing();
 
+        setContentView(R.layout.activity_radius_search_result);
 
     }
 
@@ -210,28 +194,6 @@ public class RainViewerActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-
-    public void recordGroundTruth(String label, boolean isFinish) {
-
-//        uncomment to get the timing count. Might lag the app if the scanning frequency is high
-//        timingCount = getSharedPreferences("SideChannelInfo", Context.MODE_MULTI_PROCESS)
-//                .getLong("timeCount", -1l);
-
-//        timingCount = -1l;
-
-//        GroundTruthValue groundTruthValue = new GroundTruthValue();
-//        groundTruthValue.setCount(-1);
-//        groundTruthValue.setLabel(label);
-//        groundTruthValue.setSystemTime(System.currentTimeMillis());
-//
-//        insert_locker.lock();
-//        groundTruthValues.add(groundTruthValue);
-//        insert_locker.unlock();
-//        if (groundTruthValues.size() > 0 && isFinish) {
-//            new Thread(new JobMainAppInsertRunnable(getBaseContext())).start();
-//        }
     }
 
 
@@ -356,22 +318,6 @@ abstract class Parent {
     abstract int methodB(int delay);
 
 
-    public void recordGroundTruth(String label, boolean isFinish) {
-
-//        uncomment to get the timing count. Might lag the app if the scanning frequency is high
-//        timingCount = getSharedPreferences("SideChannelInfo", Context.MODE_MULTI_PROCESS)
-//                .getLong("timeCount", -1l);
-        long timingCount = -1l;
-
-//        GroundTruthValue groundTruthValue = new GroundTruthValue();
-//        groundTruthValue.setLabel(label);
-//        groundTruthValue.setSystemTime(System.currentTimeMillis());
-//        groundTruthValue.setCount(timingCount);
-//        insert_locker.lock();
-//        groundTruthValues.add(groundTruthValue);
-//        insert_locker.unlock();
-    }
-
     int binarySearch(int array[], int element, int low, int high) {
 
         // Repeat until the pointers low and high meet each other
@@ -413,7 +359,6 @@ class ChildA extends Parent {
     @Override
     int methodB(int delay) {
         Log.d("weather:AddressScan2", "#4_0_0#");
-        recordGroundTruth("4_1_0", true);
         List<Integer> tempList = new ArrayList<>();
         IntStream.range(0, 200).forEach(i -> tempList.add(ThreadLocalRandom.current().nextInt(1000, 100000 + 1)));
         int x = 1 + 3;

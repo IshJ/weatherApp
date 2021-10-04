@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.TrafficStats;
 import android.os.BatteryManager;
@@ -61,6 +62,8 @@ import java.util.StringTokenizer;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 //import static org.woheller69.weather.CacheScan.answered;
 //import static org.woheller69.weather.CacheScan.notification;
@@ -127,25 +130,10 @@ public class SideChannelJob extends Service {
         Log.d(TAG, "Job started");
         start_time = System.currentTimeMillis();
 
-//        SharedPreferences sharedPreferences = getSharedPreferences("Settings", Context.MODE_MULTI_PROCESS);
-//        String savedValueInWriterProcess = sharedPreferences.getString("fd", "");
-//        Log.d("shared_data_shm side channel sharedpref", " sp.toString() " + savedValueInWriterProcess);
-//        sharedPreferences.edit().putString("fd", "56").commit();
         initializeDB();
         configMap = readConfigFile();
 //        configMap.entrySet().forEach(e -> Log.d("configMap: ", e.getKey() + " " + e.getValue()));
         yieldVal = Integer.parseInt(Objects.requireNonNull(configMap.get("yield")));
-
-//        shared_mem_des = intent.getStringExtra("shared_map_ptr");
-//        Bundle bundle = intent.getExtras();
-//        ParcelFileDescriptor fd = bundle.getParcelable("fd");
-//        intent.getExtras().getBinder("fd");
-//       ParcelFileDescriptor fd = (ParcelFileDescriptor) ((IBinder)intent.getExtras().getBinder("fd")).getData();
-//        ParcelFileDescriptor fd = (ParcelFileDescriptor) intent.getParcelableArrayListExtra("fd").get(0);
-//        Log.d("shared_data_shm side channel", " fd.toString() "+fd.toString());
-
-//        Log.d("shared_data_shm side channel", " shared_mem_ptr "+shared_mem_des);
-
         doBackgroundWork();
         Toast.makeText(this, "Job scheduled successfully", Toast.LENGTH_SHORT)
                 .show();
@@ -158,29 +146,31 @@ public class SideChannelJob extends Service {
     public void doBackgroundWork() {
         Log.d(TAG, "New Thread Created");
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    while (fd < 0) {
-//                        Thread.sleep(10);
-//                    }
-//                    int i=1;
-//                   while (true) {
-//                       i=1;
-//                       setAshMemVal(fd, readAshMem(fd));
-//                       while (i % 5 != 0) {
-//                           i++;
-//                       }
-//
-//                   }
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
+        Thread ashMemUpdatorThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    while (fd < 0) {
+                        Thread.sleep(10);
+                    }
+                    int i = 1;
+                    long j = 0l;
+                    while (true) {
+                        i = 1;
+                        j = j + 1;
+                        setAshMemVal(fd, j);
+                        while (i % 100 != 0) {
+                            i++;
+                        }
 
-        // Send the job to a different thread
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+//         Send the job to a different thread
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -194,9 +184,7 @@ public class SideChannelJob extends Service {
                     if (cs == null) {
 
                         cs = new CacheScan(getBaseContext());//Initialize the CacheScan class
-//                        PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putString("test", "test123").commit();
-//                        String testString = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("test", "0");
-//                        Log.d("rainviewer sidechannel", "testString "+ testString);
+
 
                         Log.d(TAG, "Initialize CacheScan");
 //                        setSharedMapChild(2, shared_mem_des.toCharArray());
@@ -212,7 +200,7 @@ public class SideChannelJob extends Service {
                         BigInteger execOffset = new BigInteger(execOffsetString, 16);
                         Log.d("OdexScan::", "exec offset: " + execOffset.toString(16));
 
-                        odexMemExBegin = odexMemExBegin.subtract(execOffset);
+                        odexMemExBegin = odexMemExBegin.add(execOffset);
 
 //####
 //######
@@ -222,24 +210,25 @@ public class SideChannelJob extends Service {
 
                         odexMemMapBegin = new BigInteger(getOdexBeginAddress(), 16);
 //                        odexMemMapBegin = odexMemMapBegin.add(execOffset);
+//                        odexMemMapBegin = odexMemMapBegin.add(execOffset);
 
                         Log.d(TAG, "Odex starting Address: " + odexMemMapBegin.toString(16));
                         Log.d(TAG, "Odex x starting Address: " + odexMemExBegin.toString(16));
 
 //##########
 
-//                        String addressForAdjusting = configMap.get("addressForAdjusting");
-//                        String[] adjustingAddressesString = addressForAdjusting.split(",");
-//                        long[] adjustingAddressesLong = new long[adjustingAddressesString.length];
-//                        for (int i = 0; i < adjustingAddressesString.length; i++) {
-////                          (exec memory-exec offset)+code offset
-//                            adjustingAddressesString[i] = odexMemExBegin
-//                                    .add(new BigInteger(adjustingAddressesString[i], 16)).toString(10);
-//                            adjustingAddressesLong[i] = Long.parseLong(adjustingAddressesString[i]);
-//                        }
-//                        if (("1").equals(configMap.get("isAdjust"))) {
-//                            adjustThreshold(adjustingAddressesLong, adjustingAddressesLong.length);
-//                        }
+                        String addressForAdjusting = configMap.get("addressForAdjusting");
+                        String[] adjustingAddressesString = addressForAdjusting.split(",");
+                        long[] adjustingAddressesLong = new long[adjustingAddressesString.length];
+                        for (int i = 0; i < adjustingAddressesString.length; i++) {
+//                          (exec memory-exec offset)+code offset
+                            adjustingAddressesString[i] = odexMemMapBegin
+                                    .add(new BigInteger(adjustingAddressesString[i], 16)).toString(10);
+                            adjustingAddressesLong[i] = Long.parseLong(adjustingAddressesString[i]);
+                        }
+                        if (("1").equals(configMap.get("isAdjust"))) {
+                            adjustThreshold(adjustingAddressesLong, adjustingAddressesLong.length);
+                        }
 
 
 //##########
@@ -247,35 +236,38 @@ public class SideChannelJob extends Service {
                         int pauseVal = Integer.parseInt(configMap.get("pauseVal").trim());
                         int hitVal = Integer.parseInt(configMap.get("hitVal").trim());
                         boolean resetHitCounter = "1".equals(configMap.get("resetHitCounter").trim());
+                        int splitVal = Integer.parseInt(configMap.get("splitVal").trim());
 //don't change
-//                        String ode++xOffsets = "6c1934,6c1958,6c196c,6c1984,6c199c,6c19c4,6c19f0";
-//                        Log.d(TAG, "odex offsets:" + odexOffsets);
 
                         long[] longOffsets = new long[offsets.length];
-                        int[] intOffsets = new int[offsets.length];
+                        List<Integer> splitIndexes = new ArrayList<>();
+                        splitIndexes.add(0);
+                        IntStream.range(1, 1 + (longOffsets.length / splitVal))
+                                .forEach(b -> splitIndexes.add(Math.min(b * splitVal, longOffsets.length)));
 
                         for (int i = 0; i < offsets.length; i++) {
-//                          (exec memory-exec offset)+code offset
-                            offsets[i] = odexMemExBegin.add(new BigInteger(offsets[i], 16))
+
+                            offsets[i] = odexMemMapBegin.add(new BigInteger(offsets[i], 16))
                                     .toString(10);
                             if (odexMemExEnd.compareTo(new BigInteger(offsets[i], 10)) > 0) {
                                 longOffsets[i] = Long.parseLong(offsets[i]);
                             } else {
-                                Log.d("odex ", offsets[i] + new BigInteger(offsets[i],10).toString(16) + " is out of range");
+                                Log.d("odex ", offsets[i] + new BigInteger(offsets[i], 10).toString(16) + " is out of range");
                             }
 //                            intOffsets[i] = Integer.parseInt(offsets[i]);
                         }
-Log.d("odex", " end of for");
-//                        ShmClientLib.setVal(5,10);
+                        Log.d("odex", " end of for");
                         Log.d(TAG, "odex scanned offsets:" + String.join(",", offsets));
-
+                        ashMemUpdatorThread.start();
                         while (true) {
-//                            Log.d("rainviewerashmem", "side " + ShmLib.getValue("sh1",5));
 
                             localCount++;
                             if (localCount % yieldVal == 0) {
                                 localCount = 0;
-                                long timeCount = scan7(longOffsets, longOffsets.length, pauseVal, hitVal, resetHitCounter);
+                                for (int sp = 0; sp < splitIndexes.size() - 1; sp++) {
+                                    scan7(Arrays.copyOfRange(longOffsets, splitIndexes.get(sp), splitIndexes.get(sp + 1))
+                                            , splitIndexes.get(sp + 1)-splitIndexes.get(sp), pauseVal, hitVal, resetHitCounter);
+                                }
                                 if (fd < 0) {
                                     Log.d("ashmem ", "not set yet" + fd);
                                 } else {
@@ -284,20 +276,6 @@ Log.d("odex", " end of for");
                                 Thread.sleep(1);
 
                             }
-
-//                            getSharedPreferences("SideChannelInfo", Context.MODE_MULTI_PROCESS)
-//                                    .edit().putLong("timeCount", timeCount).commit();
-//                            Log.d("sharedPref", " side " + timeCount);
-
-//                            Log.d("shared_data_shm splash sharedpref", "set val" + timeCount);
-
-//                            scanOdex(intOffsets, intOffsets.length);
-//                            long startTime = System.currentTimeMillis();
-//                            while (System.currentTimeMillis() - startTime < 1
-//                            ) {
-//                            }
-
-//                            Thread.yield();
 
                         }
                     }
@@ -325,9 +303,8 @@ Log.d("odex", " end of for");
                         while (cs == null) {
                             Thread.sleep(100);//Waiting until CacheScan class is initialized
                         }
-//                        Log.d("sidechannel", "groundTruthValues " + groundTruthValues.size());
 
-                        if (sideChannelValues.size() > 2 || groundTruthValues.size() > 2) {//Do not save collected info when at trial mode
+                        if (sideChannelValues.size() > 10) {//Do not save collected info when at trial mode
 //                            Log.d("sidescandb", "sidechannel");
                             new Thread(new JobInsertRunnable(getBaseContext())).start();//start a thread to save data
 //                            Log.d(TAG, "DB Updated");
@@ -358,7 +335,7 @@ Log.d("odex", " end of for");
                         Thread.sleep(100);//Waiting until CacheScan class is initialized
                     }
                     while (true) {
-                        Thread.sleep(500);
+                        Thread.sleep(2000);
                         cs.Notify(getBaseContext());//every 1 second to check if it need to send notification
                     }
                 } catch (InterruptedException e) {
@@ -376,7 +353,7 @@ Log.d("odex", " end of for");
         // get Process ID of the running app
         int pid = android.os.Process.myPid();
 
-        Log.d(TAG, "%%%% spLASH! getOdexBeginAddress" + pid);
+        Log.d(TAG, "pid: " + pid);
 
         try {
 
@@ -384,19 +361,18 @@ Log.d("odex", " end of for");
                     .stream().sequential().filter(s -> s.contains("woheller69") && s.contains("base.odex"))
                     .findFirst().map(s -> new StringTokenizer(s, "-")).filter(StringTokenizer::hasMoreElements)
                     .map(StringTokenizer::nextToken);
-            Log.d(TAG, "%%%% spLASH! odc " + odc);
+            Log.d(TAG, "%OdexBeginAddress " + odc);
             if (odc.isPresent()) {
                 return odc.get();
             }
         } catch (Exception e) {
             Log.d(TAG, "ERROR!!!!" + e.toString());
         }
-        return "77a6425000";
+        return "0000";
     }
 
     public String getOdexExLine() {
 
-        boolean isMemMapping = false;
         // get Process ID of the running app
         int pid = android.os.Process.myPid();
         Log.d(TAG, "pid " + pid);
@@ -415,19 +391,6 @@ Log.d("odex", " end of for");
             Log.d(TAG, "ERROR!!!!" + e.toString());
         }
         return "";
-    }
-
-    public String[] getMethodOffsets() {
-
-        //SideChannelOffsets
-        return new String[]{"000000", "6c2404", "6c2428", "6c243c", "6c2454", "6c246c", "6c2494", "6c24c0"};
-//        return new String[]{"000000", "123"};
-    }
-
-    public String[] getClassOffsets() {
-//       return new ArrayList<String>(Collections.nCopies(11, "000000")).toArray(new String[10]);
-
-        return new String[]{"000000", "00010d78", "00010d68", "00010d70", "00010c6c", "00010d7c", "00010c04", "00010c44", "00010c18", "00010c60", "00010d64"};
     }
 
     public native void scan(int[] pattern, int length);
@@ -592,7 +555,17 @@ Log.d("odex", " end of for");
         db.execSQL(sSQL);
         sSQL = "DELETE FROM " + SideChannelContract.TABLE_NAME;
         db.execSQL(sSQL);
+        Log.d("dbinfo", SideChannelContract.TABLE_NAME + " count: " + getRecordCount(SideChannelContract.TABLE_NAME));
+
         db.close();
+    }
+
+    public long getRecordCount(String tableName) {
+        SQLiteDatabase db = getBaseContext().openOrCreateDatabase("SideScan.db",
+                MODE_PRIVATE, null);
+        long count = DatabaseUtils.queryNumEntries(db, tableName);
+        db.close();
+        return count;
     }
 
     private Map<String, String> readConfigFile() {
@@ -608,25 +581,6 @@ Log.d("odex", " end of for");
         return configMap;
     }
 
-//    private static String getCommandResult(String command) {
-//        StringBuilder log = new StringBuilder();
-//
-//        try {
-//            // Run the command
-//            Process process = Runtime.getRuntime().exec(command);
-//            BufferedReader bufferedReader = new BufferedReader(
-//                    new InputStreamReader(process.getInputStream()));
-//
-//            // Grab the results
-//            String line;
-//            while ((line = bufferedReader.readLine()) != null) {
-//                log.append(line + "\n");
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return log.toString();
-//    }
 }
 
 
@@ -672,33 +626,3 @@ Log.d("odex", " end of for");
 //                                Log.d("OdexScan::", "exec memory+code offset - exec offset: "+ odexMemEx7Begin.toString(16) );
 //
 //
-////                        BigInteger odexMemEx7Begin = odexMemExBegin.add(new BigInteger("11a000", 16));
-//
-//                                List<BigInteger> toBeScanned = Arrays.asList(
-//        odexMemMapBegin2,
-////                                odexMemExBegin,
-////                                execOffset,
-////                                codeOffset,
-//        odexMemEx2Begin,
-//        odexMemEx3Begin,
-//        odexMemEx4Begin,
-//        odexMemEx5Begin,
-//        odexMemEx6Begin,
-//        odexMemEx7Begin
-//        );
-//
-//        List<String> toBeScannedLong = toBeScanned.stream().map(s -> s.toString(10)).collect(Collectors.toList());
-//        long[] longOffsets = new long[toBeScanned.size()];
-//        for (int i = 0; i < toBeScanned.size(); i++) {
-//        longOffsets[i] = Long.valueOf(toBeScannedLong.get(i));
-//        }
-////                        while (true) {
-////                            scanOdex(longOffsets, longOffsets.length);
-////                            Thread.sleep(500);
-////                        }
-
-//    scanOdex(longOffsets, longOffsets.length);
-//                        while (true) {
-//
-//                                Thread.sleep(500);
-//                                }
