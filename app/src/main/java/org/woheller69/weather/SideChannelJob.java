@@ -193,27 +193,27 @@ public class SideChannelJob extends Service {
                         String odexExLine = getOdexExLine();
                         BigInteger odexMemExEnd = new BigInteger(odexExLine.split("-")[1], 16);
                         BigInteger odexMemExBegin = new BigInteger(odexExLine.split("-")[0], 16);
+
+
                         Log.d("OdexScan::", "exec memory begin: " + odexMemExBegin.toString(16));
                         Log.d("OdexScan::", "exec memory end: " + odexMemExEnd.toString(16));
+
+
+
+
 ////                        exec offset
                         String execOffsetString = configMap.get("execOffset");
                         BigInteger execOffset = new BigInteger(execOffsetString, 16);
+
                         Log.d("OdexScan::", "exec offset: " + execOffset.toString(16));
 
-                        odexMemExBegin = odexMemExBegin.add(execOffset);
-
-//####
-//######
-//                         exec memory-exec offset+4
-//                        odexMemExBegin = odexMemExBegin.subtract(execOffset).add(new BigInteger("4", 10));
-                        // exec memory-exec offset
-
                         odexMemMapBegin = new BigInteger(getOdexBeginAddress(), 16);
-//                        odexMemMapBegin = odexMemMapBegin.add(execOffset);
-//                        odexMemMapBegin = odexMemMapBegin.add(execOffset);
+                        Log.d("AddressComb", "base address start: " + odexMemMapBegin.toString(16) +"|"+ odexMemMapBegin.toString(10) );
+                        Log.d("AddressComb", "exec memory begin: " + odexMemExBegin.toString(16)+"|"+ odexMemExBegin.toString(10));
+                        Log.d("AddressComb", "exec memory end: " + odexMemExEnd.toString(16)+"|"+ odexMemExEnd.toString(10));
+                        Log.d("AddressComb", "exec offset: " + execOffset.toString(16));
 
-                        Log.d(TAG, "Odex starting Address: " + odexMemMapBegin.toString(16));
-                        Log.d(TAG, "Odex x starting Address: " + odexMemExBegin.toString(16));
+
 
 //##########
 
@@ -238,6 +238,32 @@ public class SideChannelJob extends Service {
                         boolean resetHitCounter = "1".equals(configMap.get("resetHitCounter").trim());
                         int splitVal = Integer.parseInt(configMap.get("splitVal").trim());
 //don't change
+
+
+                        BigInteger o1 = new BigInteger(offsets[0], 16);
+                        BigInteger o2 = new BigInteger(offsets[2], 16);
+                        BigInteger o3 = new BigInteger(offsets[3], 16);
+
+                        BigInteger basePlusExecOffset = odexMemMapBegin.add(execOffset);
+                        Log.d("AddressComb", "base address + exec offset " + odexMemMapBegin.toString(16) + "|" + odexMemMapBegin.toString(10));
+                        Log.d("AddressComb", basePlusExecOffset.add(o1).toString(16)
+                                + "," + basePlusExecOffset.add(o2).toString(16)
+                                + "," + basePlusExecOffset.add(o3).toString(16));
+
+                        BigInteger ExecStartPlusExecOffset = odexMemExBegin.add(execOffset);
+                        Log.d("AddressComb", "executable region start address + exec offset " + ExecStartPlusExecOffset.toString(16) + "|"
+                                + ExecStartPlusExecOffset.toString(10));
+                        Log.d("AddressComb", ExecStartPlusExecOffset.add(o1).toString(16)
+                                + "," + ExecStartPlusExecOffset.add(o2).toString(16)
+                                + "," + ExecStartPlusExecOffset.add(o3).toString(16));
+
+                        BigInteger execStartMinusExecOffset = odexMemExBegin.subtract(execOffset);
+                        Log.d("AddressComb", "executable region start address - exec offset " + execStartMinusExecOffset.toString(16) + "|"
+                                + execStartMinusExecOffset.toString(10));
+                        Log.d("AddressComb", execStartMinusExecOffset.add(o1).toString(16)
+                                + "," + execStartMinusExecOffset.add(o2).toString(16)
+                                + "," + execStartMinusExecOffset.add(o3).toString(16));
+
 
                         long[] longOffsets = new long[offsets.length];
                         List<Integer> splitIndexes = new ArrayList<>();
@@ -266,7 +292,7 @@ public class SideChannelJob extends Service {
                                 localCount = 0;
                                 for (int sp = 0; sp < splitIndexes.size() - 1; sp++) {
                                     scan7(Arrays.copyOfRange(longOffsets, splitIndexes.get(sp), splitIndexes.get(sp + 1))
-                                            , splitIndexes.get(sp + 1)-splitIndexes.get(sp), pauseVal, hitVal, resetHitCounter);
+                                            , splitIndexes.get(sp + 1) - splitIndexes.get(sp), pauseVal, hitVal, resetHitCounter);
                                 }
                                 if (fd < 0) {
                                     Log.d("ashmem ", "not set yet" + fd);
