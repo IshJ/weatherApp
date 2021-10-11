@@ -227,7 +227,7 @@ public class SplashActivity extends AppCompatActivity {
         runView();
     }
 
-    private void runView() {
+    public void runView() {
         Log.d(TAG + "#", "currentViewId:" + currentViewId);
 
         currentViewId++;

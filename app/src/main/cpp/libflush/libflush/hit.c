@@ -638,7 +638,7 @@ int hit7(jlong *param, int length, int threshold, long *timingCount, long *times
     ptr = (int *) malloc(sizeof(int));
 
 //    for (int i = 1; i < length; i++) {
-    for (int i = 1; i < length; i++) {
+    for (int i = 0; i < length; i++) {
         if (param == NULL || param + i == NULL) {
             LOGD("scan4 hit6 param null ");
             break;
