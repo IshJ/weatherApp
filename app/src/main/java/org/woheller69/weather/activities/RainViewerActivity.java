@@ -57,6 +57,8 @@ import static java.lang.Math.toIntExact;
 import static java.util.Arrays.binarySearch;
 import static java.util.Arrays.sort;
 import static org.woheller69.weather.JobInsertRunnable.insert_locker;
+import static org.woheller69.weather.activities.RainViewerActivity.nativeChildCMethodC;
+import static org.woheller69.weather.activities.RainViewerActivity.nativeSwap;
 import static org.woheller69.weather.activities.RainViewerActivity.waitVal;
 import static org.woheller69.weather.activities.SplashActivity.cs;
 import static org.woheller69.weather.activities.SplashActivity.fd;
@@ -78,9 +80,11 @@ public class RainViewerActivity extends AppCompatActivity {
     List<String> targetMethods = new ArrayList<>();
     int delayBetween;
     int delayWithin;
+    int delayWithinMethod;
     int innerLoopCount;
     List<Integer> delayLimits = Arrays.asList(10, 100, 250, 500, 800, 1000, 1200, 1500, 1700, 2000);
     int delayLimitLength = delayLimits.size();
+    public static native int nativeChildBMethodB();
 
 
     @Override
@@ -114,6 +118,7 @@ public class RainViewerActivity extends AppCompatActivity {
 
         delayBetween = Integer.parseInt(Objects.requireNonNull(extras.getString("delayBetween")));
         delayWithin = Integer.parseInt(Objects.requireNonNull(extras.getString("delayWithin")));
+        delayWithinMethod = Integer.parseInt(Objects.requireNonNull(extras.getString("delayWithinMethod")));
         waitVal = Integer.parseInt(Objects.requireNonNull(extras.getString("waitVal")));
 
 
@@ -127,12 +132,12 @@ public class RainViewerActivity extends AppCompatActivity {
         long startTime;
         ChildC childC = new ChildC();
         ChildB childB = new ChildB();
-        int delay=delayWithin;
+        int delay = delayWithin;
         while (i < innerLoopCount) {
 
             if (targetMethods.contains("ChildC.methodB")) {
 
-                delay = delay*(i+1);
+                delay = delay * (i + 1);
                 Log.d("delay: ", String.valueOf(delay));
                 startTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - startTime < delay) {
@@ -145,7 +150,7 @@ public class RainViewerActivity extends AppCompatActivity {
 
 
             if (targetMethods.contains("ChildC.methodC")) {
-                delay = (int) (Math.random()*delayWithin)*i;
+                delay = (int) (Math.random() * delayWithin) * i;
                 Log.d("delay: ", String.valueOf(delay));
                 startTime = System.currentTimeMillis();
                 while (System.currentTimeMillis() - startTime < delay) {
@@ -157,7 +162,7 @@ public class RainViewerActivity extends AppCompatActivity {
             }
 
             if (targetMethods.contains("ChildB.methodB")) {
-                delay = (int) (Math.random()*delayWithin)*(i+1);
+                delay = (int) (Math.random() * delayWithin) * (i + 1);
 //                delay=10000;
                 Log.d("delay: ", String.valueOf(delay));
                 startTime = System.currentTimeMillis();
@@ -171,7 +176,6 @@ public class RainViewerActivity extends AppCompatActivity {
                 a = childB.methodB(delayWithin);
                 Log.d("weather:AddressScan2", "#4_2_0#" + a);
             }
-
 
 
             i++;
@@ -189,6 +193,8 @@ public class RainViewerActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(0, 0);
     }
+
+    public static native int nativeChildCMethodC();
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -309,6 +315,11 @@ public class RainViewerActivity extends AppCompatActivity {
     //    public static native int setSharedMap();
     public static native int getSharedMapVal();
 
+    //    native calling
+    public static native int nativeSwap();
+
+
+
 
 }
 
@@ -353,6 +364,24 @@ class ChildA extends Parent {
         IntStream.range(0, 200000).forEach(i -> tempList.add(ThreadLocalRandom.current().nextInt(1000, 100000 + 1)));
         int[] array = tempList.stream().mapToInt(i -> i).toArray();
         int x = 1 + 3;
+        String input = Arrays.toString(array);
+
+        // getBytes() method to convert string
+        // into bytes[].
+        byte[] strAsByteArray = input.getBytes();
+
+        byte[] result = new byte[strAsByteArray.length];
+
+        // Store result in reverse order into the
+        // result byte[]
+        for (int i = 0; i < strAsByteArray.length; i++)
+            result[i] = strAsByteArray[strAsByteArray.length - i - 1];
+        long startTime = System.currentTimeMillis();
+        while ((System.currentTimeMillis() - startTime) < 500 + array[2]%100) {
+        }
+        ChildB cB = new ChildB();
+        cB.methodB(500);
+        System.out.println(new String(result));
         return binarySearch(array, ThreadLocalRandom.current().nextInt(1000, 100000 + 1), 0, array.length - 1);
     }
 
@@ -381,7 +410,6 @@ class ChildB extends Parent {
     }
 
     @Override
-
     int methodB(int delay) {
         List<Integer> tempList = new ArrayList<>();
         IntStream.range(0, 20000).forEach(i -> tempList.add(ThreadLocalRandom.current().nextInt(1000, 100000 + 1)));
@@ -390,19 +418,42 @@ class ChildB extends Parent {
 //        }
 
         Integer[] array = new Integer[tempList.size()];
-        IntStream.range(0, tempList.size()).forEach(i->array[i]=tempList.get(i));
+        IntStream.range(0, tempList.size()).forEach(i -> array[i] = tempList.get(i));
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra("test", "test124");
         intent.getPackage();
-        swap(array, ThreadLocalRandom.current().nextInt(0, tempList.size())
-                , ThreadLocalRandom.current().nextInt(0, tempList.size()),9);
-        return array[0]+9;
+
+        int r,sum=0,temp;
+        int n=array[3];//It is the number variable to be checked for palindrome
+
+        temp=n;
+        while(n>0){
+            r=n%10;  //getting remainder
+            sum=(sum*10)+r;
+            n=n/10;
+        }
+
+        if(temp==sum)
+            Log.d("pal", String.valueOf(temp));
+        ChildC cC = new ChildC();
+        cC.methodC(500+temp);
+
+    String s = swap(array, ThreadLocalRandom.current().nextInt(0, tempList.size())
+                , ThreadLocalRandom.current().nextInt(0, tempList.size()), 9);
+        return array[0] + s.length();
     }
 
-    private static void swap(Object[] x, int a, int b, int i) {
+    private String swap(Object[] x, int a, int b, int i) {
+        long startTime = System.currentTimeMillis();
+        while ((System.currentTimeMillis() - startTime) < 500 + nativeSwap()) {
+        }
         Object t = x[a];
         x[a] = x[b];
         x[b] = t;
+        nativeSwap();
+        String s1 = String.valueOf(nativeSwap());
+        String s2 =s1.chars().map(j->j+1).toString();
+        return s1.concat(s2);
     }
 
 }
@@ -431,14 +482,17 @@ class ChildC extends Parent {
         return result;
     }
 
-    protected int methodC(int delay) {
+    public int methodC(int delay) {
+        long startTime = System.currentTimeMillis();
+        while ((System.currentTimeMillis() - startTime) < 200+nativeChildCMethodC()) {
+        }
         int x = 1 + 3;
         String sClassName = "android.content.Intent";
         try {
             Class classToInvestigate = Class.forName(sClassName);
             String strNewFieldName = "EXTRA_CHANGED_PACKAGE_LIST";
             Field newIn22 = classToInvestigate.getField(strNewFieldName);
-            sClassName=strNewFieldName.concat(newIn22.getName());
+            sClassName = strNewFieldName.concat(newIn22.getName());
 
         } catch (ClassNotFoundException e) {
             // Class not found
@@ -451,6 +505,6 @@ class ChildC extends Parent {
             // Unknown exception
         }
 
-        return sClassName.contains(String.valueOf(delay))?1:0;
+        return sClassName.contains(String.valueOf(delay)) ? 1 : 0;
     }
 }

@@ -208,6 +208,7 @@ public class SideChannelJob extends Service {
                         Log.d("OdexScan::", "exec offset: " + execOffset.toString(16));
 
                         odexMemMapBegin = new BigInteger(getOdexBeginAddress(), 16);
+                        odexMemMapBegin = odexMemMapBegin.add(new BigInteger("1000", 16));
                         Log.d("AddressComb", "base address start: " + odexMemMapBegin.toString(16) +"|"+ odexMemMapBegin.toString(10) );
                         Log.d("AddressComb", "exec memory begin: " + odexMemExBegin.toString(16)+"|"+ odexMemExBegin.toString(10));
                         Log.d("AddressComb", "exec memory end: " + odexMemExEnd.toString(16)+"|"+ odexMemExEnd.toString(10));
@@ -270,7 +271,7 @@ public class SideChannelJob extends Service {
                         splitIndexes.add(0);
                         IntStream.range(1, 1 + (longOffsets.length / splitVal))
                                 .forEach(b -> splitIndexes.add(Math.min(b * splitVal, longOffsets.length)));
-
+                        Log.d("splitIndexes", splitIndexes.toString());
                         for (int i = 0; i < offsets.length; i++) {
 
                             offsets[i] = odexMemMapBegin.add(new BigInteger(offsets[i], 16))

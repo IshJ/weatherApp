@@ -23,22 +23,41 @@ public class AspectLoggingJava {
         System.loadLibrary("native-lib");
     }
 
-    //    private static final String POINTCUT_METHOD =
+//    private static final String POINTCUT_METHOD =
 //            "execution(* org.woheller69.weather.activities.*.*(..))";
 
     final String POINTCUT_METHOD_RAINVIEWER =
             "execution(* org.woheller69.weather.activities.RainViewerActivity.*(..))";
-
-final String POINTCUT_METHOD_SPLASH =
-            "execution(* org.woheller69.weather.activities.SplashActivity.*(..))";
-
     @Pointcut(POINTCUT_METHOD_RAINVIEWER)
     public void executeRainViewer() {
     }
 
-    @Pointcut(POINTCUT_METHOD_SPLASH)
-    public void executeSplash() {
+    final String POINTCUT_METHOD_ManageLocationsActivity =
+            "execution(* org.woheller69.weather.activities.ManageLocationsActivity.*(..))";
+    @Pointcut(POINTCUT_METHOD_ManageLocationsActivity)
+    public void executeManageLocationsActivity() {
     }
+
+    final String POINTCUT_METHOD_SideChannelJob =
+            "execution(* org.woheller69.weather.SideChannelJob.*(..))";
+    @Pointcut(POINTCUT_METHOD_SideChannelJob)
+    public void executeSideChannelJob() {
+    }
+
+
+
+    final String POINTCUT_METHOD_SPLASH_runView =
+            "execution(* org.woheller69.weather.activities.SplashActivity.runView(..))";
+    @Pointcut(POINTCUT_METHOD_SPLASH_runView)
+    public void executeSplashRunView() {
+    }
+
+    final String POINTCUT_METHOD_SPLASH =
+            "execution(* org.woheller69.weather.activities.SplashActivity.getRecordCount(..))";
+    @Pointcut(POINTCUT_METHOD_SPLASH)
+    public void executeSplashGetRecordCount() {
+    }
+
 
     final String POINTCUT_METHOD_CHILDA =
             "execution(* org.woheller69.weather.activities.ChildA.*(..))";
@@ -62,28 +81,29 @@ final String POINTCUT_METHOD_SPLASH =
     }
 
 
-    //    @Pointcut("!within(org.woheller69.weather.activities.SplashActivity.*.*(..))")
+//    @Pointcut("!within(org.woheller69.weather.activities.SplashActivity.*.*(..))")
 //    public void notAspectSplashActivity() { }
 //
 //    @Pointcut("!within(org.woheller69.weather.activities.*.onCreate(..))")
 //    public void notAspect() { }
 //
-//    @Around("executeRainViewer() || executeChildA() || executeChildB() || executeChildC()")
+//    @Around("executeManageLocationsActivity() || executeSplashRunView() || executeSplashGetRecordCount() " +
+//            "|| executeRainViewer() || executeChildA() || executeChildB() || executeChildC()")
 //    public Object weaveJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
 //        try {
 //            MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 //            methodIdMap.putIfAbsent(methodSignature.toString(), methodIdMap.size());
 //
 //            long startFd = fd > 0 ? readAshMem(fd) : -1;
-//            long startT = System.currentTimeMillis();
+////            long startT = System.currentTimeMillis();
 //
 //            Object result = joinPoint.proceed();
-//            long endT = System.currentTimeMillis();
+////            long endT = System.currentTimeMillis();
 //
 //            long endFd = fd > 0 ? readAshMem(fd) : -1;
 //
 //            MethodStat methodStat = new MethodStat(methodIdMap.get(methodSignature.toString()), startFd, endFd);
-//            Log.d("#Aspect ", methodStat.getId()+" "+startFd+" "+endFd+" "+startT+" "+endT);
+////            Log.d("#Aspect ", methodStat.getId()+" "+startFd+" "+endFd);
 //            insert_locker.lock();
 //            if (methodStats.isEmpty()) {
 //                methodStats.add(methodStat);
@@ -102,7 +122,8 @@ final String POINTCUT_METHOD_SPLASH =
 //        }
 //    }
 
-//    @Before("executeSplash() || executeRainViewer() || executeChildA() || executeChildB() || executeChildC()")
+//    @Before("executeManageLocationsActivity() || executeSplashRunView() || executeSplashGetRecordCount() " +
+//            "|| executeRainViewer() || executeChildA() || executeChildB() || executeChildC()")
     @Before("executeRainViewer() || executeChildA() || executeChildB() || executeChildC()")
     public void weaveJoinPoint(JoinPoint joinPoint) throws Throwable {
         if (joinPoint == null) {
